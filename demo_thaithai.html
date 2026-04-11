@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thai Thai Massage｜松本市 本格タイ古式マッサージ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep-green: #1a2e1a;
+  --forest: #2a4a2a;
+  --gold: #d4952a;
+  --gold-light: #f0c060;
+  --saffron: #e8830a;
+  --warm-bg: #fdf6e8;
+  --cream: #f5e8c8;
+  --text-dark: #1a1a0a;
+  --text-mid: #4a3a1a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--warm-bg); color: var(--text-dark); overflow-x: hidden; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(26,46,26,0.97);
+  padding: 1rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.logo {
+  display: flex; flex-direction: column; line-height: 1;
+}
+.logo-main {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 1.5rem;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+}
+.logo-sub { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(240,192,96,0.6); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,240,200,0.75); text-decoration: none;
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold-light); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--deep-green);
+  min-height: 100vh;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(212,149,42,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(232,131,10,0.08) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4952a' fill-opacity='0.04'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 7rem 3rem 4rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 4rem;
+  position: relative; z-index: 1; width: 100%;
+}
+.hero-content {}
+.hero-thai {
+  font-size: 1rem; letter-spacing: 0.1em;
+  color: var(--gold); margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero h1 strong {
+  display: block; font-style: normal;
+  color: var(--gold-light);
+}
+.hero-desc {
+  font-size: 0.88rem; line-height: 2;
+  color: rgba(245,232,200,0.75);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-tel-block {
+  opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+}
+.hero-tel-label {
+  font-size: 0.68rem; letter-spacing: 0.3em;
+  color: var(--gold); margin-bottom: 0.5rem;
+}
+.hero-tel {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; color: var(--cream);
+  text-decoration: none; margin-bottom: 0.8rem;
+  transition: color 0.3s;
+}
+.hero-tel:hover { color: var(--gold-light); }
+.hero-tel-cta {
+  display: block;
+  background: var(--gold);
+  color: var(--deep-green);
+  text-decoration: none;
+  padding: 0.9rem 2rem;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em;
+  width: fit-content;
+  transition: background 0.3s, transform 0.3s;
+}
+.hero-tel-cta:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.hero-deco {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.5rem;
+}
+.mandala {
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,149,42,0.3);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: rotateSlow 40s linear infinite;
+}
+.mandala::before, .mandala::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212,149,42,0.15);
+}
+.mandala::before { inset: 15px; }
+.mandala::after { inset: 40px; }
+.mandala-inner {
+  font-size: 6rem;
+  opacity: 0.5;
+  animation: rotateSlow 40s linear infinite reverse;
+}
+@keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+.hero-rating {
+  display: flex; gap: 1.5rem;
+}
+.hr-item { text-align: center; }
+.hr-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; color: var(--gold-light);
+  display: block;
+}
+.hr-label { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(240,192,96,0.6); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── ABOUT THAI ── */
+.about-thai { padding: 7rem 2rem; }
+.about-inner { max-width: 900px; margin: 0 auto; }
+.section-tag {
+  font-size: 0.65rem; letter-spacing: 0.4em;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+.gold-rule {
+  width: 50px; height: 2px;
+  background: var(--gold);
+  margin-bottom: 2.5rem;
+}
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; margin-top: 3rem; align-items: start;
+}
+.about-text p {
+  font-size: 0.9rem; line-height: 2;
+  color: var(--text-mid);
+  margin-bottom: 1.2rem;
+}
+.about-features { display: flex; flex-direction: column; gap: 1rem; }
+.about-feat {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.2rem;
+  background: var(--cream);
+  border-left: 3px solid var(--gold);
+}
+.feat-icon { font-size: 1.5rem; flex-shrink: 0; }
+.feat-text {}
+.feat-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; }
+.feat-desc { font-size: 0.78rem; color: var(--text-mid); line-height: 1.7; }
+
+/* ── MENU ── */
+.menu-section {
+  background: var(--forest);
+  padding: 7rem 2rem;
+}
+.menu-inner { max-width: 900px; margin: 0 auto; }
+.menu-section .section-tag { color: var(--gold-light); }
+.menu-section .section-title { color: var(--cream); }
+.menu-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem; margin-top: 3rem;
+}
+.menu-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(212,149,42,0.25);
+  padding: 2rem;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  cursor: default;
+  position: relative;
+}
+.menu-card:hover {
+  background: rgba(212,149,42,0.1);
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+.menu-card-num {
+  position: absolute; top: 1rem; right: 1.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-style: italic;
+  color: rgba(212,149,42,0.12);
+  line-height: 1;
+}
+.menu-card-name {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 1.3rem;
+  color: var(--gold-light);
+  margin-bottom: 0.4rem;
+}
+.menu-card-time {
+  font-size: 0.68rem; letter-spacing: 0.25em;
+  color: var(--gold); opacity: 0.8;
+  margin-bottom: 1rem;
+}
+.menu-card-desc {
+  font-size: 0.8rem; line-height: 1.9;
+  color: rgba(245,232,200,0.75);
+  margin-bottom: 1.5rem;
+}
+.menu-card-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; color: var(--cream);
+}
+.menu-card-price small { font-family: 'Noto Sans JP', sans-serif; font-size: 0.75rem; opacity: 0.6; }
+
+/* ── FLOW ── */
+.flow-section { padding: 7rem 2rem; }
+.flow-inner { max-width: 800px; margin: 0 auto; }
+.flow-steps { margin-top: 3rem; }
+.flow-step {
+  display: flex; gap: 2rem; align-items: flex-start;
+  padding: 1.5rem 0;
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 1.5rem; top: 4rem;
+  width: 1px; height: calc(100% - 1rem);
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.step-num {
+  width: 3rem; height: 3rem; flex-shrink: 0;
+  background: var(--gold);
+  color: var(--deep-green);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-style: italic;
+  font-weight: 700;
+}
+.step-content {}
+.step-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+.step-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.8; }
+
+/* ── ACCESS ── */
+.access-section {
+  background: var(--cream);
+  padding: 7rem 2rem;
+}
+.access-inner { max-width: 900px; margin: 0 auto; }
+.access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+.access-item { padding: 0.9rem 0; border-bottom: 1px solid rgba(212,149,42,0.3); display: flex; gap: 1rem; }
+.a-label { font-size: 0.68rem; letter-spacing: 0.2em; color: var(--gold); min-width: 5rem; padding-top: 0.2rem; }
+.a-val { font-size: 0.88rem; line-height: 1.7; color: var(--text-mid); }
+.map-deco {
+  background: linear-gradient(135deg, var(--forest), var(--deep-green));
+  height: 280px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem;
+}
+.map-deco-text { font-size: 0.72rem; letter-spacing: 0.3em; color: var(--gold); }
+
+/* ── CTA ── */
+.cta-final {
+  background: var(--deep-green);
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-lotus {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20rem; opacity: 0.04;
+  pointer-events: none;
+}
+.cta-tag { font-size: 0.65rem; letter-spacing: 0.4em; color: var(--gold); margin-bottom: 1rem; }
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-style: italic; color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+.cta-sub { font-size: 0.85rem; color: rgba(245,232,200,0.6); margin-bottom: 2.5rem; letter-spacing: 0.1em; }
+.cta-tel-big {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--gold-light);
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+  letter-spacing: 0.05em;
+}
+.cta-tel-big:hover { color: var(--cream); }
+.cta-hours { font-size: 0.72rem; letter-spacing: 0.25em; color: rgba(240,192,96,0.5); }
+
+footer {
+  background: #0f1a0f;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  color: rgba(212,149,42,0.4);
+}
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.8s, transform 0.8s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 700px) {
+  .hero-inner { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+  .hero-deco { display: none; }
+  .about-grid, .access-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .mandala { width: 200px; height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-main">Thai Thai Massage</div>
+    <div class="logo-sub">タイタイマッサージ — 松本市深志</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">タイ古式とは</a></li>
+    <li><a href="#menu">メニュー</a></li>
+    <li><a href="#flow">施術の流れ</a></li>
+    <li><a href="#access">アクセス</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-thai">🪷 本場タイから受け継いだ伝統の技</p>
+      <h1>古来より伝わる<br><strong>タイ古式</strong>の癒し</h1>
+      <p class="hero-desc">タイ王国の伝統的なボディワークを、松本市深志でご体験いただけます。全身のエネルギーラインに沿ったストレッチと指圧で、身体の奥深くから解放感を得てください。</p>
+      <div class="hero-tel-block">
+        <p class="hero-tel-label">RESERVATION & INQUIRY</p>
+        <a href="tel:0263326977" class="hero-tel">☎ 0263-32-6977</a><br>
+        <a href="tel:0263326977" class="hero-tel-cta">今すぐ予約する</a>
+      </div>
+    </div>
+    <div class="hero-deco">
+      <div class="mandala">
+        <div class="mandala-inner">🪷</div>
+      </div>
+      <div class="hero-rating">
+        <div class="hr-item">
+          <span class="hr-num">4.6★</span>
+          <span class="hr-label">Google評価</span>
+        </div>
+        <div class="hr-item">
+          <span class="hr-num">12+</span>
+          <span class="hr-label">口コミ件数</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT THAI -->
+<section class="about-thai" id="about">
+  <div class="about-inner">
+    <div class="reveal">
+      <p class="section-tag">About Thai Massage</p>
+      <h2 class="section-title">タイ古式マッサージとは</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>タイ古式マッサージは2500年以上の歴史を持つ伝統的な療法です。仏教医学と中国の伝統医学が融合したこの技術は、「センライン」と呼ばれるエネルギーラインに沿って身体を施術します。</p>
+        <p>衣服を着用したまま行うため、日本でも安心してご利用いただけます。ストレッチと指圧を組み合わせた独特の施術は、「着たままできるヨガ」とも呼ばれています。</p>
+      </div>
+      <div class="about-features reveal">
+        <div class="about-feat">
+          <div class="feat-icon">🧘</div>
+          <div class="feat-text">
+            <div class="feat-title">着衣のまま施術</div>
+            <div class="feat-desc">専用ウェアの貸し出し有り。リラックスした状態でお受けいただけます。</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-text">
+            <div class="feat-title">エネルギーラインへのアプローチ</div>
+            <div class="feat-desc">全身10本のセンラインを刺激し、エネルギーの滞りを解消します。</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🌿</div>
+          <div class="feat-text">
+            <div class="feat-title">本場仕込みの技術</div>
+            <div class="feat-desc">タイ国認定資格を持つセラピストが施術を担当します。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-inner">
+    <div class="reveal">
+      <p class="section-tag">Treatment Menu</p>
+      <h2 class="section-title">メニュー・料金</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="menu-cards">
+      <div class="menu-card reveal">
+        <div class="menu-card-num">I</div>
+        <div class="menu-card-name">Thai Classic</div>
+        <div class="menu-card-time">60 MIN</div>
+        <div class="menu-card-desc">タイ古式の基本を凝縮した入門コース。初めてのお客様に最もおすすめのメニューです。</div>
+        <div class="menu-card-price">¥6,000<small> (税込)</small></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-num">II</div>
+        <div class="menu-card-name">Full Body Thai</div>
+        <div class="menu-card-time">90 MIN</div>
+        <div class="menu-card-desc">全身のセンラインを丁寧にたどり、深いリリースを促すスタンダードコース。リピーターに人気。</div>
+        <div class="menu-card-price">¥8,500<small> (税込)</small></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-num">III</div>
+        <div class="menu-card-name">Royal Thai</div>
+        <div class="menu-card-time">120 MIN</div>
+        <div class="menu-card-desc">最上級のタイ古式体験。ハーブボールを使った温熱療法もプラス。身体の芯から温まる贅沢なコースです。</div>
+        <div class="menu-card-price">¥12,000<small> (税込)</small></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-card-num">IV</div>
+        <div class="menu-card-name">Foot & Leg</div>
+        <div class="menu-card-time">45 MIN</div>
+        <div class="menu-card-desc">足・ふくらはぎを中心とした集中ケア。むくみや疲労にお悩みの方へのスポットコースです。</div>
+        <div class="menu-card-price">¥4,500<small> (税込)</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow-section" id="flow">
+  <div class="flow-inner">
+    <div class="reveal">
+      <p class="section-tag">How It Works</p>
+      <h2 class="section-title">施術の流れ</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step reveal">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">ご予約・ご来店</div>
+          <div class="step-desc">お電話にてご予約ください。松本市深志３丁目、サンエイトビル5Fにご来店いただきます。初めての方はお気軽にご相談ください。</div>
+        </div>
+      </div>
+      <div class="flow-step reveal">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">カウンセリング</div>
+          <div class="step-desc">体の気になる部位や施術の強さのご要望をお伺いします。体調や持病がある場合もこの時点でお伝えください。</div>
+        </div>
+      </div>
+      <div class="flow-step reveal">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">着替え・準備</div>
+          <div class="step-desc">施術用のタイパンツとシャツにお着替えいただきます（無料貸し出し）。貴重品はロッカーに保管いただけます。</div>
+        </div>
+      </div>
+      <div class="flow-step reveal">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">施術</div>
+          <div class="step-desc">仰向け・うつ伏せ・横向き・座位など様々なポジションで施術を行います。途中、強さの調整も遠慮なくお申し付けください。</div>
+        </div>
+      </div>
+      <div class="flow-step reveal">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">アフターケア・お会計</div>
+          <div class="step-desc">施術後はハーブティーをご用意しています。ゆっくりと体を休めてからお帰りください。次回のご予約もこちらで承ります。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access-section" id="access">
+  <div class="access-inner">
+    <div class="reveal">
+      <p class="section-tag">Access</p>
+      <h2 class="section-title">アクセス</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="access-grid reveal">
+      <div>
+        <div class="access-item"><span class="a-label">店名</span><span class="a-val">Thai Thai Massage（タイタイマッサージ）</span></div>
+        <div class="access-item"><span class="a-label">住所</span><span class="a-val">長野県松本市深志３丁目７−２<br>サンエイトビル 5F</span></div>
+        <div class="access-item"><span class="a-label">電話</span><span class="a-val"><a href="tel:0263326977" style="color:var(--gold);text-decoration:none;font-weight:700;">0263-32-6977</a></span></div>
+        <div class="access-item"><span class="a-label">営業時間</span><span class="a-val">11:00〜22:00（最終受付 21:00）</span></div>
+        <div class="access-item"><span class="a-label">定休日</span><span class="a-val">不定休（お電話にてご確認ください）</span></div>
+        <div class="access-item"><span class="a-label">アクセス</span><span class="a-val">JR松本駅より徒歩約7分<br>深志方面、サンエイトビル5階</span></div>
+      </div>
+      <div class="map-deco">
+        <div style="font-size:2rem;">🗾</div>
+        <div class="map-deco-text">MAP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="reserve">
+  <div class="cta-lotus">🪷</div>
+  <p class="cta-tag">RESERVATION</p>
+  <h2 class="cta-title">ご予約・お問い合わせ</h2>
+  <p class="cta-sub">はじめての方もお気軽にどうぞ。日本語・英語対応可能です。</p>
+  <a href="tel:0263326977" class="cta-tel-big">0263-32-6977</a>
+  <div class="cta-hours">受付時間 11:00〜21:00</div>
+</section>
+
+<footer>© 2024 Thai Thai Massage. All rights reserved. | 長野県松本市深志３丁目７−２ サンエイトビル5F</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

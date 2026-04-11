@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ジャスミン｜松本市のアジアンリラクゼーションサロン</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --deep-purple: #1a0a2e;
+  --mid-purple: #2d1554;
+  --soft-purple: #4a2080;
+  --cream: #f5eed8;
+  --text-light: #f0e6cc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--deep-purple);
+  color: var(--text-light);
+  font-family: 'Noto Serif JP', serif;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: linear-gradient(to bottom, rgba(26,10,46,0.95), transparent);
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-style: italic;
+  color: var(--gold-light);
+  letter-spacing: 0.1em;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--cream); text-decoration: none;
+  font-size: 0.8rem; letter-spacing: 0.15em;
+  opacity: 0.8; transition: opacity 0.3s;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(74,32,128,0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(201,168,76,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 60%);
+}
+.hero-ornament {
+  position: absolute;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rotate 30s linear infinite;
+}
+.hero-ornament::before {
+  content: '';
+  position: absolute; inset: 30px;
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 50%;
+}
+@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+.hero-tag {
+  font-size: 0.7rem; letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp 1s 0.3s forwards;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 300; font-style: italic;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 0.2em;
+  opacity: 0; animation: fadeUp 1s 0.5s forwards;
+}
+.hero-sub {
+  font-size: 0.85rem; letter-spacing: 0.2em;
+  color: var(--gold-light);
+  margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp 1s 0.7s forwards;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep-purple);
+  text-decoration: none;
+  padding: 1rem 2.5rem;
+  font-size: 0.85rem; letter-spacing: 0.2em;
+  font-weight: 700;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0; animation: fadeUp 1s 0.9s forwards;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(201,168,76,0.4);
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold);
+  opacity: 0; animation: fadeUp 1s 1.2s forwards;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50% { transform: scaleY(0.5); opacity: 0.5; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RATING STRIP ── */
+.rating-strip {
+  background: var(--mid-purple);
+  padding: 1.5rem;
+  display: flex; justify-content: center; gap: 3rem;
+  flex-wrap: wrap;
+}
+.rating-item { text-align: center; }
+.rating-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; color: var(--gold);
+}
+.rating-label { font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.7; }
+
+/* ── SECTION BASE ── */
+section { padding: 6rem 2rem; }
+.section-tag {
+  font-size: 0.65rem; letter-spacing: 0.4em;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300; font-style: italic;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+}
+.gold-line {
+  width: 60px; height: 1px;
+  background: var(--gold);
+  margin-bottom: 2rem;
+}
+
+/* ── CONCEPT ── */
+.concept { max-width: 900px; margin: 0 auto; }
+.concept-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+  margin-top: 3rem;
+}
+.concept-text p {
+  font-size: 0.95rem; line-height: 2;
+  color: rgba(240,230,204,0.85);
+  margin-bottom: 1rem;
+}
+.concept-visual {
+  position: relative; height: 350px;
+}
+.concept-box {
+  position: absolute;
+  background: var(--mid-purple);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.concept-box:nth-child(1) { inset: 0 30px 30px 0; }
+.concept-box:nth-child(2) {
+  inset: 30px 0 0 30px;
+  background: linear-gradient(135deg, var(--soft-purple), var(--mid-purple));
+  display: flex; align-items: center; justify-content: center;
+}
+.concept-icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5rem; color: var(--gold);
+  opacity: 0.4;
+}
+
+/* ── MENU ── */
+.menu { background: var(--mid-purple); }
+.menu-inner { max-width: 900px; margin: 0 auto; }
+.menu-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem; margin-top: 3rem;
+}
+.menu-card {
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 2rem;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: default;
+}
+.menu-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.menu-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.menu-card:hover::before { opacity: 1; }
+.menu-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
+}
+.menu-duration {
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  color: var(--gold); opacity: 0.7;
+  margin-bottom: 1rem;
+}
+.menu-desc {
+  font-size: 0.82rem; line-height: 1.8;
+  color: rgba(240,230,204,0.75);
+  margin-bottom: 1.5rem;
+}
+.menu-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; color: var(--cream);
+}
+.menu-price span { font-size: 0.8rem; opacity: 0.6; }
+
+/* ── ACCESS ── */
+.access { max-width: 900px; margin: 0 auto; }
+.access-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; margin-top: 3rem; align-items: start;
+}
+.info-row {
+  display: flex; gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.info-label {
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  color: var(--gold); min-width: 5rem;
+  padding-top: 0.2rem;
+}
+.info-val { font-size: 0.9rem; line-height: 1.7; opacity: 0.85; }
+.map-placeholder {
+  background: var(--mid-purple);
+  border: 1px solid rgba(201,168,76,0.2);
+  height: 250px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; letter-spacing: 0.2em;
+  color: var(--gold); opacity: 0.6;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: linear-gradient(135deg, var(--soft-purple), var(--mid-purple));
+  text-align: center;
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: 'JASMINE';
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15rem; font-style: italic;
+  color: rgba(201,168,76,0.04);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.cta-section .section-title { margin-bottom: 0.5rem; }
+.cta-section p {
+  font-size: 0.85rem; opacity: 0.7;
+  margin-bottom: 2.5rem; letter-spacing: 0.1em;
+}
+.tel-link {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem; color: var(--gold-light);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+.tel-link:hover { color: var(--cream); }
+.tel-note { font-size: 0.72rem; letter-spacing: 0.2em; opacity: 0.6; }
+
+/* ── FOOTER ── */
+footer {
+  background: #0f0620;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .concept-grid, .access-grid { grid-template-columns: 1fr; }
+  .concept-visual { height: 200px; }
+  .rating-strip { gap: 1.5rem; }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Jasmine</div>
+  <ul class="nav-links">
+    <li><a href="#concept">コンセプト</a></li>
+    <li><a href="#menu">メニュー</a></li>
+    <li><a href="#access">アクセス</a></li>
+    <li><a href="#reserve">ご予約</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament"></div>
+  <p class="hero-tag">Asian Relaxation Salon — Matsumoto</p>
+  <h1>Jasmine</h1>
+  <p class="hero-sub">ジャスミン｜松本市大手</p>
+  <a href="tel:0263742418" class="hero-cta">
+    <span>📞</span> 今すぐ予約する
+  </a>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- RATING -->
+<div class="rating-strip">
+  <div class="rating-item">
+    <div class="rating-num">4.8</div>
+    <div class="rating-label">Google 評価</div>
+  </div>
+  <div class="rating-item">
+    <div class="rating-num">49</div>
+    <div class="rating-label">口コミ件数</div>
+  </div>
+  <div class="rating-item">
+    <div class="rating-num">10+</div>
+    <div class="rating-label">施術メニュー</div>
+  </div>
+  <div class="rating-item">
+    <div class="rating-num">松本</div>
+    <div class="rating-label">大手エリア</div>
+  </div>
+</div>
+
+<!-- CONCEPT -->
+<section class="concept" id="concept">
+  <div class="reveal">
+    <p class="section-tag">Philosophy</p>
+    <h2 class="section-title">日常から解き放たれる、<br>上質なひとときを。</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="concept-grid reveal">
+    <div class="concept-text">
+      <p>アジアの伝統的な癒しの技術と、現代のリラクゼーション理論を融合させたジャスミンのトリートメント。</p>
+      <p>身体の深部から緊張をほぐし、心身のバランスを整えます。忙しい日常の中で、本当の意味での休息をご提供します。</p>
+      <p>松本市大手にて、みなさまのお越しをお待ちしております。</p>
+    </div>
+    <div class="concept-visual">
+      <div class="concept-box"></div>
+      <div class="concept-box">
+        <div class="concept-icon">✦</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-inner">
+    <div class="reveal">
+      <p class="section-tag">Treatment Menu</p>
+      <h2 class="section-title">メニュー・料金</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal">
+        <div class="menu-name">Relax Course</div>
+        <div class="menu-duration">60 MIN</div>
+        <div class="menu-desc">全身の疲れをじっくりほぐす、スタンダードなリラクゼーションコース。初めての方にもおすすめです。</div>
+        <div class="menu-price">¥6,600<span> (税込)</span></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-name">Deep Healing</div>
+        <div class="menu-duration">90 MIN</div>
+        <div class="menu-desc">深層筋にアプローチし、慢性的な疲れやコリを集中的にケア。特別な日の前後におすすめのプレミアムコース。</div>
+        <div class="menu-price">¥9,900<span> (税込)</span></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-name">Head & Shoulder</div>
+        <div class="menu-duration">40 MIN</div>
+        <div class="menu-desc">頭・首・肩に特化したスポットケア。デスクワークやスマホ疲れにお悩みの方へ。</div>
+        <div class="menu-price">¥4,400<span> (税込)</span></div>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-name">Foot Reflection</div>
+        <div class="menu-duration">60 MIN</div>
+        <div class="menu-desc">足裏の反射区を丁寧に刺激することで、全身の臓器・器官の機能を活性化するリフレクソロジー。</div>
+        <div class="menu-price">¥6,600<span> (税込)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="access">
+  <div class="access">
+    <div class="reveal">
+      <p class="section-tag">Access</p>
+      <h2 class="section-title">アクセス</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="access-grid reveal">
+      <div class="access-info">
+        <div class="info-row">
+          <div class="info-label">店 名</div>
+          <div class="info-val">ジャスミン</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">住 所</div>
+          <div class="info-val">長野県松本市大手４丁目１０−６</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">電 話</div>
+          <div class="info-val"><a href="tel:0263742418" style="color:var(--gold-light);text-decoration:none;">0263-74-2418</a></div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">営業時間</div>
+          <div class="info-val">10:00 〜 21:00（最終受付 20:00）</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">定休日</div>
+          <div class="info-val">不定休（お電話にてご確認ください）</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">アクセス</div>
+          <div class="info-val">JR松本駅より徒歩約10分</div>
+        </div>
+      </div>
+      <div class="map-placeholder">MAP</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="reserve">
+  <p class="section-tag">Reservation</p>
+  <h2 class="section-title">ご予約・お問い合わせ</h2>
+  <p>お電話にて承っております。お気軽にお問い合わせください。</p>
+  <a href="tel:0263742418" class="tel-link">0263-74-2418</a>
+  <div class="tel-note">受付時間 10:00〜20:00</div>
+</section>
+
+<footer>
+  © 2024 Jasmine. All rights reserved. | 長野県松本市大手４丁目１０−６
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
