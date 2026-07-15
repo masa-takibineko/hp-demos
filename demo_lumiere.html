@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMIÈRE hair atelier | 光をまとう、あなたのための一席。</title>
+<meta name="description" content="LUMIÈRE hair atelier は、完全予約制のプライベートヘアサロン。AI動画×3D演出のプレミアムHPデモ。">
+<!-- OGP -->
+<meta property="og:title" content="LUMIÈRE hair atelier">
+<meta property="og:description" content="光をまとう、あなたのための一席。完全予約制プライベートヘアサロン。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='%23c9a96e' font-family='serif'>L</text></svg>">
+<!-- 構造化データ (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "LUMIÈRE hair atelier",
+  "description": "完全予約制のプライベートヘアサロン",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "渋谷区",
+    "addressRegion": "東京都",
+    "streetAddress": "神宮前 0-0-0 DEMO BLDG 2F"
+  },
+  "openingHours": "Tu-Su 10:00-20:00",
+  "priceRange": "¥¥¥",
+  "telephone": "+81-3-0000-0000"
+}
+</script>
+<!--
+  ================================================================
+  PREMIUM PLAN DEMO — 上プラン仕様
+  ・AI生成動画背景 (Higgsfield) + Three.js 3D演出
+  ・ローディング演出 / カスタムカーソル / 視差 / 3Dティルト
+  ・ダークモード切替 / 日英切替 / ギャラリーフィルタ
+  ・編集モード（管理画面デモ・localStorage保存）
+  ・フォームバリデーション + Formspree接続枠
+  ・JSON-LD / OGP / GA4設置枠
+  本番納品時: sitemap.xml / robots.txt / GA4測定ID / FormspreeIDを設定
+  ================================================================
+-->
+<!-- GA4 設置枠（本番時に測定IDを設定して有効化）
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ================= CSS変数（ダーク / ライト両テーマ） ================= */
+:root{
+  --bg:#0a0807;
+  --bg2:#12100d;
+  --gold:#c9a96e;
+  --gold-light:#e8ca8f;
+  --cream:#f2ece1;
+  --text:#ece5d8;
+  --text-dim:#b8a794;
+  --surface:rgba(24,20,15,0.82);
+  --card:rgba(255,255,255,0.03);
+  --border:rgba(201,169,110,0.22);
+  --glow:rgba(201,169,110,0.25);
+  --section-bg:rgba(10,8,7,0.94);
+  --section-bg2:rgba(16,13,10,0.9);
+  --nav-solid:rgba(8,6,5,0.88);
+  --input-bg:rgba(255,255,255,0.04);
+  --shadow:rgba(0,0,0,0.55);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+:root[data-theme="light"]{
+  --bg:#f7f2e9;
+  --bg2:#efe8db;
+  --gold:#9a7b42;
+  --gold-light:#7d6234;
+  --cream:#2a2118;
+  --text:#3a3025;
+  --text-dim:#7d6f5d;
+  --surface:rgba(255,252,246,0.9);
+  --card:rgba(255,255,255,0.75);
+  --border:rgba(154,123,66,0.35);
+  --glow:rgba(154,123,66,0.18);
+  --section-bg:rgba(247,242,233,0.97);
+  --section-bg2:rgba(239,232,219,0.97);
+  --nav-solid:rgba(247,242,233,0.92);
+  --input-bg:rgba(255,255,255,0.85);
+  --shadow:rgba(90,70,40,0.18);
+}
+
+/* ================= リセット・基本 ================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);overflow-x:hidden;
+  font-family:'Noto Serif JP',serif;font-weight:300;
+  transition:background .5s,color .5s;
+}
+@media(pointer:fine){ body{cursor:none;} body a,body button{cursor:none;} }
+img{max-width:100%;display:block;}
+.en{font-family:'Cormorant Garamond',serif;}
+.mono{font-family:'DM Mono',monospace;}
+
+/* ================= ローディング演出 ================= */
+#loader{position:fixed;inset:0;z-index:10000;background:#0a0807;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;
+  transition:opacity .9s ease,visibility .9s;}
+#loader.done{opacity:0;visibility:hidden;}
+#loader .loader-logo{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,6vw,3.4rem);
+  letter-spacing:0.42em;color:#f2ece1;text-indent:0.42em;
+  opacity:0;animation:loaderFade 1.2s ease .2s forwards;}
+#loader .loader-sub{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.5em;
+  color:#c9a96e;text-transform:uppercase;text-indent:0.5em;
+  opacity:0;animation:loaderFade 1.2s ease .6s forwards;}
+#loader .loader-line{width:0;height:1px;background:linear-gradient(to right,transparent,#c9a96e,transparent);
+  animation:loaderLine 1.6s var(--ease-out) .4s forwards;}
+@keyframes loaderFade{to{opacity:1;}}
+@keyframes loaderLine{to{width:min(360px,70vw);}}
+
+/* ================= デモバー ================= */
+#demo-bar{position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(201,169,110,0.25);
+  padding:5px 20px;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;
+  text-transform:uppercase;color:#c9a96e;}
+#demo-bar .demo-actions{display:flex;gap:8px;align-items:center;}
+#demo-bar button,#demo-bar a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;
+  text-transform:uppercase;color:#c9a96e;background:transparent;
+  border:1px solid rgba(201,169,110,0.5);padding:3px 10px;text-decoration:none;
+  transition:all .3s;}
+#demo-bar button:hover,#demo-bar a:hover{background:#c9a96e;color:#0a0807;}
+#demo-bar button.active{background:#c9a96e;color:#0a0807;}
+
+/* ================= カスタムカーソル ================= */
+.cursor,.cursor-ring{display:none;}
+@media(pointer:fine){
+  .cursor{display:block;width:7px;height:7px;background:var(--gold);border-radius:50%;
+    position:fixed;pointer-events:none;z-index:9998;
+    box-shadow:0 0 12px var(--glow);transition:transform .25s;}
+  .cursor-ring{display:block;width:34px;height:34px;border:1px solid var(--border);
+    border-radius:50%;position:fixed;pointer-events:none;z-index:9997;
+    transition:transform .3s,opacity .3s;}
+}
+
+/* ================= スクロールプログレス ================= */
+#progress-bar{position:fixed;top:26px;left:0;height:2px;z-index:9990;width:0%;
+  background:linear-gradient(to right,var(--gold),var(--gold-light));}
+
+/* ================= ヒーロー（hero-shell パターン） ================= */
+#hero-shell{position:relative;pointer-events:none;}
+#hero-bg{position:fixed;inset:0;z-index:0;background:var(--bg);}
+#hero-gradient{position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse 70% 55% at 30% 40%,rgba(201,169,110,0.13),transparent 60%),
+    radial-gradient(ellipse 60% 50% at 75% 65%,rgba(150,110,60,0.1),transparent 65%),
+    linear-gradient(160deg,#0a0807 0%,#151009 55%,#0a0807 100%);}
+#hero-fallback-img{display:none;}
+#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  opacity:0;transition:opacity 1.6s ease;}
+#hero-video.loaded{opacity:0.55;}
+#hero-dim{position:absolute;inset:0;z-index:2;
+  background:linear-gradient(to bottom,rgba(5,4,3,0.55) 0%,rgba(5,4,3,0.25) 45%,rgba(10,8,7,0.8) 100%);}
+#three-canvas{position:fixed;inset:0;z-index:3;pointer-events:none;display:block;}
+#scroll-spacer{height:140vh;}
+
+/* ヒーローテキスト */
+#hero-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:15;
+  pointer-events:none;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:0 2rem;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.55em;
+  color:var(--gold-light);text-transform:uppercase;text-indent:0.55em;margin-bottom:2rem;
+  opacity:0;animation:fadeInUp 1s var(--ease-out) 2.1s forwards;}
+:root[data-theme="light"] .hero-eyebrow{color:#e8ca8f;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:clamp(3.2rem,10vw,8rem);line-height:1;letter-spacing:0.14em;color:#f8f3ea;
+  text-shadow:0 0 60px rgba(201,169,110,0.35);
+  opacity:0;animation:fadeInUp 1.1s var(--ease-out) 2.35s forwards;}
+.hero-title em{font-style:italic;color:#e8ca8f;}
+.hero-tagline{margin-top:1.8rem;font-size:clamp(0.82rem,2vw,1.05rem);letter-spacing:0.3em;
+  color:#d8cbb6;font-weight:200;
+  opacity:0;animation:fadeInUp 1s var(--ease-out) 2.65s forwards;}
+.hero-cta{margin-top:3.2rem;display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeInUp 1s var(--ease-out) 2.95s forwards;pointer-events:all;}
+#scroll-hint{position:absolute;bottom:2.4rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.6rem;
+  opacity:0;animation:fadeInUp 1s ease 3.4s forwards;}
+#scroll-hint span{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.4em;
+  color:#8a7a62;text-transform:uppercase;}
+#scroll-hint .hint-line{width:1px;height:44px;overflow:hidden;position:relative;}
+#scroll-hint .hint-line::after{content:'';position:absolute;top:-100%;left:0;width:1px;height:100%;
+  background:linear-gradient(to bottom,transparent,#c9a96e);animation:hintDrop 1.8s ease-in-out infinite;}
+@keyframes hintDrop{to{top:100%;}}
+
+/* ================= ボタン ================= */
+.btn-p{font-family:'DM Mono',monospace;padding:1rem 2.4rem;background:transparent;
+  border:1px solid var(--gold);color:var(--gold-light);font-size:0.7rem;letter-spacing:0.25em;
+  text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;
+  transition:color .35s;display:inline-block;}
+.btn-p::before{content:'';position:absolute;inset:0;background:var(--gold);
+  transform:translateX(-101%);transition:transform .35s var(--ease-out);z-index:-1;}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p:hover{color:#0a0807;}
+.btn-s{font-family:'DM Mono',monospace;padding:1rem 2.4rem;background:transparent;
+  border:1px solid rgba(200,180,150,0.35);color:#c8bba6;font-size:0.7rem;letter-spacing:0.25em;
+  text-transform:uppercase;text-decoration:none;transition:all .35s;display:inline-block;}
+.btn-s:hover{border-color:var(--gold);color:var(--gold-light);}
+
+/* ================= ナビ ================= */
+#main-nav{position:fixed;top:26px;left:0;right:0;z-index:200;
+  padding:1.3rem 4rem;display:flex;justify-content:space-between;align-items:center;
+  transition:background .4s,backdrop-filter .4s,padding .4s;}
+#main-nav.solid{background:var(--nav-solid);backdrop-filter:blur(20px);padding:0.9rem 4rem;
+  border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;letter-spacing:0.3em;
+  color:var(--cream);text-decoration:none;}
+:root[data-theme="dark"] .nav-logo{color:#f2ece1;}
+.nav-logo b{color:var(--gold);font-weight:500;}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;color:var(--text-dim);text-decoration:none;
+  font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;position:relative;
+  padding-bottom:3px;transition:color .3s;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+  background:var(--gold);transition:width .35s var(--ease-out);}
+.nav-links a:hover{color:var(--gold-light);}
+.nav-links a:hover::after{width:100%;}
+.nav-tools{display:flex;gap:8px;}
+.tool-btn{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;
+  background:transparent;border:1px solid var(--border);color:var(--text-dim);
+  padding:5px 10px;transition:all .3s;text-transform:uppercase;}
+.tool-btn:hover{border-color:var(--gold);color:var(--gold-light);}
+
+/* ================= セクション共通 ================= */
+.section{position:relative;z-index:20;padding:8.5rem 8vw;background:var(--section-bg);
+  transition:background .5s;}
+.section.alt{background:var(--section-bg2);}
+.section-inner{max-width:1180px;margin:0 auto;}
+.section-label{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.5em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1.1rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-weight:400;
+  font-size:clamp(2.1rem,4.6vw,3.4rem);letter-spacing:0.08em;color:var(--cream);
+  margin-bottom:1rem;line-height:1.15;}
+.section-title-ja{font-size:0.85rem;letter-spacing:0.35em;color:var(--text-dim);margin-bottom:2rem;}
+.section-line{width:64px;height:1px;background:linear-gradient(to right,var(--gold),transparent);
+  margin-bottom:3.2rem;}
+
+/* ================= Concept ================= */
+.concept-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:4.5rem;align-items:center;}
+.concept-text p{line-height:2.3;color:var(--text-dim);font-size:0.95rem;margin-bottom:1.6rem;}
+.concept-text strong{color:var(--cream);font-weight:400;}
+.concept-imgs{position:relative;height:560px;}
+.concept-img{position:absolute;overflow:hidden;box-shadow:0 24px 60px var(--shadow);}
+.concept-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-out);}
+.concept-img:hover img{transform:scale(1.06);}
+.ci-1{top:0;left:0;width:64%;height:380px;}
+.ci-2{bottom:0;right:0;width:52%;height:300px;border:1px solid var(--border);}
+
+/* ================= Stats ================= */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);}
+.stat{background:var(--section-bg);padding:3rem 1.4rem;text-align:center;transition:background .5s;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,4.5vw,3.6rem);
+  color:var(--gold-light);line-height:1;}
+.stat-num sup{font-size:0.45em;color:var(--gold);}
+.stat-label{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.3em;
+  color:var(--text-dim);text-transform:uppercase;margin-top:1rem;}
+
+/* ================= Menu（タブ切替） ================= */
+.menu-tabs{display:flex;gap:0.6rem;margin-bottom:3rem;flex-wrap:wrap;}
+.menu-tab{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.22em;
+  text-transform:uppercase;background:transparent;border:1px solid var(--border);
+  color:var(--text-dim);padding:0.8rem 1.7rem;transition:all .35s;}
+.menu-tab.active,.menu-tab:hover{background:var(--gold);border-color:var(--gold);color:#14100a;}
+.menu-list{display:grid;grid-template-columns:1fr 1fr;gap:0 4rem;}
+.menu-item{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding:1.5rem 0;border-bottom:1px solid var(--border);}
+.menu-item-name{color:var(--cream);font-size:0.98rem;letter-spacing:0.08em;}
+.menu-item-desc{font-size:0.72rem;color:var(--text-dim);margin-top:0.4rem;letter-spacing:0.05em;}
+.menu-item-price{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold-light);
+  white-space:nowrap;}
+
+/* ================= Stylists ================= */
+.stylist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.stylist-card{position:relative;overflow:hidden;background:var(--card);
+  border:1px solid var(--border);transition:border-color .4s;}
+.stylist-card:hover{border-color:var(--gold);}
+.stylist-photo{height:380px;overflow:hidden;}
+.stylist-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(35%);
+  transition:transform 1s var(--ease-out),filter .6s;}
+.stylist-card:hover .stylist-photo img{transform:scale(1.07);filter:grayscale(0%);}
+.stylist-info{padding:1.8rem;}
+.stylist-role{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.3em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:0.7rem;}
+.stylist-name{font-size:1.15rem;color:var(--cream);letter-spacing:0.15em;margin-bottom:0.8rem;}
+.stylist-bio{font-size:0.78rem;line-height:2;color:var(--text-dim);}
+
+/* ================= Gallery（フィルタリング） ================= */
+.filter-bar{display:flex;gap:0.6rem;margin-bottom:3rem;flex-wrap:wrap;}
+.filter-btn{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;
+  text-transform:uppercase;background:transparent;border:1px solid var(--border);
+  color:var(--text-dim);padding:0.7rem 1.5rem;transition:all .35s;}
+.filter-btn.active,.filter-btn:hover{background:var(--gold);border-color:var(--gold);color:#14100a;}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem;}
+.g-item{position:relative;overflow:hidden;background:var(--card);}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease-out);}
+.g-item:hover img{transform:scale(1.08);}
+.g-item .g-tag{position:absolute;left:0;bottom:0;font-family:'DM Mono',monospace;
+  font-size:0.52rem;letter-spacing:0.25em;text-transform:uppercase;color:#e8ca8f;
+  background:rgba(10,8,6,0.78);padding:6px 14px;}
+.g-item.hide{display:none;}
+/* フィルタ時はマソンリー配置を解除して自動グリッドに */
+.gallery-grid.filtered .g-item{grid-column:span 4 !important;grid-row:auto !important;height:250px !important;}
+.gp-1{grid-column:1/6;grid-row:span 2;height:520px;}
+.gp-2{grid-column:6/9;height:252px;}
+.gp-3{grid-column:9/13;height:252px;}
+.gp-4{grid-column:6/10;height:252px;}
+.gp-5{grid-column:10/13;height:252px;}
+.gp-6{grid-column:1/5;height:240px;}
+.gp-7{grid-column:5/9;height:240px;}
+.gp-8{grid-column:9/13;height:240px;}
+
+/* ================= Voice ================= */
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;}
+.voice-card{background:var(--card);border:1px solid var(--border);padding:2.4rem 2rem;
+  position:relative;transition:transform .4s,border-color .4s;}
+.voice-card::before{content:'\201C';font-family:'Cormorant Garamond',serif;
+  position:absolute;top:0.6rem;left:1.4rem;font-size:4.5rem;color:var(--glow);line-height:1;}
+.voice-text{font-size:0.85rem;line-height:2.2;color:var(--text-dim);margin-bottom:1.6rem;
+  padding-top:1.4rem;}
+.voice-meta{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  color:var(--gold);text-transform:uppercase;}
+
+/* ================= FAQ ================= */
+.faq-list{max-width:820px;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{width:100%;background:transparent;border:none;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+  padding:1.8rem 0.4rem;color:var(--cream);font-family:'Noto Serif JP',serif;
+  font-size:0.95rem;letter-spacing:0.08em;transition:color .3s;}
+.faq-q:hover{color:var(--gold-light);}
+.faq-q .faq-mark{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);
+  transition:transform .4s var(--ease-out);flex-shrink:0;}
+.faq-item.open .faq-mark{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease-out);}
+.faq-a p{padding:0 0.4rem 1.8rem;font-size:0.85rem;line-height:2.2;color:var(--text-dim);}
+
+/* ================= Access ================= */
+.access-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:start;}
+.access-table{width:100%;border-collapse:collapse;}
+.access-table th{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;
+  color:var(--gold);text-transform:uppercase;text-align:left;padding:1.1rem 1.4rem 1.1rem 0.2rem;
+  border-bottom:1px solid var(--border);white-space:nowrap;vertical-align:top;font-weight:400;}
+.access-table td{font-size:0.88rem;color:var(--text-dim);padding:1.1rem 0;
+  border-bottom:1px solid var(--border);line-height:1.9;}
+.access-photo{height:420px;overflow:hidden;border:1px solid var(--border);
+  box-shadow:0 24px 60px var(--shadow);}
+.access-photo img{width:100%;height:100%;object-fit:cover;}
+
+/* ================= Contact ================= */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4.5rem;}
+.contact-lead{line-height:2.4;color:var(--text-dim);font-size:0.92rem;}
+.form-row{margin-bottom:1.7rem;}
+.form-label{font-family:'DM Mono',monospace;display:block;font-size:0.58rem;
+  letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--input-bg);
+  border:1px solid var(--border);color:var(--text);padding:1rem 1.2rem;
+  font-family:'Noto Serif JP',serif;font-size:0.9rem;transition:border-color .3s;outline:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-textarea{min-height:140px;resize:vertical;}
+.form-error{font-size:0.7rem;color:#d98a7a;margin-top:0.5rem;display:none;letter-spacing:0.05em;}
+.form-row.invalid .form-error{display:block;}
+.form-row.invalid .form-input,.form-row.invalid .form-textarea{border-color:#d98a7a;}
+#form-success{display:none;border:1px solid var(--gold);padding:2.4rem;text-align:center;
+  color:var(--gold-light);letter-spacing:0.1em;line-height:2.2;font-size:0.9rem;}
+
+/* ================= Footer ================= */
+footer{position:relative;z-index:20;background:var(--section-bg2);
+  border-top:1px solid var(--border);padding:4rem 8vw 2.5rem;transition:background .5s;}
+.footer-inner{max-width:1180px;margin:0 auto;display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;gap:3rem;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:0.3em;
+  color:var(--cream);margin-bottom:1.2rem;}
+.footer-note{font-size:0.75rem;line-height:2.2;color:var(--text-dim);}
+.footer-h{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.3em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:0.9rem;}
+.footer-links a{color:var(--text-dim);text-decoration:none;font-size:0.78rem;
+  letter-spacing:0.1em;transition:color .3s;}
+.footer-links a:hover{color:var(--gold-light);}
+.footer-btm{max-width:1180px;margin:3rem auto 0;padding-top:2rem;
+  border-top:1px solid var(--border);display:flex;justify-content:space-between;
+  align-items:center;gap:1rem;flex-wrap:wrap;
+  font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;color:var(--text-dim);}
+
+/* ================= 編集モード（管理画面デモ） ================= */
+body.editing [data-edit]{outline:1px dashed var(--gold);outline-offset:4px;cursor:text;}
+body.editing [data-edit]:hover{background:var(--glow);}
+#edit-toolbar{position:fixed;bottom:2rem;left:50%;transform:translate(-50%,150px);
+  z-index:9995;background:rgba(12,10,8,0.92);backdrop-filter:blur(16px);
+  border:1px solid var(--gold);padding:0.9rem 1.4rem;display:flex;gap:0.8rem;align-items:center;
+  visibility:hidden;transition:transform .5s var(--ease-out),visibility .5s;}
+#edit-toolbar.show{transform:translate(-50%,0);visibility:visible;}
+#edit-toolbar span{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  color:#e8ca8f;text-transform:uppercase;margin-right:0.5rem;}
+#edit-toolbar button{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;
+  text-transform:uppercase;padding:0.55rem 1.2rem;border:1px solid #c9a96e;
+  background:transparent;color:#e8ca8f;transition:all .3s;}
+#edit-toolbar button:hover{background:#c9a96e;color:#0a0807;}
+#edit-toolbar button.primary{background:#c9a96e;color:#0a0807;}
+#edit-toolbar button.primary:hover{background:#e8ca8f;}
+#toast{position:fixed;top:70px;left:50%;transform:translate(-50%,-80px);z-index:9996;
+  background:rgba(12,10,8,0.94);border:1px solid var(--gold);color:#e8ca8f;
+  font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;
+  padding:0.8rem 1.8rem;transition:transform .5s var(--ease-out);}
+#toast.show{transform:translate(-50%,0);}
+
+/* ================= アニメーション ================= */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(34px);}to{opacity:1;transform:translateY(0);}}
+
+/* デスクトップのみ: GSAP初期状態（toのみで解決する設計） */
+@media(min-width:901px){
+  .reveal{opacity:0;transform:translateY(50px);}
+}
+/* モバイル: 強制表示 */
+@media(max-width:900px){
+  .reveal{opacity:1 !important;transform:none !important;}
+}
+
+/* ================= レスポンシブ ================= */
+@media(max-width:1024px){
+  .menu-list{grid-template-columns:1fr;}
+  .stylist-grid,.voice-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:900px){
+  #scroll-spacer{display:none;}
+  #hero-shell{height:100svh;min-height:620px;overflow:hidden;pointer-events:all;}
+  #hero-shell>#hero-bg{position:absolute !important;inset:0;}
+  #hero-shell>#three-canvas{position:absolute !important;inset:0;height:100%;}
+  #hero-shell>#hero-overlay{position:absolute !important;top:50%;left:50%;
+    transform:translate(-50%,-50%);width:100%;}
+  #hero-fallback-img{display:block;position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:0;opacity:0.5;}
+  #hero-gradient{z-index:1;}
+  #main-nav{padding:1rem 5vw;}
+  #main-nav.solid{padding:0.8rem 5vw;}
+  .nav-links{display:none;}
+  .section{padding:5.5rem 6vw;}
+  .concept-grid,.access-grid,.contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .concept-imgs{height:auto;position:static;}
+  .concept-img{position:static;width:100% !important;height:260px !important;margin-bottom:1rem;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .stylist-grid,.voice-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .gallery-grid .g-item{grid-column:auto !important;grid-row:auto !important;height:210px !important;}
+  .gallery-grid .gp-1{grid-column:1/3 !important;height:300px !important;}
+  .gallery-grid.filtered .g-item{grid-column:auto !important;height:210px !important;}
+  .footer-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .hero-title{font-size:clamp(3rem,15vw,6rem);}
+  img{display:block;max-width:100%;height:auto;}
+}
+@media(max-width:600px){
+  .hero-cta{flex-direction:column;align-items:center;}
+  .btn-p,.btn-s{width:100%;max-width:300px;text-align:center;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  #demo-bar{font-size:8px;padding:4px 10px;}
+}
+
+/* ================= reduced motion ================= */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;}
+  html{scroll-behavior:auto;}
+  .reveal,.hero-eyebrow,.hero-title,.hero-tagline,.hero-cta{opacity:1 !important;transform:none !important;}
+  #scroll-hint{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ローディング演出 -->
+<div id="loader">
+  <div class="loader-logo">LUMIÈRE</div>
+  <div class="loader-line"></div>
+  <div class="loader-sub">hair atelier</div>
+</div>
+
+<!-- デモバー -->
+<div id="demo-bar">
+  <span>DEMO — PREMIUM PLAN / AI VIDEO × 3D</span>
+  <div class="demo-actions">
+    <button id="edit-toggle" type="button">編集モード</button>
+    <a href="#contact">お問い合わせ</a>
+  </div>
+</div>
+
+<!-- カスタムカーソル -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- スクロールプログレス -->
+<div id="progress-bar"></div>
+
+<!-- ナビ -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#top">LUMI<b>È</b>RE</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#concept" data-i18n="nav_concept">Concept</a></li>
+      <li><a href="#menu" data-i18n="nav_menu">Menu</a></li>
+      <li><a href="#stylist" data-i18n="nav_stylist">Stylist</a></li>
+      <li><a href="#gallery" data-i18n="nav_gallery">Gallery</a></li>
+      <li><a href="#access" data-i18n="nav_access">Access</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Reserve</a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="tool-btn" id="lang-toggle" type="button" aria-label="言語切替">EN</button>
+      <button class="tool-btn" id="theme-toggle" type="button" aria-label="テーマ切替">LIGHT</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ヒーロー -->
+<div id="hero-shell">
+  <div id="hero-bg">
+    <div id="hero-gradient"></div>
+    <img id="hero-fallback-img" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85" alt="salon">
+    <video id="hero-video" autoplay muted loop playsinline>
+      <source src="assets_lumiere_hero.mp4" type="video/mp4">
+    </video>
+    <div id="hero-dim"></div>
+  </div>
+  <canvas id="three-canvas"></canvas>
+  <div id="hero-overlay">
+    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Private Hair Salon — Tokyo</p>
+    <h1 class="hero-title">LUMI<em>È</em>RE</h1>
+    <p class="hero-tagline" data-i18n="hero_tagline" data-edit="hero_tagline">光をまとう、あなたのための一席。</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-p" data-i18n="hero_cta1">ご予約はこちら</a>
+      <a href="#menu" class="btn-s" data-i18n="hero_cta2">メニューを見る</a>
+    </div>
+  </div>
+  <div id="scroll-hint">
+    <span>Scroll</span>
+    <div class="hint-line"></div>
+  </div>
+</div>
+<div id="scroll-spacer"></div>
+
+<!-- Concept -->
+<section class="section" id="concept">
+  <div class="section-inner">
+    <div class="concept-grid">
+      <div class="concept-text reveal">
+        <p class="section-label">Concept</p>
+        <h2 class="section-title" data-i18n="concept_title">A seat, only for you.</h2>
+        <p class="section-title-ja">完全予約制のプライベートアトリエ</p>
+        <div class="section-line"></div>
+        <p data-edit="concept_p1" data-i18n="concept_p1"><strong>一日に迎えるお客様は、わずか6名。</strong>照明も、香りも、音楽も、あなたが椅子に座る時間のためだけに整えます。騒がしさから切り離された空間で、髪と向き合う90分を。</p>
+        <p data-edit="concept_p2" data-i18n="concept_p2">パリと東京でキャリアを重ねたスタイリストが、骨格・髪質・ライフスタイルから逆算した「あなただけの設計図」を描きます。仕上がりは、鏡の前だけでなく、それからの毎朝に続きます。</p>
+      </div>
+      <div class="concept-imgs reveal">
+        <div class="concept-img ci-1" data-parallax="-40">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85" alt="サロン内観">
+        </div>
+        <div class="concept-img ci-2" data-parallax="30">
+          <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=700&q=85" alt="施術風景">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="section alt" id="stats">
+  <div class="section-inner">
+    <div class="stats-grid reveal">
+      <div class="stat"><div class="stat-num"><span class="count" data-count="12">0</span><sup>年</sup></div><div class="stat-label" data-i18n="stat_1">創業</div></div>
+      <div class="stat"><div class="stat-num"><span class="count" data-count="98">0</span><sup>%</sup></div><div class="stat-label" data-i18n="stat_2">顧客満足度</div></div>
+      <div class="stat"><div class="stat-num"><span class="count" data-count="89">0</span><sup>%</sup></div><div class="stat-label" data-i18n="stat_3">リピート率</div></div>
+      <div class="stat"><div class="stat-num"><span class="count" data-count="4200">0</span><sup>+</sup></div><div class="stat-label" data-i18n="stat_4">累計のお客様</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu -->
+<section class="section" id="menu">
+  <div class="section-inner">
+    <p class="section-label reveal">Menu</p>
+    <h2 class="section-title reveal" data-i18n="menu_title">Menu &amp; Price</h2>
+    <p class="section-title-ja reveal">すべて税込・指名料込みの明朗価格</p>
+    <div class="section-line reveal"></div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-cat="cut" type="button">Cut &amp; Style</button>
+      <button class="menu-tab" data-cat="color" type="button">Color</button>
+      <button class="menu-tab" data-cat="spa" type="button">Treatment &amp; Spa</button>
+    </div>
+    <div class="menu-list reveal" id="cat-cut">
+      <div class="menu-item"><div><div class="menu-item-name" data-edit="m_cut1">デザインカット</div><div class="menu-item-desc">カウンセリング・シャンプー・ブロー込み / 90min</div></div><div class="menu-item-price">¥ 8,800</div></div>
+      <div class="menu-item"><div><div class="menu-item-name" data-edit="m_cut2">ショートデザインカット</div><div class="menu-item-desc">骨格補正に特化したショート専用設計 / 100min</div></div><div class="menu-item-price">¥ 9,900</div></div>
+      <div class="menu-item"><div><div class="menu-item-name" data-edit="m_cut3">前髪カット</div><div class="menu-item-desc">次回来店までのメンテナンスに / 20min</div></div><div class="menu-item-price">¥ 2,200</div></div>
+      <div class="menu-item"><div><div class="menu-item-name" data-edit="m_cut4">お子様カット（小学生以下）</div><div class="menu-item-desc">平日限定 / 45min</div></div><div class="menu-item-price">¥ 4,400</div></div>
+    </div>
+    <div class="menu-list reveal" id="cat-color" style="display:none;">
+      <div class="menu-item"><div><div class="menu-item-name">フルカラー</div><div class="menu-item-desc">ダメージレス処方・カット別 / 120min</div></div><div class="menu-item-price">¥ 11,000</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">ハイライト / バレイヤージュ</div><div class="menu-item-desc">外国人風の立体感カラー / 180min</div></div><div class="menu-item-price">¥ 18,700</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">白髪ぼかしカラー</div><div class="menu-item-desc">伸びても気にならない設計 / 150min</div></div><div class="menu-item-price">¥ 14,300</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">リタッチカラー</div><div class="menu-item-desc">根元2cmまで / 90min</div></div><div class="menu-item-price">¥ 7,700</div></div>
+    </div>
+    <div class="menu-list reveal" id="cat-spa" style="display:none;">
+      <div class="menu-item"><div><div class="menu-item-name">髪質改善トリートメント</div><div class="menu-item-desc">酸熱×ケラチンのオーダーメイド調合 / 120min</div></div><div class="menu-item-price">¥ 16,500</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">プレミアムヘッドスパ</div><div class="menu-item-desc">個室・アロマ選択制 / 60min</div></div><div class="menu-item-price">¥ 9,900</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">クイックスパ</div><div class="menu-item-desc">施術メニューへの追加に / 20min</div></div><div class="menu-item-price">¥ 3,300</div></div>
+      <div class="menu-item"><div><div class="menu-item-name">TOKIOトリートメント</div><div class="menu-item-desc">集中補修 / 40min</div></div><div class="menu-item-price">¥ 6,600</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Stylists -->
+<section class="section alt" id="stylist">
+  <div class="section-inner">
+    <p class="section-label reveal">Stylist</p>
+    <h2 class="section-title reveal" data-i18n="stylist_title">The Artisans</h2>
+    <p class="section-title-ja reveal">あなたの髪を預かる職人たち</p>
+    <div class="section-line reveal"></div>
+    <div class="stylist-grid">
+      <div class="stylist-card reveal tilt">
+        <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=85" alt="スタイリスト"></div>
+        <div class="stylist-info">
+          <div class="stylist-role">Director / Founder</div>
+          <div class="stylist-name" data-edit="st_name1">MIKA SAIONJI</div>
+          <p class="stylist-bio" data-edit="st_bio1">パリ・Le Marais地区のメゾンで7年間研鑽。骨格補正カットとバレイヤージュの融合を得意とし、雑誌・広告のヘアメイクも手がける。</p>
+        </div>
+      </div>
+      <div class="stylist-card reveal tilt">
+        <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=600&q=85" alt="スタイリスト"></div>
+        <div class="stylist-info">
+          <div class="stylist-role">Top Stylist</div>
+          <div class="stylist-name" data-edit="st_name2">REN KATSURAGI</div>
+          <p class="stylist-bio" data-edit="st_bio2">ショート・ボブ比率9割の専門派。乾かすだけで決まる再現性を追求し、指名リピート率94%。メンズグルーミングにも対応。</p>
+        </div>
+      </div>
+      <div class="stylist-card reveal tilt">
+        <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=85" alt="スタイリスト"></div>
+        <div class="stylist-info">
+          <div class="stylist-role">Color Specialist</div>
+          <div class="stylist-name" data-edit="st_name3">AOI HIIRAGI</div>
+          <p class="stylist-bio" data-edit="st_bio3">毛髪診断士。ダメージレス薬剤の調合を専門とし、ブリーチ毛の髪質改善カラーで全国のコンテスト受賞歴多数。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section" id="gallery">
+  <div class="section-inner">
+    <p class="section-label reveal">Gallery</p>
+    <h2 class="section-title reveal" data-i18n="gallery_title">Style Archive</h2>
+    <p class="section-title-ja reveal">カテゴリで絞り込みできます</p>
+    <div class="section-line reveal"></div>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all" type="button">All</button>
+      <button class="filter-btn" data-filter="cut" type="button">Cut</button>
+      <button class="filter-btn" data-filter="color" type="button">Color</button>
+      <button class="filter-btn" data-filter="arrange" type="button">Arrange</button>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item gp-1 tilt" data-cat="color"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=85" alt="style"><span class="g-tag">Color</span></div>
+      <div class="g-item gp-2 tilt" data-cat="cut"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Cut</span></div>
+      <div class="g-item gp-3 tilt" data-cat="cut"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Cut</span></div>
+      <div class="g-item gp-4 tilt" data-cat="arrange"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Arrange</span></div>
+      <div class="g-item gp-5 tilt" data-cat="color"><img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Color</span></div>
+      <div class="g-item gp-6 tilt" data-cat="arrange"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Arrange</span></div>
+      <div class="g-item gp-7 tilt" data-cat="cut"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Cut</span></div>
+      <div class="g-item gp-8 tilt" data-cat="color"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=85" alt="style"><span class="g-tag">Color</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Voice -->
+<section class="section alt" id="voice">
+  <div class="section-inner">
+    <p class="section-label reveal">Voice</p>
+    <h2 class="section-title reveal" data-i18n="voice_title">Guest Voices</h2>
+    <p class="section-title-ja reveal">お客様の声</p>
+    <div class="section-line reveal"></div>
+    <div class="voice-grid">
+      <div class="voice-card reveal tilt">
+        <p class="voice-text" data-edit="v1">「他のサロンでは『扱いにくい』と言われ続けたくせ毛が、初めて味方になりました。朝のセットが5分で終わるなんて、革命です。」</p>
+        <div class="voice-meta">30s / Designer / 来店歴2年</div>
+      </div>
+      <div class="voice-card reveal tilt">
+        <p class="voice-text" data-edit="v2">「カウンセリングの深さが別格。仕事や普段の服装まで聞いた上で提案してくれるので、仕上がりが生活に馴染みます。」</p>
+        <div class="voice-meta">40s / Executive / 来店歴5年</div>
+      </div>
+      <div class="voice-card reveal tilt">
+        <p class="voice-text" data-edit="v3">「完全予約制で他のお客様と会わないので、心から寛げます。ヘッドスパの60分は毎月の自分へのご褒美です。」</p>
+        <div class="voice-meta">50s / Physician / 来店歴3年</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <p class="section-label reveal">FAQ</p>
+    <h2 class="section-title reveal" data-i18n="faq_title">Questions</h2>
+    <p class="section-title-ja reveal">よくあるご質問</p>
+    <div class="section-line reveal"></div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" type="button">当日予約はできますか？<span class="faq-mark">+</span></button>
+        <div class="faq-a"><p>空席があれば承ります。完全予約制のためまずはお電話またはご予約フォームからご確認ください。前日までのご予約をおすすめしております。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">駐車場はありますか？<span class="faq-mark">+</span></button>
+        <div class="faq-a"><p>専用駐車場が1台分ございます。ご予約時に「お車で来店」の旨をお伝えください。満車の場合は近隣のコインパーキングをご案内いたします。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">子ども連れでも大丈夫ですか？<span class="faq-mark">+</span></button>
+        <div class="faq-a"><p>平日限定でお子様連れ歓迎のお時間をご用意しています。個室のため周囲に気兼ねなくお過ごしいただけます。</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">支払い方法は何が使えますか？<span class="faq-mark">+</span></button>
+        <div class="faq-a"><p>現金・各種クレジットカード・交通系IC・QRコード決済（PayPay / 楽天ペイ / d払い）に対応しております。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Access -->
+<section class="section alt" id="access">
+  <div class="section-inner">
+    <p class="section-label reveal">Access</p>
+    <h2 class="section-title reveal" data-i18n="access_title">Visit Us</h2>
+    <p class="section-title-ja reveal">アクセス・営業時間</p>
+    <div class="section-line reveal"></div>
+    <div class="access-grid">
+      <div class="reveal">
+        <table class="access-table">
+          <tr><th>Address</th><td data-edit="ac_addr">東京都渋谷区神宮前 0-0-0<br>DEMO BLDG 2F（明治神宮前駅 徒歩4分）</td></tr>
+          <tr><th>Hours</th><td data-edit="ac_hours">10:00 – 20:00（最終受付 18:30）</td></tr>
+          <tr><th>Closed</th><td data-edit="ac_closed">毎週月曜・第2火曜</td></tr>
+          <tr><th>Tel</th><td data-edit="ac_tel">03-0000-0000（施術中は折り返しいたします）</td></tr>
+          <tr><th>Seats</th><td>セット面3席・完全個室スパルーム1室</td></tr>
+        </table>
+      </div>
+      <div class="access-photo reveal tilt" data-parallax="-25">
+        <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=900&q=85" alt="店舗外観">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <p class="section-label reveal">Reservation</p>
+    <h2 class="section-title reveal" data-i18n="contact_title">Book Your Seat</h2>
+    <p class="section-title-ja reveal">ご予約・お問い合わせ</p>
+    <div class="section-line reveal"></div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-lead" data-i18n="contact_lead" data-edit="ct_lead">ご予約は下記フォームまたはお電話にて承ります。初めての方は、なりたいイメージのお写真をお持ちいただくとカウンセリングがスムーズです。24時間以内にご返信いたします。</p>
+      </div>
+      <div class="reveal">
+        <!-- 本番時: action を Formspree の実IDに差し替え -->
+        <form id="reserve-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+          <div class="form-row" data-field="name">
+            <label class="form-label" for="f-name" data-i18n="f_name">お名前</label>
+            <input class="form-input" id="f-name" name="name" type="text" autocomplete="name">
+            <p class="form-error">お名前を入力してください</p>
+          </div>
+          <div class="form-row" data-field="email">
+            <label class="form-label" for="f-email" data-i18n="f_email">メールアドレス</label>
+            <input class="form-input" id="f-email" name="email" type="email" autocomplete="email">
+            <p class="form-error">正しいメールアドレスを入力してください</p>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="f-menu" data-i18n="f_menu">ご希望メニュー</label>
+            <select class="form-select" id="f-menu" name="menu">
+              <option>カット</option>
+              <option>カット + カラー</option>
+              <option>髪質改善トリートメント</option>
+              <option>ヘッドスパ</option>
+              <option>その他（メッセージに記入）</option>
+            </select>
+          </div>
+          <div class="form-row" data-field="message">
+            <label class="form-label" for="f-msg" data-i18n="f_msg">ご希望日時・メッセージ</label>
+            <textarea class="form-textarea" id="f-msg" name="message"></textarea>
+            <p class="form-error">ご希望日時をご記入ください</p>
+          </div>
+          <button class="btn-p" type="submit" style="border:none;width:100%;" data-i18n="f_submit">この内容で予約リクエストを送る</button>
+        </form>
+        <div id="form-success">
+          予約リクエストを受け付けました。<br>24時間以内に確認のご連絡を差し上げます。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">LUMIÈRE</div>
+      <p class="footer-note">完全予約制プライベートヘアサロン<br>東京都渋谷区神宮前 0-0-0 DEMO BLDG 2F<br>10:00 – 20:00 / 月曜・第2火曜 定休</p>
+    </div>
+    <div>
+      <div class="footer-h">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#concept" data-i18n="nav_concept">Concept</a></li>
+        <li><a href="#menu" data-i18n="nav_menu">Menu</a></li>
+        <li><a href="#stylist" data-i18n="nav_stylist">Stylist</a></li>
+        <li><a href="#gallery" data-i18n="nav_gallery">Gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-h">Information</div>
+      <ul class="footer-links">
+        <li><a href="#access" data-i18n="nav_access">Access</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Reserve</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <span>© 2026 LUMIÈRE hair atelier — DEMO SITE</span>
+    <span>PREMIUM PLAN / AI VIDEO × THREE.JS × CMS</span>
+  </div>
+</footer>
+
+<!-- 編集モードツールバー -->
+<div id="edit-toolbar">
+  <span>編集モード</span>
+  <button id="edit-save" class="primary" type="button">保存</button>
+  <button id="edit-reset" type="button">初期に戻す</button>
+  <button id="edit-exit" type="button">終了</button>
+</div>
+<div id="toast">保存しました</div>
+
+<script>
+/* ============================================================
+   PREMIUM PLAN — スクリプト
+   ============================================================ */
+/* ビューポート取得（innerWidthが0を返す環境向けフォールバック付き）
+   フォールバックはmatchMediaの二分探索でCSSビューポート実寸を求める */
+function mqProbe(feature, lo, hi) {
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (matchMedia('(min-' + feature + ':' + mid + 'px)').matches) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}
+const vw = () => window.innerWidth || document.documentElement.clientWidth || mqProbe('width', 200, 4096);
+const vh = () => window.innerHeight || document.documentElement.clientHeight || mqProbe('height', 200, 4096);
+/* CSSブレークポイント(900px)と必ず一致させるためmatchMediaで判定 */
+const isMobile = window.matchMedia('(max-width:900px)').matches;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── ローディング演出 ── */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('done'), reducedMotion ? 100 : 1900);
+});
+// フォールバック（load が遅延しても最大3.5秒で解除）
+setTimeout(() => document.getElementById('loader').classList.add('done'), 3500);
+
+/* ── カスタムカーソル（ポインタ環境のみ） ── */
+if (window.matchMedia('(pointer:fine)').matches && !reducedMotion) {
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = (mx - 3.5) + 'px';
+    cursor.style.top = (my - 3.5) + 'px';
+  });
+  (function loop() {
+    rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
+    ring.style.left = (rx - 17) + 'px';
+    ring.style.top = (ry - 17) + 'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.g-item,.stylist-card,input,select,textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.4)'; ring.style.transform = 'scale(1.7)'; ring.style.opacity = '0.5'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; ring.style.opacity = '1'; });
+  });
+}
+
+/* ── プログレスバー & ナビ ── */
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / Math.max(1, document.body.scrollHeight - vh()) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  nav.classList.toggle('solid', window.scrollY > 60);
+}, { passive: true });
+
+/* ── ヒーロー動画 ── */
+const heroVideo = document.getElementById('hero-video');
+if (isMobile) {
+  heroVideo.style.display = 'none'; // モバイルは通信量節約・フォールバック画像
+} else {
+  heroVideo.addEventListener('canplay', () => heroVideo.classList.add('loaded'));
+}
+
+/* ── Three.js: 金粒子 + 光のリング（alpha:true で動画の上に重ねる） ── */
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.getElementById('three-canvas'), antialias: true, alpha: true
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.0 : 2.0));
+renderer.setSize(vw(), vh());
+renderer.setClearColor(0x000000, 0);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(58, vw() / vh(), 0.1, 100);
+camera.position.set(0, 0, 5);
+
+// 光のリング×2（ゆっくり回転する高級感の演出）
+function makeRing(radius, opacity, tiltX, tiltZ) {
+  const geo = new THREE.TorusGeometry(radius, 0.012, 8, 160);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xc9a96e, transparent: true, opacity });
+  const ring = new THREE.Mesh(geo, mat);
+  ring.rotation.x = tiltX; ring.rotation.z = tiltZ;
+  scene.add(ring);
+  return ring;
+}
+const ring1 = makeRing(2.1, 0.4, Math.PI / 2.6, 0.3);
+const ring2 = makeRing(2.7, 0.22, Math.PI / 1.9, -0.5);
+
+// 金粒子（上方向へ漂う・sin波ゆらぎ）
+const pCount = isMobile ? 260 : 850;
+const pos = new Float32Array(pCount * 3);
+const speed = new Float32Array(pCount);
+const phase = new Float32Array(pCount);
+for (let i = 0; i < pCount; i++) {
+  pos[i * 3] = (Math.random() - 0.5) * 16;
+  pos[i * 3 + 1] = (Math.random() - 0.5) * 10;
+  pos[i * 3 + 2] = (Math.random() - 0.5) * 8;
+  speed[i] = 0.002 + Math.random() * 0.005;
+  phase[i] = Math.random() * Math.PI * 2;
+}
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const pMat = new THREE.PointsMaterial({
+  color: 0xe8ca8f, size: 0.035, transparent: true, opacity: 0.55,
+  blending: THREE.AdditiveBlending, depthWrite: false
+});
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+let t = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  t += 0.008;
+  ring1.rotation.y = t * 0.25;
+  ring2.rotation.y = -t * 0.18;
+  ring1.rotation.x = Math.PI / 2.6 + Math.sin(t * 0.3) * 0.08;
+  const arr = pGeo.attributes.position.array;
+  for (let i = 0; i < pCount; i++) {
+    arr[i * 3 + 1] += speed[i];                              // 上昇
+    arr[i * 3] += Math.sin(t + phase[i]) * 0.0016;           // ゆらぎ
+    if (arr[i * 3 + 1] > 5.5) arr[i * 3 + 1] = -5.5;         // ループ
+  }
+  pGeo.attributes.position.needsUpdate = true;
+  renderer.render(scene, camera);
+}
+animate();
+
+let lastMobile = isMobile;
+window.addEventListener('resize', () => {
+  camera.aspect = vw() / vh();
+  camera.updateProjectionMatrix();
+  renderer.setSize(vw(), vh());
+  // ブレークポイントを跨いだら再初期化（タブレット回転・ウィンドウリサイズ対応）
+  const nowMobile = window.matchMedia('(max-width:900px)').matches;
+  if (nowMobile !== lastMobile) { lastMobile = nowMobile; location.reload(); }
+});
+
+/* ── GSAP: スクロール演出 ── */
+gsap.registerPlugin(ScrollTrigger);
+
+if (!isMobile && !reducedMotion) {
+  // カメラがスクロールで寄る
+  gsap.to(camera.position, {
+    z: 3.4,
+    scrollTrigger: { trigger: '#scroll-spacer', start: 'top top', end: 'bottom bottom', scrub: 1.6 }
+  });
+  // ヒーローテキストがスクロールで淡く消える
+  gsap.to('#hero-overlay', {
+    opacity: 0, y: -80,
+    scrollTrigger: { trigger: '#scroll-spacer', start: 'top top', end: '+=80%', scrub: true }
+  });
+  // セクション出現（CSSがfrom状態、GSAPはtoのみ）
+  gsap.utils.toArray('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 86%', once: true }
+    });
+  });
+  // 視差（data-parallax）
+  gsap.utils.toArray('[data-parallax]').forEach(el => {
+    gsap.to(el, {
+      y: parseFloat(el.dataset.parallax),
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+    });
+  });
+} else {
+  gsap.utils.toArray('.reveal').forEach(el => gsap.set(el, { opacity: 1, y: 0 }));
+}
+
+/* ── ヒーローマウス視差（デスクトップのみ） ── */
+if (!isMobile && !reducedMotion) {
+  const ht = document.querySelector('.hero-title');
+  const hs = document.querySelector('.hero-tagline');
+  const he = document.querySelector('.hero-eyebrow');
+  document.addEventListener('mousemove', ev => {
+    const x = (ev.clientX / vw() - 0.5) * 2;
+    const y = (ev.clientY / vh() - 0.5) * 2;
+    ht.style.transform = `translate(${x * 14}px,${y * 8}px)`;
+    hs.style.transform = `translate(${x * 9}px,${y * 5}px)`;
+    he.style.transform = `translate(${x * 6}px,${y * 3}px)`;
+    camera.position.x = x * 0.18;
+    camera.position.y = -y * 0.12;
+  });
+}
+
+/* ── カード3Dティルト（デスクトップのみ） ── */
+if (!isMobile && !reducedMotion) {
+  document.querySelectorAll('.tilt').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      el.style.transition = 'transform 0.12s ease';
+      el.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 5}deg) translateY(-6px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.55s cubic-bezier(0.22,1,0.36,1)';
+      el.style.transform = '';
+    });
+  });
+}
+
+/* ── 数字カウントアップ ── */
+const counters = document.querySelectorAll('.count');
+const cObs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    cObs.unobserve(en.target);
+    const target = parseInt(en.target.dataset.count, 10);
+    const dur = 1600; const start = performance.now();
+    (function tick(now) {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      en.target.textContent = Math.round(target * eased).toLocaleString();
+      if (p < 1) requestAnimationFrame(tick);
+    })(start);
+  });
+}, { threshold: 0.4 });
+counters.forEach(c => cObs.observe(c));
+
+/* ── メニュータブ ── */
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.menu-tab').forEach(x => x.classList.remove('active'));
+    tab.classList.add('active');
+    ['cut', 'color', 'spa'].forEach(cat => {
+      document.getElementById('cat-' + cat).style.display = cat === tab.dataset.cat ? 'grid' : 'none';
+    });
+  });
+});
+
+/* ── ギャラリーフィルタ ── */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelector('.gallery-grid').classList.toggle('filtered', f !== 'all');
+    document.querySelectorAll('.g-item').forEach(item => {
+      const show = f === 'all' || item.dataset.cat === f;
+      item.classList.toggle('hide', !show);
+      if (show && !reducedMotion) gsap.fromTo(item, { opacity: 0.2 }, { opacity: 1, duration: 0.5 });
+    });
+  });
+});
+
+/* ── FAQ アコーディオン ── */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const q = item.querySelector('.faq-q');
+  const a = item.querySelector('.faq-a');
+  q.addEventListener('click', () => {
+    const open = item.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+  });
+});
+
+/* ── ダークモード切替 ── */
+const themeBtn = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('lumiere-theme');
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+function syncThemeBtn() {
+  themeBtn.textContent = document.documentElement.dataset.theme === 'dark' ? 'LIGHT' : 'DARK';
+}
+syncThemeBtn();
+themeBtn.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('lumiere-theme', next);
+  syncThemeBtn();
+});
+
+/* ── 日英切替（i18n） ── */
+const i18nEN = {
+  nav_concept: 'Concept', nav_menu: 'Menu', nav_stylist: 'Stylist',
+  nav_gallery: 'Gallery', nav_access: 'Access', nav_contact: 'Reserve',
+  hero_eyebrow: 'Private Hair Salon — Tokyo',
+  hero_tagline: 'A seat of light, reserved only for you.',
+  hero_cta1: 'Book Now', hero_cta2: 'View Menu',
+  concept_title: 'A seat, only for you.',
+  concept_p1: '<strong>We welcome only six guests a day.</strong> The lighting, the scent, the music — everything is arranged solely for the time you spend in our chair. Ninety minutes devoted to your hair, away from the noise of the city.',
+  concept_p2: 'Our stylists, trained in Paris and Tokyo, design a blueprint unique to you — built from your bone structure, hair texture and lifestyle. The result lasts far beyond the mirror: it lives in every morning after.',
+  stat_1: 'Years', stat_2: 'Satisfaction', stat_3: 'Return Rate', stat_4: 'Guests Served',
+  menu_title: 'Menu & Price',
+  stylist_title: 'The Artisans',
+  gallery_title: 'Style Archive',
+  voice_title: 'Guest Voices',
+  faq_title: 'Questions',
+  access_title: 'Visit Us',
+  contact_title: 'Book Your Seat',
+  contact_lead: 'Reservations are accepted via the form below or by phone. First-time guests are welcome to bring reference photos — it makes the counselling smoother. We reply within 24 hours.',
+  f_name: 'Name', f_email: 'Email', f_menu: 'Preferred Menu',
+  f_msg: 'Preferred Date & Message', f_submit: 'Send Reservation Request'
+};
+let i18nJA = {};
+let lang = 'ja';
+const langBtn = document.getElementById('lang-toggle');
+function captureJA() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { i18nJA[el.dataset.i18n + '@' + [...document.querySelectorAll('[data-i18n="' + el.dataset.i18n + '"]')].indexOf(el)] = el.innerHTML; });
+}
+function applyLang(next) {
+  lang = next;
+  document.documentElement.lang = next;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (next === 'en' && i18nEN[key] !== undefined) {
+      el.innerHTML = i18nEN[key];
+    } else if (next === 'ja') {
+      const idx = [...document.querySelectorAll('[data-i18n="' + key + '"]')].indexOf(el);
+      const saved = i18nJA[key + '@' + idx];
+      if (saved !== undefined) el.innerHTML = saved;
+    }
+  });
+  langBtn.textContent = next === 'ja' ? 'EN' : 'JA';
+}
+langBtn.addEventListener('click', () => applyLang(lang === 'ja' ? 'en' : 'ja'));
+
+/* ── 編集モード（管理画面デモ / localStorage永続化） ──
+   本番納品時は Next.js + Supabase の管理画面（pet-salon-template）に置き換える */
+const EDIT_KEY = 'lumiere-edits';
+function applyEdits() {
+  const saved = JSON.parse(localStorage.getItem(EDIT_KEY) || '{}');
+  Object.entries(saved).forEach(([id, html]) => {
+    const el = document.querySelector('[data-edit="' + id + '"]');
+    if (el) el.innerHTML = html;
+  });
+}
+applyEdits();
+captureJA(); // 編集適用後のJAテキストをi18n復元用に確定
+
+const editToggle = document.getElementById('edit-toggle');
+const toolbar = document.getElementById('edit-toolbar');
+const toast = document.getElementById('toast');
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+function setEditing(on) {
+  document.body.classList.toggle('editing', on);
+  editToggle.classList.toggle('active', on);
+  toolbar.classList.toggle('show', on);
+  document.querySelectorAll('[data-edit]').forEach(el => el.contentEditable = on);
+  if (on && lang === 'en') { applyLang('ja'); showToast('編集は日本語表示で行います'); }
+}
+editToggle.addEventListener('click', () => setEditing(!document.body.classList.contains('editing')));
+document.getElementById('edit-exit').addEventListener('click', () => setEditing(false));
+document.getElementById('edit-save').addEventListener('click', () => {
+  const data = {};
+  document.querySelectorAll('[data-edit]').forEach(el => { data[el.dataset.edit] = el.innerHTML; });
+  localStorage.setItem(EDIT_KEY, JSON.stringify(data));
+  captureJA();
+  setEditing(false);
+  showToast('保存しました（このブラウザに反映）');
+});
+document.getElementById('edit-reset').addEventListener('click', () => {
+  localStorage.removeItem(EDIT_KEY);
+  location.reload();
+});
+
+/* ── フォームバリデーション + 送信 ── */
+const form = document.getElementById('reserve-form');
+form.addEventListener('submit', e => {
+  let ok = true;
+  const rows = {
+    name: v => v.trim().length > 0,
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    message: v => v.trim().length > 0
+  };
+  form.querySelectorAll('.form-row[data-field]').forEach(row => {
+    const input = row.querySelector('input,textarea');
+    const valid = rows[row.dataset.field](input.value);
+    row.classList.toggle('invalid', !valid);
+    if (!valid) ok = false;
+  });
+  if (!ok) { e.preventDefault(); return; }
+  // デモ環境（FormspreeID未設定）はローカルで成功表示
+  if (form.action.includes('YOUR_FORM_ID')) {
+    e.preventDefault();
+    form.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
