@@ -1169,6 +1169,11 @@ langBtn.addEventListener('click', () => applyLang(lang === 'ja' ? 'en' : 'ja'));
 /* ── 編集モード（管理画面デモ / localStorage永続化） ──
    本番納品時は Next.js + Supabase の管理画面（pet-salon-template）に置き換える */
 const EDIT_KEY = 'lumiere-edits';
+/* 店舗系サイト必須: 料金・メニューの全フィールドを確実に編集対象にする
+   （メニュー名・説明・価格に data-edit を自動付与。DOM順で安定したIDになる） */
+document.querySelectorAll('.menu-item-name,.menu-item-desc,.menu-item-price').forEach((el, i) => {
+  if (!el.dataset.edit) el.dataset.edit = 'menu_' + i;
+});
 function applyEdits() {
   const saved = JSON.parse(localStorage.getItem(EDIT_KEY) || '{}');
   Object.entries(saved).forEach(([id, html]) => {
