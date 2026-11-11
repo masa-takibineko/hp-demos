@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>呉服橋 | 高槻</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0a06; --bg2:#151208; --gold:#c9a84c; --cream:#f5eed8;
+  --text:#ede6cc; --dim:#9a9080; --border:rgba(201,168,76,0.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(12,10,6,0.95),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
+.nav-links a:hover{opacity:1;color:var(--gold);}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:radial-gradient(ellipse at center,#1e1608 0%,#0c0a06 70%);position:relative;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 60%);}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
+  color:var(--cream);letter-spacing:0.08em;line-height:1.1;margin-bottom:1rem;}
+.hero-sub{font-size:0.85rem;color:var(--dim);letter-spacing:0.25em;margin-bottom:3rem;}
+.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
+  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;transition:all 0.3s;}
+.btn:hover{background:var(--gold);color:var(--bg);}
+.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
+.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
+.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
+  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
+.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
+.items-section{background:var(--bg2);padding:6rem 2rem;}
+.items-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;}
+.item-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
+.item-card:hover{border-color:var(--gold);}
+.item-card h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
+.item-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
+.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
+.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
+.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
+.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,168,76,0.12);
+  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
+  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
+footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr;} .nav-links{display:none;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">呉服橋</div>
+  <ul class="nav-links">
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#items">ITEMS</a></li>
+    <li><a href="#info">ACCESS</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Takatsuki</p>
+  <h1>呉服橋</h1>
+  <p class="hero-sub">高槻の街で、本物と出会う。</p>
+  <a href="#items" class="btn">商品を見る</a>
+</section>
+
+<section class="section" id="about">
+  <p class="section-label">Our Story</p>
+  <h2>選び抜かれたもの、<br>だけを。</h2>
+  <p>長年にわたって地域のお客様に愛され続けてきた呉服橋。<br>
+  本物の価値を知るお客様に、丁寧に選んだ商品をお届けしています。</p>
+</section>
+
+<div class="items-section" id="items">
+  <div style="max-width:900px;margin:0 auto;">
+    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Items</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-top:1rem;">取り扱い商品</h2>
+  </div>
+  <div class="items-grid">
+    <div class="item-card"><h3>こだわりの逸品</h3><p>厳選した商品を取り揃えております。ぜひ店頭でお手に取ってご覧ください。</p></div>
+    <div class="item-card"><h3>季節の新入荷</h3><p>定期的に新しい商品を入荷しています。お気に入りの一点をぜひ見つけてください。</p></div>
+    <div class="item-card"><h3>ギフト対応</h3><p>大切な方へのプレゼントにも。ご要望に応じてラッピング対応いたします。</p></div>
+  </div>
+</div>
+
+<section class="info-section" id="info">
+  <p class="section-label">Access</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
+  <div class="info-grid">
+    <div class="info-item"><h4>Address</h4><p>大阪府高槻市</p></div>
+    <div class="info-item"><h4>Tel</h4><p>お問い合わせはInstagramのDMまで</p></div>
+    <div class="info-item"><h4>Hours</h4><p>10:00 – 19:00</p></div>
+    <div class="info-item"><h4>Closed</h4><p>不定休</p></div>
+  </div>
+</section>
+
+<div class="demo-badge">※ Demo Page</div>
+
+<footer>
+  <p>© 呉服橋 | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
+</footer>
+</body>
+</html>

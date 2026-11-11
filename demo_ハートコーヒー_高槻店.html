@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ハートコーヒー 高槻店 | 高槻のカフェ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0b08; --bg2:#1a1310; --gold:#c9a96e; --cream:#f5f0e8;
+  --text:#ede8de; --dim:#9a8878; --border:rgba(201,169,110,0.2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(15,11,8,0.95),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
+.nav-links a:hover{opacity:1;color:var(--gold);}
+/* HERO */
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:radial-gradient(ellipse at center, #2a1f14 0%, #0f0b08 70%);
+  position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 60%, rgba(201,169,110,0.08) 0%, transparent 60%);}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
+  color:var(--cream);letter-spacing:0.05em;line-height:1.1;margin-bottom:1rem;}
+.hero-sub{font-size:0.9rem;color:var(--dim);letter-spacing:0.2em;margin-bottom:3rem;}
+.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
+  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;
+  transition:all 0.3s;}
+.btn:hover{background:var(--gold);color:var(--bg);}
+/* CONCEPT */
+.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
+.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
+.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
+  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
+.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
+/* MENU */
+.menu-section{background:var(--bg2);padding:6rem 2rem;}
+.menu-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
+.menu-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
+.menu-card:hover{border-color:var(--gold);}
+.menu-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
+.menu-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
+.menu-price{margin-top:1rem;font-size:0.8rem;color:var(--cream);letter-spacing:0.1em;}
+/* INFO */
+.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
+.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
+.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
+/* DEMO BADGE */
+.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,169,110,0.15);
+  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
+  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
+footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
+@media(max-width:600px){
+  .info-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">ハートコーヒー 高槻店</div>
+  <ul class="nav-links">
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#menu">MENU</a></li>
+    <li><a href="#info">ACCESS</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Takatsuki Coffee</p>
+  <h1>ハートコーヒー 高槻店</h1>
+  <p class="hero-sub">一杯のコーヒーが、今日を特別にする</p>
+  <a href="#info" class="btn">アクセスを見る</a>
+</section>
+
+<section class="section" id="concept">
+  <p class="section-label">Our Story</p>
+  <h2>こだわりの一杯を、<br>あなたのそばに。</h2>
+  <p>高槻の街に根ざし、毎日丁寧に淹れたコーヒーをお届けしています。<br>
+  豆の選定から抽出まで、妥協なく追い求めた味をぜひご堪能ください。</p>
+</section>
+
+<div class="menu-section" id="menu">
+  <div style="max-width:900px;margin:0 auto;">
+    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Menu</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--cream);margin-top:1rem;">おすすめメニュー</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <h3>Blend Coffee</h3>
+      <p>自家焙煎のブレンドコーヒー。深みのある味わいと豊かな香りが特徴です。</p>
+      <p class="menu-price">¥ 450〜</p>
+    </div>
+    <div class="menu-card">
+      <h3>Latte</h3>
+      <p>エスプレッソとスチームミルクのやさしい一杯。ラテアートも楽しめます。</p>
+      <p class="menu-price">¥ 550〜</p>
+    </div>
+    <div class="menu-card">
+      <h3>Single Origin</h3>
+      <p>産地にこだわった豆を使ったスペシャルティコーヒー。季節ごとに変わります。</p>
+      <p class="menu-price">¥ 650〜</p>
+    </div>
+  </div>
+</div>
+
+<section class="info-section" id="info">
+  <p class="section-label">Access</p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
+  <div class="info-grid">
+    <div class="info-item">
+      <h4>Address</h4>
+      <p>大阪府高槻市</p>
+    </div>
+    <div class="info-item">
+      <h4>Tel</h4>
+      <p>072-685-0900</p>
+    </div>
+    <div class="info-item">
+      <h4>Hours</h4>
+      <p>月〜金　10:00 – 20:00<br>土日祝　9:00 – 19:00</p>
+    </div>
+    <div class="info-item">
+      <h4>Closed</h4>
+      <p>水曜定休</p>
+    </div>
+  </div>
+</section>
+
+<div class="demo-badge">※ Demo Page</div>
+
+<footer>
+  <p>© ハートコーヒー 高槻店 | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
+</footer>
+</body>
+</html>
