@@ -3,218 +3,1020 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ハートコーヒー 高槻店</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<title>HEART COFFEE — 高槻店</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #1a0f0a;
-    --gold: #d4a853;
-    --gold-light: #e8c97a;
-    --cream: #f5f0e8;
-    --text-light: #c8bfb0;
+:root {
+  --bg:       #0d0805;
+  --bg2:      #1a0f0a;
+  --bg3:      #100a05;
+  --gold:     #c9a84c;
+  --gold-lt:  #e8cc7a;
+  --gold-dk:  #9a7a30;
+  --cream:    #f2ede4;
+  --text-dim: #a89880;
+  --border:   rgba(201,168,76,0.25);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Noto Serif JP', serif;
+  overflow-x: hidden;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.07);
+  transition: transform 12s cubic-bezier(0.25,0.46,0.45,0.94);
+  will-change: transform;
+}
+.hero-bg.loaded { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,15,10,0.87) 0%, rgba(26,15,10,0.52) 55%, rgba(13,8,5,0.68) 100%);
+}
+/* grain texture */
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+/* BIG DECORATIVE WORD */
+.hero-word {
+  position: absolute;
+  left: -0.1em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 20vw;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--gold);
+  opacity: 0.08;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+  white-space: nowrap;
+}
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+.hero-rating-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+}
+.hero-stars {
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+}
+.hero-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0.4rem 0;
+}
+.hero-name-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.hero-name-ja {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.hero-name-branch {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+.hero-tagline {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  font-weight: 300;
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+/* review counter bottom-right */
+.hero-counter {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 3;
+  text-align: right;
+}
+.counter-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+.counter-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+/* scroll arrow */
+.scroll-arrow {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  animation: bounce 2.2s ease-in-out infinite;
+  cursor: pointer;
+}
+.scroll-arrow span {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.scroll-arrow svg { opacity: 0.5; }
+@keyframes bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===================== STATS BAR ===================== */
+.stats-bar {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.stats-bar.visible { opacity: 1; transform: translateY(0); }
+.stats-inner {
+  display: flex;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 1.4rem 1rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* ===================== PHOTO ESSAY ===================== */
+.photo-essay {
+  padding: 6rem 0;
+  background: var(--bg);
+}
+.essay-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 0;
+  align-items: center;
+}
+.essay-photo {
+  overflow: hidden;
+  height: 520px;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.essay-photo.visible { opacity: 1; transform: translateX(0); }
+.essay-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+.essay-photo:hover img { transform: scale(1.04); }
+.essay-text {
+  padding: 4rem 5rem;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+}
+.essay-text.visible { opacity: 1; transform: translateX(0); }
+.essay-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.essay-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 60px;
+}
+.essay-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+.essay-body {
+  font-size: 0.88rem;
+  line-height: 2;
+  color: var(--text-dim);
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+.essay-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.essay-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--cream);
+}
+.essay-info-item .ic {
+  color: var(--gold);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.1em;
+  flex-shrink: 0;
+  min-width: 2rem;
+}
+
+/* ===================== GALLERY ===================== */
+.gallery {
+  padding: 6rem 2rem;
+  background: var(--bg3);
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.section-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+}
+.gallery-grid {
+  display: grid;
+  max-width: 1100px;
+  margin: 0 auto;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 260px 260px;
+  gap: 6px;
+}
+.g-item {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.g-item:nth-child(1) { grid-column: 1 / 6;  grid-row: 1 / 2; }
+.g-item:nth-child(2) { grid-column: 6 / 9;  grid-row: 1 / 2; }
+.g-item:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 2; }
+.g-item:nth-child(4) { grid-column: 1 / 5;  grid-row: 2 / 3; }
+.g-item:nth-child(5) { grid-column: 5 / 13; grid-row: 2 / 3; }
+.g-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.g-item:hover img { transform: scale(1.06); }
+.g-overlay {
+  position: absolute; inset: 0;
+  background: rgba(201,168,76,0.0);
+  transition: background 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.g-item:hover .g-overlay { background: rgba(201,168,76,0.18); }
+.g-overlay-icon {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  color: white;
+  font-size: 1.5rem;
+}
+.g-item:hover .g-overlay-icon { opacity: 1; transform: scale(1); }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.open { display: flex; }
+.lb-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.lb-inner img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+  border: 1px solid var(--border);
+}
+.lb-close {
+  position: absolute;
+  top: -2.5rem; right: 0;
+  color: var(--gold);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  background: none;
+  border: none;
+  font-family: 'Cormorant Garamond', serif;
+}
+.lb-prev, .lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(201,168,76,0.15);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+  z-index: 2;
+}
+.lb-prev { left: -55px; }
+.lb-next { right: -55px; }
+.lb-prev:hover, .lb-next:hover { background: rgba(201,168,76,0.3); }
+.lb-counter {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+/* ===================== HOURS ===================== */
+.hours {
+  padding: 6rem 2rem;
+  background: var(--bg3);
+}
+.hours-table-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+}
+.hours-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.hours-table thead tr {
+  background: rgba(201,168,76,0.08);
+}
+.hours-table th {
+  padding: 1rem 1.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 400;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.hours-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+.hours-table tr:last-child td { border-bottom: none; }
+.hours-table tr.today td {
+  color: var(--gold-lt);
+  background: rgba(201,168,76,0.05);
+  font-weight: 400;
+}
+.today-badge {
+  display: inline-block;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  background: var(--gold);
+  color: var(--bg);
+  padding: 0.15em 0.5em;
+  margin-left: 0.6rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+/* ===================== ACCESS ===================== */
+.access {
+  padding: 6rem 2rem;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.access-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 5rem;
+  align-items: center;
+}
+.access-info {}
+.access-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.access-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+.access-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.access-detail-item {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  align-items: flex-start;
+}
+.access-detail-item .label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  padding-top: 0.2em;
+  min-width: 2.8rem;
+  flex-shrink: 0;
+}
+.access-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2rem;
+  background: var(--gold);
+  color: var(--bg);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: background 0.2s, color 0.2s;
+  font-family: 'Noto Serif JP', serif;
+}
+.btn-primary:hover { background: var(--gold-lt); }
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2rem;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: 'Noto Serif JP', serif;
+}
+.btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+.access-deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.access-circle {
+  width: 320px;
+  height: 320px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+.access-circle::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 50%;
+}
+.access-cid-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.access-rating-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+.access-stars-big {
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  font-size: 1rem;
+}
+.access-reviews {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+}
+.footer-copy {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+}
+.footer-copy a { color: var(--gold-dk); text-decoration: none; }
+.footer-copy a:hover { color: var(--gold); }
+
+/* ===================== DEMO BADGE ===================== */
+.demo-badge {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  background: rgba(13,8,5,0.9);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  padding: 0.4em 0.75em;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .hero-word { font-size: 40vw; opacity: 0.06; }
+  .essay-row { grid-template-columns: 1fr; }
+  .essay-photo { height: 300px; transform: translateX(0) translateY(20px); }
+  .essay-text { padding: 2.5rem 1.8rem; transform: translateX(0) translateY(20px); }
+  .essay-text.visible, .essay-photo.visible { transform: translateX(0) translateY(0); }
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--cream); font-family: 'Noto Serif JP', serif; overflow-x: hidden; }
+  .g-item { grid-column: auto !important; grid-row: auto !important; height: 160px; }
+  .hours-table th, .hours-table td { padding: 0.8rem 1rem; font-size: 0.82rem; }
+  .access-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .access-circle { width: 240px; height: 240px; }
+  .stats-inner { flex-wrap: wrap; }
+  .stat-item { flex: 1 1 50%; border-right: none; border-bottom: 1px solid var(--border); }
+  .lb-prev { left: -38px; }
+  .lb-next { right: -38px; }
+}
 
-  /* HERO */
-  .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
-    background-size: cover; background-position: center;
-    transform: scale(1.08); transition: transform 10s ease;
-  }
-  .hero-bg.zoomed { transform: scale(1); }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,15,10,0.88) 0%, rgba(26,15,10,0.55) 60%, rgba(40,20,10,0.75) 100%); }
-  .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
-  .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 1s 0.4s forwards; }
-  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.0; color: var(--cream); margin-bottom: 0.4rem; opacity: 0; animation: fadeUp 1s 0.7s forwards; }
-  .hero-name em { font-style: italic; color: var(--gold); }
-  .hero-jp { font-size: clamp(1rem, 2.5vw, 1.3rem); letter-spacing: 0.3em; color: var(--text-light); margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 1s 1s forwards; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 0.8rem; background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.5); padding: 0.7rem 1.8rem; border-radius: 100px; opacity: 0; animation: fadeUp 1s 1.3s forwards; }
-  .stars { color: var(--gold); letter-spacing: 0.05em; }
-  .rating-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); }
-  .review-cnt { font-size: 0.82rem; color: var(--text-light); }
-  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeIn 1s 2s forwards; }
-  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
-  .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold)); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-  /* GALLERY SLIDER */
-  .gallery { padding: 6rem 2rem; background: #110a06; }
-  .sec-head { text-align: center; margin-bottom: 3rem; }
-  .sec-eyebrow { font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 0.8rem; }
-  .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.5rem); color: var(--cream); }
-  .slider-wrap { position: relative; max-width: 920px; margin: 0 auto; border-radius: 2px; overflow: hidden; box-shadow: 0 25px 70px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,168,83,0.15); }
-  .slider-track { display: flex; transition: transform 0.75s cubic-bezier(0.77,0,0.175,1); }
-  .slide { min-width: 100%; aspect-ratio: 16/9; overflow: hidden; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-  .slide img:hover { transform: scale(1.03); }
-  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(26,15,10,0.72); border: 1px solid rgba(212,168,83,0.6); color: var(--gold); width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 10; }
-  .s-btn:hover { background: var(--gold); color: var(--bg); }
-  .s-btn.prev { left: 1.2rem; } .s-btn.next { right: 1.2rem; }
-  .s-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(212,168,83,0.3); cursor: pointer; transition: all 0.3s; }
-  .dot.active { background: var(--gold); transform: scale(1.5); }
-
-  /* INFO */
-  .info { padding: 6rem 2rem; background: var(--bg); }
-  .info-cards { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  @media (max-width: 600px) { .info-cards { grid-template-columns: 1fr; } }
-  .i-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(212,168,83,0.18); padding: 2rem 2rem 1.8rem; border-radius: 2px; transition: border-color 0.4s, transform 0.4s; }
-  .i-card:hover { border-color: rgba(212,168,83,0.5); transform: translateY(-4px); }
-  .i-card .ico { font-size: 1.6rem; margin-bottom: 1rem; }
-  .i-card h3 { font-size: 0.7rem; letter-spacing: 0.45em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; }
-  .i-card p { color: var(--text-light); line-height: 1.9; font-size: 0.93rem; }
-  .i-btn { display: inline-block; margin-top: 1.1rem; padding: 0.5rem 1.3rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.18em; border-radius: 1px; transition: all 0.3s; }
-  .i-btn:hover { background: var(--gold); color: var(--bg); }
-
-  /* HOURS */
-  .hours { padding: 6rem 2rem; background: #0d0806; }
-  .h-wrap { max-width: 580px; margin: 0 auto; }
-  .h-table { width: 100%; border-collapse: collapse; }
-  .h-table tr { border-bottom: 1px solid rgba(212,168,83,0.1); transition: background 0.3s; }
-  .h-table tr:hover { background: rgba(212,168,83,0.04); }
-  .h-table td { padding: 1.1rem 0.5rem; font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
-  .h-table td:first-child { color: var(--gold); font-weight: 700; min-width: 110px; }
-
-  /* CTA */
-  .cta { padding: 7rem 2rem; background: linear-gradient(135deg, #2d1507 0%, #1a0f0a 60%); text-align: center; }
-  .cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); color: var(--cream); margin-bottom: 1.2rem; }
-  .cta p { color: var(--text-light); margin-bottom: 2.5rem; line-height: 1.9; max-width: 480px; margin-inline: auto; }
-  .cta-btn { display: inline-block; padding: 1.1rem 3rem; background: var(--gold); color: var(--bg); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.15em; font-weight: 700; border-radius: 1px; transition: all 0.35s; }
-  .cta-btn:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 10px 35px rgba(212,168,83,0.45); }
-
-  /* FOOTER */
-  footer { background: #080503; padding: 2.2rem 2rem; text-align: center; border-top: 1px solid rgba(212,168,83,0.12); }
-  footer p { color: rgba(200,191,176,0.45); font-size: 0.8rem; }
-  footer a { color: var(--gold); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
-  /* DEMO BADGE */
-  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.78); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; letter-spacing: 0.08em; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  .fade-in-up { opacity:0; transform:translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-  .fade-in-up.visible { opacity:1; transform:translateY(0); }
-  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; } .fade-in-up.d3 { transition-delay: 0.3s; }
+@media (max-width: 480px) {
+  .hero-counter { bottom: 5rem; right: 1rem; }
+  .hero-name-ja { font-size: 2.4rem; }
+  .access-buttons { gap: 0.8rem; }
+  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+}
 </style>
 </head>
 <body>
 
-<section class="hero">
+<!-- HERO -->
+<section class="hero" id="top">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-word" aria-hidden="true">HEART</div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Takatsuki, Osaka — Since Est.</p>
-    <h1 class="hero-name">Heart<em>Coffee</em></h1>
-    <p class="hero-jp">ハートコーヒー 高槻店</p>
-    <div class="hero-badge">
-      <span class="stars">★★★★☆</span>
-      <span class="rating-num">4.4</span>
-      <span class="review-cnt">（112件のレビュー）</span>
+    <div class="hero-rating-top">
+      <span class="hero-stars">★ ★ ★ ★</span>
+      <span>4.4 / 5.0</span>
     </div>
+    <div class="hero-line"></div>
+    <div class="hero-name-en">Heart Coffee</div>
+    <h1 class="hero-name-ja">ハートコーヒー</h1>
+    <div class="hero-name-branch">高 槻 店</div>
+    <p class="hero-tagline">— コーヒーの深さへ、あなたを誘う —</p>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
+  <div class="hero-counter">
+    <span class="counter-num" id="reviewCount">0</span>
+    <span class="counter-label">Reviews on Google</span>
+  </div>
+  <div class="scroll-arrow" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
     <span>Scroll</span>
+    <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 1V21M9 21L1 13M9 21L17 13" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </section>
 
-<section class="gallery">
-  <div class="sec-head fade-in-up">
-    <span class="sec-eyebrow">Gallery</span>
-    <h2 class="sec-title">店内の風景</h2>
-  </div>
-  <div class="slider-wrap fade-in-up d1">
-    <div class="slider-track" id="sliderTrack">
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="ハートコーヒー写真1" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
+<!-- STATS BAR -->
+<section class="stats-bar" id="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-val">★ 4.4</span>
+      <span class="stat-label">Google Rating</span>
     </div>
-    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
-    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
-  </div>
-  <div class="s-dots" id="sliderDots"></div>
-</section>
-
-<section class="info">
-  <div class="sec-head fade-in-up">
-    <span class="sec-eyebrow">Information</span>
-    <h2 class="sec-title">店舗情報</h2>
-  </div>
-  <div class="info-cards">
-    <div class="i-card fade-in-up d1">
-      <div class="ico">&#128205;</div>
-      <h3>アクセス</h3>
-      <p>大阪府高槻市高槻町１２−７</p>
-      <a href="https://maps.google.com/?cid=2778037305847829364" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
+    <div class="stat-item">
+      <span class="stat-val">112</span>
+      <span class="stat-label">口コミ件数</span>
     </div>
-    <div class="i-card fade-in-up d2">
-      <div class="ico">&#128222;</div>
-      <h3>お電話</h3>
-      <p>072-685-0900</p>
-      <a href="tel:0726850900" class="i-btn">電話をかける</a>
+    <div class="stat-item">
+      <span class="stat-val">10:00 — 19:00</span>
+      <span class="stat-label">平日営業時間</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val">高槻市高槻町</span>
+      <span class="stat-label">Location</span>
     </div>
   </div>
 </section>
 
-<section class="hours">
-  <div class="sec-head fade-in-up">
-    <span class="sec-eyebrow">Hours</span>
-    <h2 class="sec-title">営業時間</h2>
+<!-- PHOTO ESSAY -->
+<section class="photo-essay" id="about">
+  <div class="essay-row">
+    <div class="essay-photo" id="essayPhoto">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="ハートコーヒー 店内" loading="lazy">
+    </div>
+    <div class="essay-text" id="essayText">
+      <div class="essay-eyebrow">About Us</div>
+      <h2 class="essay-heading">Googleマップにて<br>112件の口コミ<br>★ 4.4 の評価</h2>
+      <p class="essay-body">
+        地域のコーヒー愛好家から高い支持を集める、高槻の隠れた一杯。<br>
+        豆の選定から抽出まで、一杯一杯に向き合い続けています。
+      </p>
+      <div class="essay-info">
+        <div class="essay-info-item">
+          <span class="ic">ADDR</span>
+          <span>大阪府高槻市高槻町１２−７</span>
+        </div>
+        <div class="essay-info-item">
+          <span class="ic">TEL</span>
+          <span>072-685-0900</span>
+        </div>
+        <div class="essay-info-item">
+          <span class="ic">TIME</span>
+          <span>月〜金 10:00–19:00&emsp;土日 10:00–18:00</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="h-wrap fade-in-up d1">
-    <table class="h-table">
-      <tr><td>月〜金</td><td>10:00 〜 19:00</td></tr>
-      <tr><td>土・日</td><td>10:00 〜 18:00</td></tr>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-header">
+    <div class="section-eyebrow">Photo Gallery</div>
+    <h2 class="section-title">The Space</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item" data-index="0">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="Gallery 1" loading="lazy">
+      <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
+    </div>
+    <div class="g-item" data-index="1">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="Gallery 2" loading="lazy">
+      <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
+    </div>
+    <div class="g-item" data-index="2">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="Gallery 3" loading="lazy">
+      <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
+    </div>
+    <div class="g-item" data-index="3">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="Gallery 4" loading="lazy">
+      <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
+    </div>
+    <div class="g-item" data-index="4">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="Gallery 5" loading="lazy">
+      <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lb-inner">
+    <button class="lb-close" id="lbClose" aria-label="閉じる">&times;</button>
+    <button class="lb-prev" id="lbPrev" aria-label="前の写真">&#8592;</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-next" id="lbNext" aria-label="次の写真">&#8594;</button>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+</div>
+
+<!-- HOURS -->
+<section class="hours" id="hours">
+  <div class="section-header">
+    <div class="section-eyebrow">Business Hours</div>
+    <h2 class="section-title">営 業 時 間</h2>
+  </div>
+  <div class="hours-table-wrap">
+    <table class="hours-table" id="hoursTable">
+      <thead>
+        <tr>
+          <th>曜日</th>
+          <th>Day</th>
+          <th>営業時間</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-day="1"><td>月曜日</td><td>Monday</td><td>10:00 — 19:00</td><td></td></tr>
+        <tr data-day="2"><td>火曜日</td><td>Tuesday</td><td>10:00 — 19:00</td><td></td></tr>
+        <tr data-day="3"><td>水曜日</td><td>Wednesday</td><td>10:00 — 19:00</td><td></td></tr>
+        <tr data-day="4"><td>木曜日</td><td>Thursday</td><td>10:00 — 19:00</td><td></td></tr>
+        <tr data-day="5"><td>金曜日</td><td>Friday</td><td>10:00 — 19:00</td><td></td></tr>
+        <tr data-day="6"><td>土曜日</td><td>Saturday</td><td>10:00 — 18:00</td><td></td></tr>
+        <tr data-day="0"><td>日曜日</td><td>Sunday</td><td>10:00 — 18:00</td><td></td></tr>
+      </tbody>
     </table>
   </div>
 </section>
 
-<section class="cta">
-  <div class="fade-in-up">
-    <h2>お気軽にご連絡ください</h2>
-    <p>ご来店・お問い合わせはお電話にてお気軽にどうぞ。<br>スタッフ一同、心よりお待ちしております。</p>
-    <a href="tel:0726850900" class="cta-btn">072-685-0900</a>
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div class="access-inner">
+    <div class="access-info">
+      <div class="access-eyebrow">Access &amp; Contact</div>
+      <h2 class="access-name">ハートコーヒー<br>高槻店</h2>
+      <div class="access-detail">
+        <div class="access-detail-item">
+          <span class="label">住所</span>
+          <span>大阪府高槻市高槻町１２−７</span>
+        </div>
+        <div class="access-detail-item">
+          <span class="label">電話</span>
+          <span>072-685-0900</span>
+        </div>
+        <div class="access-detail-item">
+          <span class="label">時間</span>
+          <span>平日 10:00–19:00&emsp;土日 10:00–18:00</span>
+        </div>
+      </div>
+      <div class="access-buttons">
+        <a href="https://maps.google.com/?cid=2778037305847829364" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M7 1C4.24 1 2 3.24 2 6c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+          Googleマップで見る
+        </a>
+        <a href="https://www.instagram.com/heartcoffeetakatsuki" target="_blank" rel="noopener" class="btn-outline">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.2"/><circle cx="10.5" cy="3.5" r="0.7" fill="currentColor"/></svg>
+          @heartcoffeetakatsuki
+        </a>
+      </div>
+    </div>
+    <div class="access-deco">
+      <div class="access-circle">
+        <span class="access-cid-label">Google Rating</span>
+        <span class="access-rating-big">4.4</span>
+        <span class="access-stars-big">★ ★ ★ ★</span>
+        <span class="access-reviews">112 Reviews</span>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p>&copy; ハートコーヒー 高槻店 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+  <div class="footer-logo">Heart Coffee</div>
+  <p class="footer-copy">
+    &copy; ハートコーヒー 高槻店 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a>
+  </p>
 </footer>
 
+<!-- DEMO BADGE -->
 <div class="demo-badge">※ Demo Page</div>
 
 <script>
-  window.addEventListener('load', () => { document.getElementById('heroBg').classList.add('zoomed'); });
+// --- Hero bg load ---
+window.addEventListener('load', () => {
+  document.getElementById('heroBg').classList.add('loaded');
+});
 
-  let cur = 0, total = 5;
-  const track = document.getElementById('sliderTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  for (let i = 0; i < total; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dotsWrap.appendChild(d);
-  }
-  function goTo(n) {
-    cur = (n + total) % total;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  }
-  function changeSlide(dir) { goTo(cur + dir); }
-  setInterval(() => changeSlide(1), 3800);
+// --- Counter animation ---
+function animateCounter(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target; clearInterval(timer); }
+    else { el.textContent = Math.floor(start); }
+  }, 16);
+}
+const counterEl = document.getElementById('reviewCount');
+let counted = false;
+const heroObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !counted) {
+      counted = true;
+      animateCounter(counterEl, 112, 1800);
+    }
+  });
+});
+heroObs.observe(counterEl);
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+// --- Stats bar fade in ---
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.3 });
+statsObs.observe(document.getElementById('stats'));
+
+// --- Photo essay slide in ---
+const elemObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.getElementById('essayPhoto') && elemObs.observe(document.getElementById('essayPhoto'));
+document.getElementById('essayText') && elemObs.observe(document.getElementById('essayText'));
+
+// --- Hours table: today highlight ---
+const today = new Date().getDay();
+document.querySelectorAll('#hoursTable tbody tr').forEach(tr => {
+  if (parseInt(tr.dataset.day) === today) {
+    tr.classList.add('today');
+    const lastTd = tr.querySelector('td:last-child');
+    lastTd.innerHTML = '<span class="today-badge">Today</span>';
+  }
+});
+
+// --- Gallery lightbox ---
+const photos = [
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg'
+];
+let lbIndex = 0;
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCounter = document.getElementById('lbCounter');
+
+function openLb(i) {
+  lbIndex = i;
+  lbImg.src = photos[i];
+  lbCounter.textContent = `${i+1} / ${photos.length}`;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function moveLb(dir) {
+  lbIndex = (lbIndex + dir + photos.length) % photos.length;
+  lbImg.src = photos[lbIndex];
+  lbCounter.textContent = `${lbIndex+1} / ${photos.length}`;
+}
+document.querySelectorAll('.g-item').forEach(item => {
+  item.addEventListener('click', () => openLb(parseInt(item.dataset.index)));
+});
+document.getElementById('lbClose').addEventListener('click', closeLb);
+document.getElementById('lbPrev').addEventListener('click', () => moveLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => moveLb(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') moveLb(-1);
+  if (e.key === 'ArrowRight') moveLb(1);
+});
 </script>
 </body>
 </html>

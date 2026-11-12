@@ -3,203 +3,763 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>珈琲屋ほっぺ</title>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<title>珈琲屋ほっぺ — 高槻市</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #faf6f0;
-    --terra: #c4663c;
-    --terra-dark: #a0522d;
-    --terra-light: #e88a62;
-    --warm: #f0e8dc;
-    --text: #3a2318;
-    --muted: #8a6e5c;
+:root {
+  --bg:       #faf6f0;
+  --bg2:      #f3ece1;
+  --bg-dark:  #2e1c0e;
+  --terra:    #c05530;
+  --terra-lt: #e07050;
+  --terra-dk: #9a3f20;
+  --terra-pale: #f0d5c8;
+  --warm:     #ede4d8;
+  --text:     #2e1c0e;
+  --muted:    #8a7060;
+  --border:   rgba(192,85,48,0.18);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcq3vvfQZC_5LBj5nVIEuYNufq24kVkyepIzx4H08qMnwDvjkxKeJgWM623FXI0xdA92SK8rgbhQnzB7TAmfw_rh_OKO7iIRuvGEo8tviJLAPpzNHuU25RVZK9Smo-ama3l_STwzIepjyfan-ELSCkB8F7_0TIYNkVJaMX_uoBbRUliC-rzCEP-5ZxuRL52AEiNvg42qEBBct-yZVB3lc1DtgCyyMbIu0L_YKXiGJxg7LeVcYPN6z1Swbv8qwGN-pr3n93T01QFlVdMwmAkCo-QBtD4fvf49w2TVyQJXYVnlpvHIShWuv6whYyJO4Y3_q4YGuChUETpUgXT78WGCmpQx6_2Hh2RK-6PNzF8oDzC5ApuQn_xUk6KjiYs1vdsUumZpK-md5xaSnQh0-U6b1zt9xSKZbM&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+  background-size: cover;
+  background-position: center;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(46,28,14,0.72) 0%, rgba(46,28,14,0.42) 50%, rgba(46,28,14,0.60) 100%);
+}
+/* organic blob behind the circle */
+.hero-blob {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(192,85,48,0.18) 0%, transparent 70%);
+  border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+  animation: morphBlob 10s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes morphBlob {
+  0%   { border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%; transform: translate(-50%,-50%) rotate(0deg); }
+  50%  { border-radius: 45% 55% 65% 35% / 60% 40% 55% 45%; transform: translate(-50%,-50%) rotate(4deg); }
+  100% { border-radius: 55% 45% 40% 60% / 50% 50% 50% 50%; transform: translate(-50%,-50%) rotate(-3deg); }
+}
+/* central circle */
+.hero-circle-wrap {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-circle {
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: rgba(250,246,240,0.13);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(250,246,240,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+}
+.hero-circle::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(250,246,240,0.12);
+}
+.hero-subtext {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: rgba(250,246,240,0.7);
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.hero-name {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: clamp(2rem, 5.5vw, 3.2rem);
+  font-weight: 500;
+  color: #faf6f0;
+  line-height: 1.4;
+  text-align: center;
+  letter-spacing: 0.15em;
+}
+.hero-stars {
+  color: var(--terra-lt);
+  letter-spacing: 0.1em;
+  font-size: 1rem;
+}
+.hero-rating {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: rgba(250,246,240,0.9);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+/* Wave divider */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -2px;
+}
+.wave-divider svg { display: block; }
+
+/* ===================== STATUS BANNER ===================== */
+.status-banner {
+  padding: 1.2rem 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  transition: background 0.4s;
+}
+.status-banner.open  { background: var(--terra); color: #fff; }
+.status-banner.closed { background: #bbb; color: #fff; }
+.status-icon {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.status-banner.open .status-icon   { background: #fff; animation: pulse 2s ease-in-out infinite; }
+.status-banner.closed .status-icon { background: #888; }
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* ===================== ABOUT ===================== */
+.about {
+  padding: 7rem 2rem;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.about-bg-num {
+  position: absolute;
+  left: -0.1em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28vw;
+  font-weight: 300;
+  color: var(--terra);
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  letter-spacing: -0.05em;
+}
+.about-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.about-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--terra);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.about-eyebrow::before, .about-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--border);
+}
+.about-rating-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 2.5rem;
+}
+.about-stars-line {
+  color: var(--terra);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.about-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--terra), transparent);
+  margin: 2rem auto;
+}
+.about-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
+}
+.about-info-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.about-info-row .lbl {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra-dk);
+  padding-top: 0.2em;
+  min-width: 2.5rem;
+  flex-shrink: 0;
+}
+
+/* ===================== PHOTO COLLAGE ===================== */
+.collage {
+  padding: 5rem 2rem;
+  background: var(--bg2);
+}
+.collage-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.section-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--terra);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.collage-grid {
+  display: grid;
+  grid-template-areas:
+    "big  s1  s2"
+    "big  s3  s3";
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 280px 280px;
+  gap: 8px;
+}
+.cg-big { grid-area: big; }
+.cg-s1  { grid-area: s1; }
+.cg-s2  { grid-area: s2; }
+.cg-s3  { grid-area: s3; }
+
+.cg-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.cg-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.cg-item:hover img { transform: scale(1.06); }
+.cg-hover {
+  position: absolute; inset: 0;
+  background: rgba(192,85,48,0.0);
+  transition: background 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+.cg-item:hover .cg-hover { background: rgba(192,85,48,0.35); }
+.cg-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0);
+  transition: color 0.3s;
+  line-height: 1;
+}
+.cg-item:hover .cg-num { color: rgba(255,255,255,0.8); }
+
+/* ===================== HOURS ===================== */
+.hours {
+  padding: 6rem 2rem;
+  background: var(--bg);
+}
+.hours-cards {
+  display: flex;
+  gap: 10px;
+  max-width: 900px;
+  margin: 2.5rem auto 0;
+  flex-wrap: nowrap;
+}
+.day-card {
+  flex: 1;
+  border-radius: 8px;
+  padding: 1.2rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 0;
+}
+.day-card.closed-day {
+  background: #e8e2da;
+  color: #9a9090;
+}
+.day-card.weekday {
+  background: var(--terra);
+  color: #fff;
+}
+.day-card.sunday {
+  background: #e88a62;
+  color: #fff;
+}
+.day-card.today-card {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(192,85,48,0.35);
+  z-index: 1;
+  position: relative;
+}
+.day-card .day-name {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  opacity: 0.85;
+}
+.day-card .day-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  font-weight: 400;
+  line-height: 1.3;
+}
+.day-card .closed-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+.today-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 0.15em 0.5em;
+  align-self: center;
+  display: none;
+}
+.today-card .today-label { display: block; }
+
+/* ===================== ACCESS ===================== */
+.access {
+  padding: 6rem 2rem;
+  background: var(--bg-dark);
+  color: #faf6f0;
+}
+.access-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+.access-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--terra-lt);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.access-name {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 500;
+  color: #faf6f0;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+.access-info-block {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.access-info-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.access-info-col .lbl {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terra-lt);
+}
+.access-info-col .val {
+  font-size: 0.95rem;
+  color: rgba(250,246,240,0.85);
+  font-weight: 300;
+}
+.access-sep {
+  width: 1px;
+  background: rgba(250,246,240,0.1);
+  align-self: stretch;
+}
+.access-buttons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-terra {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 2.5rem;
+  background: var(--terra);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  border-radius: 2px;
+  transition: background 0.2s;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+}
+.btn-terra:hover { background: var(--terra-lt); }
+.btn-terra-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 2.5rem;
+  border: 1px solid rgba(192,85,48,0.5);
+  color: var(--terra-lt);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  border-radius: 2px;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+}
+.btn-terra-outline:hover { border-color: var(--terra-lt); background: rgba(192,85,48,0.1); }
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: var(--bg-dark);
+  border-top: 1px solid rgba(250,246,240,0.08);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--terra-lt);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.15em;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: rgba(250,246,240,0.4);
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+}
+.footer-copy a { color: var(--terra); text-decoration: none; }
+.footer-copy a:hover { color: var(--terra-lt); }
+
+/* ===================== DEMO BADGE ===================== */
+.demo-badge {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  background: rgba(46,28,14,0.9);
+  border: 1px solid rgba(192,85,48,0.4);
+  color: var(--terra-lt);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  padding: 0.4em 0.75em;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .hero-circle { width: 280px; height: 280px; }
+  .hero-name { font-size: 1.8rem; }
+  .collage-grid {
+    grid-template-areas:
+      "big big"
+      "s1  s2"
+      "s3  s3";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 240px 160px 160px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
-
-  /* HERO */
-  .hero { position: relative; height: 100vh; min-height: 580px; display: flex; align-items: flex-end; overflow: hidden; }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcq3vvfQZC_5LBj5nVIEuYNufq24kVkyepIzx4H08qMnwDvjkxKeJgWM623FXI0xdA92SK8rgbhQnzB7TAmfw_rh_OKO7iIRuvGEo8tviJLAPpzNHuU25RVZK9Smo-ama3l_STwzIepjyfan-ELSCkB8F7_0TIYNkVJaMX_uoBbRUliC-rzCEP-5ZxuRL52AEiNvg42qEBBct-yZVB3lc1DtgCyyMbIu0L_YKXiGJxg7LeVcYPN6z1Swbv8qwGN-pr3n93T01QFlVdMwmAkCo-QBtD4fvf49w2TVyQJXYVnlpvHIShWuv6whYyJO4Y3_q4YGuChUETpUgXT78WGCmpQx6_2Hh2RK-6PNzF8oDzC5ApuQn_xUk6KjiYs1vdsUumZpK-md5xaSnQh0-U6b1zt9xSKZbM&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
-    background-size: cover; background-position: center;
-  }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(58,35,24,0.9) 0%, rgba(58,35,24,0.4) 50%, rgba(58,35,24,0.1) 100%); }
-  .hero-content { position: relative; z-index: 2; padding: 3rem 3rem 4rem; width: 100%; max-width: 900px; margin: 0 auto; }
-  .hero-tag { display: inline-block; background: var(--terra); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; opacity: 0; animation: slideLeft 0.9s 0.3s forwards; }
-  .hero-name { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 1rem; opacity: 0; animation: slideLeft 0.9s 0.6s forwards; }
-  .hero-stars { display: flex; align-items: center; gap: 1rem; opacity: 0; animation: slideLeft 0.9s 0.9s forwards; }
-  .star-row { color: var(--terra-light); font-size: 1.3rem; }
-  .r-score { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 2rem; font-weight: 800; color: #fff; }
-  .r-cnt { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
-
-  /* GALLERY GRID */
-  .gallery { padding: 5rem 2rem; background: var(--warm); }
-  .sec-label { font-size: 0.72rem; letter-spacing: 0.45em; color: var(--terra); text-transform: uppercase; display: block; margin-bottom: 0.6rem; }
-  .sec-title { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.3rem); font-weight: 800; color: var(--text); margin-bottom: 2.5rem; }
-  .slider-wrap { position: relative; max-width: 900px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(58,35,24,0.18); }
-  .slider-track { display: flex; transition: transform 0.65s cubic-bezier(0.68,-0.55,0.27,1.55); }
-  .slide { min-width: 100%; aspect-ratio: 4/3; overflow: hidden; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
-  .slide img:hover { transform: scale(1.04); }
-  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; color: var(--terra); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-  .s-btn:hover { background: var(--terra); color: #fff; transform: translateY(-50%) scale(1.1); }
-  .s-btn.prev { left: 1rem; } .s-btn.next { right: 1rem; }
-  .s-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(196,102,60,0.25); cursor: pointer; transition: all 0.3s; }
-  .dot.active { background: var(--terra); transform: scale(1.3); }
-
-  /* INFO */
-  .info { padding: 5rem 2rem; background: var(--bg); }
-  .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; } }
-  .i-card { background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(58,35,24,0.07); transition: transform 0.3s, box-shadow 0.3s; }
-  .i-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(58,35,24,0.14); }
-  .i-card .ico { width: 44px; height: 44px; background: rgba(196,102,60,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
-  .i-card h3 { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--terra); text-transform: uppercase; font-weight: 700; margin-bottom: 0.7rem; }
-  .i-card p { color: var(--muted); line-height: 1.8; font-size: 0.93rem; }
-  .i-btn { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.3rem; background: var(--terra); color: #fff; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; border-radius: 100px; font-weight: 700; transition: all 0.3s; }
-  .i-btn:hover { background: var(--terra-dark); transform: translateY(-1px); }
-
-  /* HOURS */
-  .hours { padding: 5rem 2rem; background: var(--warm); }
-  .hours-inner { max-width: 580px; margin: 0 auto; }
-  .h-table { width: 100%; border-collapse: collapse; }
-  .h-table tr { border-bottom: 1px solid rgba(196,102,60,0.12); }
-  .h-table tr:hover { background: rgba(196,102,60,0.04); }
-  .h-table td { padding: 1rem 0.5rem; font-size: 0.95rem; color: var(--muted); }
-  .h-table td:first-child { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 700; color: var(--terra); min-width: 110px; }
-  .closed-tag { display: inline-block; background: rgba(196,102,60,0.1); color: var(--terra); font-size: 0.72rem; padding: 0.15rem 0.6rem; border-radius: 100px; font-weight: 700; }
-
-  /* CTA */
-  .cta { padding: 6rem 2rem; background: var(--terra); text-align: center; }
-  .cta h2 { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1rem; }
-  .cta p { color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; line-height: 1.9; max-width: 440px; margin-inline: auto; }
-  .cta-btn { display: inline-block; padding: 1rem 2.8rem; background: #fff; color: var(--terra); text-decoration: none; font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 1rem; font-weight: 800; border-radius: 100px; transition: all 0.3s; letter-spacing: 0.05em; }
-  .cta-btn:hover { background: var(--warm); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-
-  /* FOOTER */
-  footer { background: var(--text); padding: 2rem; text-align: center; }
-  footer p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
-  footer a { color: var(--terra-light); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-
-  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.75); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); }
-
-  @keyframes slideLeft { from { opacity:0; transform:translateX(-30px); } to { opacity:1; transform:translateX(0); } }
-  .fade-in-up { opacity:0; transform:translateY(35px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in-up.visible { opacity:1; transform:translateY(0); }
-  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; }
+  .hours-cards { flex-wrap: wrap; gap: 8px; }
+  .day-card { flex: 1 1 calc(50% - 4px); min-width: calc(50% - 4px); }
+  .day-card.today-card { transform: scale(1.05); }
+  .access-info-block { gap: 1.5rem; }
+  .access-sep { display: none; }
+  .access-buttons { flex-direction: column; align-items: center; }
+  .btn-terra, .btn-terra-outline { width: 100%; max-width: 320px; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .hero-circle { width: 220px; height: 220px; }
+  .hero-name { font-size: 1.5rem; letter-spacing: 0.1em; }
+  .about-rating-line { font-size: 1.5rem; }
+}
 </style>
 </head>
 <body>
 
-<section class="hero">
+<!-- HERO -->
+<section class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-tag">Takatsuki, Osaka</span>
-    <h1 class="hero-name">珈琲屋<br>ほっぺ</h1>
-    <div class="hero-stars">
-      <span class="star-row">★★★★★</span>
-      <span class="r-score">4.7</span>
-      <span class="r-cnt">（53件のレビュー）</span>
+  <div class="hero-blob"></div>
+  <div class="hero-circle-wrap">
+    <div class="hero-circle">
+      <span class="hero-subtext">Since Takatsuki</span>
+      <div class="hero-name">珈琲屋<br>ほっぺ</div>
+      <div class="hero-stars">★ ★ ★ ★ ★</div>
+      <div class="hero-rating">4.7 / 5.0</div>
     </div>
   </div>
 </section>
 
-<section class="gallery">
-  <div class="fade-in-up">
-    <span class="sec-label">Gallery</span>
-    <h2 class="sec-title">店内の風景</h2>
-  </div>
-  <div class="slider-wrap fade-in-up d1">
-    <div class="slider-track" id="sliderTrack">
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcq3vvfQZC_5LBj5nVIEuYNufq24kVkyepIzx4H08qMnwDvjkxKeJgWM623FXI0xdA92SK8rgbhQnzB7TAmfw_rh_OKO7iIRuvGEo8tviJLAPpzNHuU25RVZK9Smo-ama3l_STwzIepjyfan-ELSCkB8F7_0TIYNkVJaMX_uoBbRUliC-rzCEP-5ZxuRL52AEiNvg42qEBBct-yZVB3lc1DtgCyyMbIu0L_YKXiGJxg7LeVcYPN6z1Swbv8qwGN-pr3n93T01QFlVdMwmAkCo-QBtD4fvf49w2TVyQJXYVnlpvHIShWuv6whYyJO4Y3_q4YGuChUETpUgXT78WGCmpQx6_2Hh2RK-6PNzF8oDzC5ApuQn_xUk6KjiYs1vdsUumZpK-md5xaSnQh0-U6b1zt9xSKZbM&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="珈琲屋ほっぺ写真1" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfzdWIloFLvoP1U6aOGQ8PZJAMYY2FcufPF1UyCAlDBQ9ULd50EFY276o1vjYQPdBmQS8dQB23vwX13xucWpbwDB4aJ7Nq9uEkZH9wCxCLGlQnRdloOSmH_u9oi3K48iFJpSzcLafWipjRsBD11-Khc5Djio5ptOzL5a-DUqM27YOGPfQ24Iziz1fGjLJ7XGZW9FMJVOS_4CRe19L4QNZgl7iMdyrqcNDb3XpEr8efzMJMlf1k0zqD8s9KPQ8JwCM4JzM4mH_qtq_x9SIyCu_wMHghqtnNZHEAE98a19f5aaM4k-JnjXoeyN66Vo1ki6gCVL1x_FRUyIVDnFrV1QxKs9-jBtLVCbqmPyjPJvhc9uiYTfmbUfd9s15NGr53Lqis8BFvtFBRtztFj4tqVClmTnEZMlrk&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeEZqj-5kx-n9S8tnO2p4YlnJDWbt7TzYaocbjKYkdPHsPBP8rdxxBTGUGM--QWbTlRLOxiuabFqjQ3WODUVxBI6w-THGQ0eqxRxsYpz0JUE0zYGvN8Z0yS6VOjIXDlLuMpoy-pTOyOi4Gbd2EYz70D5t5GrKJhDJ7jNJJu5fWf4ecFlwjMCraKiWkkdkdxxwHFYRNFWFIwq0krac1xewmDS4Q3FxAc2WJclU7iNFJjkyBcEcqh5Gppfj_88CiajiJBz0nNLbkFenis3qL417KWe6haUCv5L9PffQqA2wuV_G-5cxj8aezrBZ_5mx0kTnoWvXq6sKqPXTkstud9lZWqgGIJwD8UY3gKyLMh1zP5zm-6KdBB7jqfQyBIJWym9gVRHoFEYpz6ugF5XRdwEZLYe12e6hvD2cRL3QCcBIod&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLddnCbJ9LA0fsOMxcGtS7uaAyuQibzh1jxdxgoyE0n9SgyDrbV_STd-InoHBdkcx-CVX2CeWpDv04sog42nChg9-z9tOj6NdWJKaWd5kW6vTgouuqSLAvBAnVVmMeQu5ln7SafA73-i4rhcv8DPbNYNnUJUvA2I_qnrfECWTeSw35UoC5eQhcpN9RIkGWVhQZCiDBQVuVcwxdxNl7Fn5EajE2x21vjIBtZLny7zJFc8ZbeIkihQ0GJwzlviAn_rAeXLNrbadLwMw5MDsEMjaHC_-KBe4mxVxqELPyYvGb2quVF_C_bGHYjxR7SB3LXWAuaoUiCdbi7fifh9nuHcHGXf3MWArwPkj2WBP4l6WSKczCVftMLBXaiuAT7okAG2V0sqKb-9f3gaJ0GLPRoJxDqAtpKTRMMaQSYQn5j2ihB8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcIjipoHEIWt2sudhJ1IjozN98TeAO-PI61uKaPk2R0ng472wbXowiTMaqIEj5cZfrjmwaFIhSMhLzvfAct4MQY1At_OrkZbDtF2Wj-IGMBxgKUZFmcUMBxQI19vqm4A-jeqTUpb79HTd-VQoh7HITuvkizVW4XTDKQRUKKAJgjBqoVInP6KyeZC2dIMWeMKH3mCrPfskHaZpcgOk1XPq0g782rUh3xm71NEvLMSdC1ZbZnZ4dQLbd-OJyIRJS8AFaSnHyfBL8a09r4SSHdBJidvs4dfYERT8EHIebCwK2d64eYFlpdoEG7XPLV3xmg6YFkrZ9Vr0hiUauyHHz6yIQlevUpglP9MHekULx1W12yWBxkZu_NpCaRn8Q0nCmWvZ4kP58bhed0SWa2SgnQ0SurlqJH&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
-    </div>
-    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
-    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
-  </div>
-  <div class="s-dots" id="sliderDots"></div>
-</section>
+<!-- WAVE TRANSITION -->
+<div class="wave-divider" style="background:#faf6f0;">
+  <svg viewBox="0 0 1440 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:54px;display:block;">
+    <path d="M0,0 C240,54 480,54 720,27 C960,0 1200,0 1440,27 L1440,0 Z" fill="#2e1c0e"/>
+  </svg>
+</div>
 
-<section class="info">
-  <div class="fade-in-up" style="max-width:900px;margin:0 auto 3rem;">
-    <span class="sec-label">Information</span>
-    <h2 class="sec-title">店舗情報</h2>
-  </div>
-  <div class="info-inner">
-    <div class="i-card fade-in-up d1">
-      <div class="ico">&#128205;</div>
-      <h3>アクセス</h3>
-      <p>大阪府高槻市野見町３−４<br>井上ビル２F</p>
-      <a href="https://maps.google.com/?cid=13911791282864964227" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
+<!-- STATUS BANNER -->
+<div class="status-banner" id="statusBanner">
+  <span class="status-icon" id="statusIcon"></span>
+  <span id="statusText">読み込み中...</span>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-bg-num" aria-hidden="true">53</div>
+  <div class="about-inner">
+    <div class="about-eyebrow">About</div>
+    <div class="about-rating-line">
+      <span class="about-stars-line">★ ★ ★ ★ ★</span>
+      ★ 4.7 / 5.0 — Googleマップにて<br>
+      53件のご評価をいただいています
     </div>
-    <div class="i-card fade-in-up d2">
-      <div class="ico">&#128222;</div>
-      <h3>お電話</h3>
-      <p>072-648-3750</p>
-      <a href="tel:0726483750" class="i-btn">電話をかける</a>
+    <div class="about-divider"></div>
+    <div class="about-info">
+      <div class="about-info-row">
+        <span class="lbl">住所</span>
+        <span>大阪府高槻市野見町３−４ 井上ビル２F</span>
+      </div>
+      <div class="about-info-row">
+        <span class="lbl">電話</span>
+        <span>072-648-3750</span>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="hours">
-  <div class="fade-in-up" style="max-width:580px;margin:0 auto 3rem;">
-    <span class="sec-label">Hours</span>
-    <h2 class="sec-title">営業時間</h2>
-  </div>
-  <div class="hours-inner fade-in-up d1">
-    <table class="h-table">
-      <tr><td><span class="closed-tag">定休</span> 月曜日</td><td>—</td></tr>
-      <tr><td>火〜土</td><td>9:00 〜 16:30</td></tr>
-      <tr><td>日</td><td>10:00 〜 16:30</td></tr>
-    </table>
+<!-- PHOTO COLLAGE -->
+<section class="collage" id="photos">
+  <div class="collage-inner">
+    <div class="section-eyebrow">Gallery</div>
+    <h2 class="section-title">Our Space</h2>
+    <div class="collage-grid">
+      <div class="cg-item cg-big">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfzdWIloFLvoP1U6aOGQ8PZJAMYY2FcufPF1UyCAlDBQ9ULd50EFY276o1vjYQPdBmQS8dQB23vwX13xucWpbwDB4aJ7Nq9uEkZH9wCxCLGlQnRdloOSmH_u9oi3K48iFJpSzcLafWipjRsBD11-Khc5Djio5ptOzL5a-DUqM27YOGPfQ24Iziz1fGjLJ7XGZW9FMJVOS_4CRe19L4QNZgl7iMdyrqcNDb3XpEr8efzMJMlf1k0zqD8s9KPQ8JwCM4JzM4mH_qtq_x9SIyCu_wMHghqtnNZHEAE98a19f5aaM4k-JnjXoeyN66Vo1ki6gCVL1x_FRUyIVDnFrV1QxKs9-jBtLVCbqmPyjPJvhc9uiYTfmbUfd9s15NGr53Lqis8BFvtFBRtztFj4tqVClmTnEZMlrk&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内 1" loading="lazy">
+        <div class="cg-hover"><span class="cg-num">01</span></div>
+      </div>
+      <div class="cg-item cg-s1">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeEZqj-5kx-n9S8tnO2p4YlnJDWbt7TzYaocbjKYkdPHsPBP8rdxxBTGUGM--QWbTlRLOxiuabFqjQ3WODUVxBI6w-THGQ0eqxRxsYpz0JUE0zYGvN8Z0yS6VOjIXDlLuMpoy-pTOyOi4Gbd2EYz70D5t5GrKJhDJ7jNJJu5fWf4ecFlwjMCraKiWkkdkdxxwHFYRNFWFIwq0krac1xewmDS4Q3FxAc2WJclU7iNFJjkyBcEcqh5Gppfj_88CiajiJBz0nNLbkFenis3qL417KWe6haUCv5L9PffQqA2wuV_G-5cxj8aezrBZ_5mx0kTnoWvXq6sKqPXTkstud9lZWqgGIJwD8UY3gKyLMh1zP5zm-6KdBB7jqfQyBIJWym9gVRHoFEYpz6ugF5XRdwEZLYe12e6hvD2cRL3QCcBIod&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内 2" loading="lazy">
+        <div class="cg-hover"><span class="cg-num">02</span></div>
+      </div>
+      <div class="cg-item cg-s2">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLddnCbJ9LA0fsOMxcGtS7uaAyuQibzh1jxdxgoyE0n9SgyDrbV_STd-InoHBdkcx-CVX2CeWpDv04sog42nChg9-z9tOj6NdWJKaWd5kW6vTgouuqSLAvBAnVVmMeQu5ln7SafA73-i4rhcv8DPbNYNnUJUvA2I_qnrfECWTeSw35UoC5eQhcpN9RIkGWVhQZCiDBQVuVcwxdxNl7Fn5EajE2x21vjIBtZLny7zJFc8ZbeIkihQ0GJwzlviAn_rAeXLNrbadLwMw5MDsEMjaHC_-KBe4mxVxqELPyYvGb2quVF_C_bGHYjxR7SB3LXWAuaoUiCdbi7fifh9nuHcHGXf3MWArwPkj2WBP4l6WSKczCVftMLBXaiuAT7okAG2V0sqKb-9f3gaJ0GLPRoJxDqAtpKTRMMaQSYQn5j2ihB8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内 3" loading="lazy">
+        <div class="cg-hover"><span class="cg-num">03</span></div>
+      </div>
+      <div class="cg-item cg-s3">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcIjipoHEIWt2sudhJ1IjozN98TeAO-PI61uKaPk2R0ng472wbXowiTMaqIEj5cZfrjmwaFIhSMhLzvfAct4MQY1At_OrkZbDtF2Wj-IGMBxgKUZFmcUMBxQI19vqm4A-jeqTUpb79HTd-VQoh7HITuvkizVW4XTDKQRUKKAJgjBqoVInP6KyeZC2dIMWeMKH3mCrPfskHaZpcgOk1XPq0g782rUh3xm71NEvLMSdC1ZbZnZ4dQLbd-OJyIRJS8AFaSnHyfBL8a09r4SSHdBJidvs4dfYERT8EHIebCwK2d64eYFlpdoEG7XPLV3xmg6YFkrZ9Vr0hiUauyHHz6yIQlevUpglP9MHekULx1W12yWBxkZu_NpCaRn8Q0nCmWvZ4kP58bhed0SWa2SgnQ0SurlqJH&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内 4" loading="lazy">
+        <div class="cg-hover"><span class="cg-num">04</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="fade-in-up">
-    <h2>お気軽にご連絡ください</h2>
-    <p>ご来店・お問い合わせはお電話にてお気軽にどうぞ。<br>スタッフ一同、心よりお待ちしております。</p>
-    <a href="tel:0726483750" class="cta-btn">072-648-3750</a>
+<!-- HOURS -->
+<section class="hours" id="hours">
+  <div style="max-width:900px;margin:0 auto;">
+    <div class="section-eyebrow">Business Hours</div>
+    <h2 class="section-title">営 業 時 間</h2>
+    <div class="hours-cards" id="hoursCards">
+      <!-- JS generates cards -->
+    </div>
   </div>
 </section>
 
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div class="access-inner">
+    <div class="access-eyebrow">Access &amp; Contact</div>
+    <h2 class="access-name">珈琲屋ほっぺ</h2>
+    <div class="access-info-block">
+      <div class="access-info-col">
+        <span class="lbl">住所</span>
+        <span class="val">大阪府高槻市野見町３−４ 井上ビル２F</span>
+      </div>
+      <div class="access-sep"></div>
+      <div class="access-info-col">
+        <span class="lbl">電話</span>
+        <span class="val">072-648-3750</span>
+      </div>
+      <div class="access-sep"></div>
+      <div class="access-info-col">
+        <span class="lbl">定休日</span>
+        <span class="val">毎週月曜日</span>
+      </div>
+    </div>
+    <div class="access-buttons">
+      <a href="https://maps.google.com/?cid=13911791282864964227" target="_blank" rel="noopener" class="btn-terra">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M7 1C4.24 1 2 3.24 2 6c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+        Googleマップで見る
+      </a>
+      <a href="https://www.instagram.com/coffeeyahoppe" target="_blank" rel="noopener" class="btn-terra-outline">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.2"/><circle cx="10.5" cy="3.5" r="0.7" fill="currentColor"/></svg>
+        @coffeeyahoppe へ DM
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <p>&copy; 珈琲屋ほっぺ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+  <div class="footer-logo">珈琲屋ほっぺ</div>
+  <p class="footer-copy">
+    &copy; 珈琲屋ほっぺ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a>
+  </p>
 </footer>
 
+<!-- DEMO BADGE -->
 <div class="demo-badge">※ Demo Page</div>
 
 <script>
-  let cur = 0, total = 5;
-  const track = document.getElementById('sliderTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  for (let i = 0; i < total; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dotsWrap.appendChild(d);
-  }
-  function goTo(n) {
-    cur = (n + total) % total;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  }
-  function changeSlide(dir) { goTo(cur + dir); }
-  setInterval(() => changeSlide(1), 3600);
+// ---- Status Banner ----
+(function() {
+  const days   = ['日','月','火','水','木','金','土'];
+  const today  = new Date();
+  const dow    = today.getDay(); // 0=Sun, 1=Mon
+  const banner = document.getElementById('statusBanner');
+  const text   = document.getElementById('statusText');
+  const icon   = document.getElementById('statusIcon');
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+  // Mon (1) = closed, Tue-Sat (2-6) 9:00-16:30, Sun (0) 10:00-16:30
+  if (dow === 1) {
+    banner.classList.add('closed');
+    text.textContent = '本日は定休日です（月曜）';
+  } else {
+    const openH  = dow === 0 ? 10 : 9;
+    const openM  = 0;
+    const closeH = 16;
+    const closeM = 30;
+    const h = today.getHours();
+    const m = today.getMinutes();
+    const nowMin  = h * 60 + m;
+    const openMin = openH * 60 + openM;
+    const clsMin  = closeH * 60 + closeM;
+    if (nowMin >= openMin && nowMin < clsMin) {
+      banner.classList.add('open');
+      const closeStr = `${closeH}:${String(closeM).padStart(2,'0')}`;
+      text.textContent = `本日営業中  ${openH}:00 〜 ${closeStr}`;
+    } else {
+      banner.classList.add('closed');
+      text.textContent = '本日は営業時間外です';
+    }
+  }
+})();
+
+// ---- Hours Cards ----
+(function() {
+  const container = document.getElementById('hoursCards');
+  const today = new Date().getDay(); // 0=Sun
+  const defs = [
+    { dow: 0, name: '日', en: 'Sun', time: '10:00\n16:30', cls: 'sunday' },
+    { dow: 1, name: '月', en: 'Mon', time: null,            cls: 'closed-day' },
+    { dow: 2, name: '火', en: 'Tue', time: '9:00\n16:30',  cls: 'weekday' },
+    { dow: 3, name: '水', en: 'Wed', time: '9:00\n16:30',  cls: 'weekday' },
+    { dow: 4, name: '木', en: 'Thu', time: '9:00\n16:30',  cls: 'weekday' },
+    { dow: 5, name: '金', en: 'Fri', time: '9:00\n16:30',  cls: 'weekday' },
+    { dow: 6, name: '土', en: 'Sat', time: '9:00\n16:30',  cls: 'weekday' },
+  ];
+  defs.forEach(d => {
+    const card = document.createElement('div');
+    card.className = `day-card ${d.cls}${d.dow === today ? ' today-card' : ''}`;
+    if (d.time) {
+      const [open, close] = d.time.split('\n');
+      card.innerHTML = `
+        <span class="day-name">${d.name} <small>${d.en}</small></span>
+        <span class="day-time">${open}<br>—<br>${close}</span>
+        <span class="today-label">Today</span>`;
+    } else {
+      card.innerHTML = `
+        <span class="day-name">${d.name} <small>${d.en}</small></span>
+        <span class="closed-label">定休日</span>
+        <span class="today-label">Today</span>`;
+    }
+    container.appendChild(card);
+  });
+})();
 </script>
 </body>
 </html>

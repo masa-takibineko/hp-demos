@@ -3,227 +3,662 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>プースカフェ高槻</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<title>プースカフェ 高槻</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fffcf7;
-    --coral: #e8835a;
-    --coral-dark: #d06640;
-    --teal: #4a9b8f;
-    --teal-dark: #357a70;
-    --text: #2d2520;
-    --muted: #857a73;
-    --light: #f5ede6;
+    --coral: #e07a5f;
+    --coral-dark: #c4634a;
+    --coral-pale: #f2c4b7;
+    --navy: #1b2a4a;
+    --navy-dark: #111d35;
+    --navy-pale: #4a6fa5;
+    --cream: #fdfaf6;
+    --text: #2a2018;
+    --muted: #8a7d73;
+    --light: #f5ede7;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
+  body { background: var(--cream); color: var(--text); font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
 
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.4s, box-shadow 0.4s; }
-  nav.scrolled { background: rgba(255,252,247,0.95); box-shadow: 0 2px 20px rgba(0,0,0,0.08); backdrop-filter: blur(8px); }
-  .nav-logo { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--coral); letter-spacing: 0.05em; }
-  .nav-logo span { color: var(--teal); }
-  .nav-tel { font-family: 'Poppins', sans-serif; font-size: 0.85rem; color: var(--text); font-weight: 600; text-decoration: none; transition: color 0.3s; }
-  .nav-tel:hover { color: var(--coral); }
-
-  /* HERO */
-  .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfRba02i-Ba8u8DdTT6wSOlXHSHSwouEY6qQ-HB1e2wAE9P_Tru94ndWKvy0jcUYg0JSEAzQtbM810I8PAg90Z3w8t8iBMNjkEDCD0hxcA2Y_d9svSfiqwJxnw3ZhwwGKqnsfQkjWUhQdBqI76juhICWKPZ0NjUMjsKOLAEzKPhNIld5QHUmchNbCvu49xtJDFn2IUyoGoDWD6tJ_9vxLvs0vmhI1lAY11szAGX7L5x7Pc6V1JPQxFQa4Ee3VzP9l6FZWemFrSJdGsFw871_FKD5n-6SYsLdUB7j9RbJp6hewmqUUQRGLfS92NAqsds293IFDb3M0aVTXRvdhhAXq6BsmG_y8jrviAdyWjhEQt41JscSSBIPmWlSIJdD3PJphNv2WZtyUrV9ZU_Kr9GmBKUnBNJ55E&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
-    background-size: cover; background-position: center;
+  /* ===== HERO — DIAGONAL SPLIT ===== */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    overflow: hidden;
   }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,252,247,0.9) 0%, rgba(255,252,247,0.6) 50%, rgba(74,155,143,0.4) 100%); }
-  .hero-content { position: relative; z-index: 2; padding: 2rem; max-width: 700px; }
-  .h-pill { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--coral); color: #fff; font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; padding: 0.4rem 1.1rem; border-radius: 100px; margin-bottom: 1.5rem; opacity: 0; animation: popIn 0.6s 0.2s forwards; }
-  .h-pill span { opacity: 0.7; }
-  .h-name { font-family: 'Poppins', sans-serif; font-size: clamp(2.2rem, 6vw, 5rem); font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 0.4rem; opacity: 0; animation: popIn 0.6s 0.5s forwards; }
-  .h-name .accent { color: var(--coral); } .h-name .accent2 { color: var(--teal); }
-  .h-jp { font-size: clamp(0.9rem, 2vw, 1.1rem); color: var(--muted); letter-spacing: 0.15em; margin-bottom: 2rem; opacity: 0; animation: popIn 0.6s 0.8s forwards; }
-  .h-rating-wrap { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.9); padding: 0.7rem 1.3rem; border-radius: 100px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); opacity: 0; animation: popIn 0.6s 1.1s forwards; }
-  .stars-c { color: var(--coral); font-size: 1rem; }
-  .r-score { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); }
-  .r-cnt { font-size: 0.8rem; color: var(--muted); }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfRba02i-Ba8u8DdTT6wSOlXHSHSwouEY6qQ-HB1e2wAE9P_Tru94ndWKvy0jcUYg0JSEAzQtbM810I8PAg90Z3w8t8iBMNjkEDCD0hxcA2Y_d9svSfiqwJxnw3ZhwwGKqnsfQkjWUhQdBqI76juhICWKPZ0NjUMjsKOLAEzKPhNIld5QHUmchNbCvu49xtJDFn2IUyoGoDWD6tJ_9vxLvs0vmhI1lAY11szAGX7L5x7Pc6V1JPQxFQa4Ee3VzP9l6FZWemFrSJdGsFw871_FKD5n-6SYsLdUB7j9RbJp6hewmqUUQRGLfS92NAqsds293IFDb3M0aVTXRvdhhAXq6BsmG_y8jrviAdyWjhEQt41JscSSBIPmWlSIJdD3PJphNv2WZtyUrV9ZU_Kr9GmBKUnBNJ55E&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-size: cover;
+    background-position: center;
+  }
+  /* 斜め分割: 左上コーラル */
+  .hero-overlay-lunch {
+    position: absolute;
+    inset: 0;
+    background: rgba(224,122,95,0.72);
+    clip-path: polygon(0 0, 55% 0, 35% 100%, 0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 6vw;
+  }
+  .hero-overlay-lunch-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.1em;
+    writing-mode: horizontal-tb;
+    padding-top: 10vh;
+  }
+  /* 斜め分割: 右下ネイビー */
+  .hero-overlay-dinner {
+    position: absolute;
+    inset: 0;
+    background: rgba(27,42,74,0.75);
+    clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-right: 6vw;
+    padding-bottom: 12vh;
+  }
+  .hero-overlay-dinner-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.1em;
+  }
+  /* 中央タイトル */
+  .hero-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+  }
+  .hero-center h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .hero-center p {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+  /* 斜めの境界線 */
+  .hero-divider {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .hero-divider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(55% - 1px);
+    width: 2px;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    transform: rotate(-15deg) scaleX(1);
+    transform-origin: top center;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.9; } }
 
-  /* GALLERY */
-  .gallery { padding: 6rem 2rem; background: var(--light); }
-  .g-head { margin-bottom: 2.5rem; }
-  .g-label { font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4em; color: var(--coral); text-transform: uppercase; display: block; margin-bottom: 0.5rem; }
-  .g-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: var(--text); }
-  .slider-wrap { position: relative; max-width: 900px; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
-  .slider-track { display: flex; transition: transform 0.65s cubic-bezier(0.4,0,0.2,1); }
-  .slide { min-width: 100%; aspect-ratio: 4/3; overflow: hidden; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
-  .slide img:hover { transform: scale(1.04); }
-  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.95); border: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--text); box-shadow: 0 4px 15px rgba(0,0,0,0.12); transition: all 0.3s; z-index: 10; }
-  .s-btn:hover { background: var(--coral); color: #fff; transform: translateY(-50%) scale(1.1); }
-  .s-btn.prev { left: 1rem; } .s-btn.next { right: 1rem; }
-  .s-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 1.2rem; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(232,131,90,0.25); cursor: pointer; transition: all 0.3s; }
-  .dot.active { background: var(--coral); transform: scale(1.3); }
+  /* ===== S2: HOURS CARDS ===== */
+  .hours-section {
+    padding: 5rem 0;
+    background: var(--cream);
+  }
+  .hours-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .hours-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .section-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .hours-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .hours-card {
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border-radius: 4px;
+  }
+  .hours-card:hover { transform: translateY(-4px); }
+  .hours-card.lunch {
+    background: var(--coral);
+    color: #fff;
+    box-shadow: 0 8px 40px rgba(224,122,95,0.25);
+  }
+  .hours-card.lunch.active-now {
+    box-shadow: 0 8px 60px rgba(224,122,95,0.5);
+    transform: translateY(-6px) scale(1.02);
+  }
+  .hours-card.dinner {
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 8px 40px rgba(27,42,74,0.25);
+  }
+  .hours-card.dinner.active-now {
+    box-shadow: 0 8px 60px rgba(27,42,74,0.5);
+    transform: translateY(-6px) scale(1.02);
+  }
+  .hours-card::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 60%;
+    height: 160%;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .card-type {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.6rem;
+  }
+  .card-time {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .card-days {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+  .active-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.25rem 0.8rem;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+  }
+  .closed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0.6rem 1.5rem;
+    background: #fff;
+    color: var(--coral);
+    border: 2px solid var(--coral-pale);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-family: 'Poppins', sans-serif;
+  }
+  .closed-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+  }
 
-  /* INFO */
-  .info { padding: 5rem 2rem; background: var(--bg); }
-  .info-cards { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 600px) { .info-cards { grid-template-columns: 1fr; } }
-  .i-card { border-radius: 16px; padding: 2rem; transition: transform 0.3s, box-shadow 0.3s; }
-  .i-card.c1 { background: var(--coral); color: #fff; }
-  .i-card.c2 { background: var(--teal); color: #fff; }
-  .i-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
-  .i-card h3 { font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.8rem; }
-  .i-card p { line-height: 1.8; font-size: 0.93rem; }
-  .i-btn { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.3rem; background: rgba(255,255,255,0.2); color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 600; border-radius: 100px; letter-spacing: 0.08em; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.4); font-family: 'Poppins', sans-serif; }
-  .i-btn:hover { background: rgba(255,255,255,0.35); transform: translateY(-1px); }
+  /* ===== S3: PHOTO GRID ===== */
+  .grid-section {
+    background: var(--light);
+    padding: 5rem 0;
+  }
+  .grid-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .grid-header { text-align: center; margin-bottom: 2.5rem; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+  }
+  .photo-item {
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .photo-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .photo-item:hover img { transform: scale(1.06); }
+  .photo-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--coral);
+    opacity: 0;
+    transition: opacity 0.4s;
+    mix-blend-mode: multiply;
+    border-radius: 4px;
+  }
+  .photo-item:hover::after { opacity: 0.4; }
 
-  /* HOURS */
-  .hours { padding: 5rem 2rem; background: var(--light); }
-  .h-wrap { max-width: 600px; margin: 0 auto; }
-  .h-table { width: 100%; border-collapse: collapse; }
-  .h-table tr { border-bottom: 1px solid rgba(232,131,90,0.12); transition: background 0.3s; }
-  .h-table tr:hover { background: rgba(232,131,90,0.04); }
-  .h-table td { padding: 1.1rem 0.5rem; font-size: 0.95rem; color: var(--muted); }
-  .h-table td:first-child { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--text); min-width: 100px; }
-  .closed-tag { display: inline-block; background: var(--coral); color: #fff; font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: 100px; font-weight: 600; font-family: 'Poppins', sans-serif; }
+  /* ===== S4: INFO ===== */
+  .info-section {
+    padding: 6rem 0;
+    background: var(--cream);
+  }
+  .info-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .rating-block {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 3rem;
+  }
+  .rating-stars {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .star {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+  .rating-score {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--coral);
+    line-height: 1;
+  }
+  .rating-count {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .info-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    text-align: left;
+    margin-top: 2rem;
+  }
+  .info-item-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .info-item-val {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .info-item-val a {
+    color: var(--coral-dark);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s;
+  }
+  .info-item-val a:hover { color: var(--navy); }
+  .map-btn {
+    display: inline-block;
+    margin-top: 2.5rem;
+    padding: 1rem 2.8rem;
+    background: var(--coral);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .map-btn:hover { background: var(--coral-dark); transform: translateY(-2px); }
 
-  /* CTA */
-  .cta { padding: 6rem 2rem; background: var(--teal); text-align: center; }
-  .cta h2 { font-family: 'Poppins', sans-serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 700; color: #fff; margin-bottom: 1rem; }
-  .cta p { color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; line-height: 1.8; max-width: 440px; margin-inline: auto; }
-  .cta-btn { display: inline-block; padding: 1rem 2.8rem; background: #fff; color: var(--teal); text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; border-radius: 100px; transition: all 0.3s; letter-spacing: 0.08em; }
-  .cta-btn:hover { background: var(--light); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-
-  /* FOOTER */
-  footer { background: var(--text); padding: 2rem; text-align: center; }
-  footer p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
-  footer a { color: var(--coral); text-decoration: none; }
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--coral);
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    line-height: 2;
+  }
+  footer p:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.25em;
+    margin-bottom: 0.4rem;
+  }
+  footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
-  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.75); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); }
+  /* ===== DEMO BADGE ===== */
+  .demo-badge {
+    position: fixed;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    background: rgba(27,42,74,0.9);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.65rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    z-index: 9999;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+  }
 
-  @keyframes popIn { from { opacity:0; transform:scale(0.92) translateY(16px); } to { opacity:1; transform:scale(1) translateY(0); } }
-  .fade-in-up { opacity:0; transform:translateY(35px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in-up.visible { opacity:1; transform:translateY(0); }
-  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; }
+  /* ===== FADE IN ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero-overlay-lunch-label { font-size: 10vw; padding-top: 5vh; }
+    .hero-overlay-dinner-label { font-size: 10vw; }
+    .hours-cards { grid-template-columns: 1fr; }
+    .photo-grid { grid-template-columns: 1fr; }
+    .photo-item img { height: 55vw; }
+    .info-box { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    .hours-card { padding: 2rem 1.5rem; }
+    .hero-center h1 { font-size: 5.5vw; }
+  }
 </style>
 </head>
 <body>
 
-<nav id="mainNav">
-  <div class="nav-logo">Pus<span>Cafe</span></div>
-  <a href="tel:0726758200" class="nav-tel">072-675-8200</a>
-</nav>
-
+<!-- ===== HERO ===== -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="h-pill">&#127881; Takatsuki, Osaka</span>
-    <h1 class="h-name"><span class="accent">Pus</span><span class="accent2">Cafe</span><br>高槻</h1>
-    <p class="h-jp">プースカフェ高槻 — 城北町</p>
-    <div class="h-rating-wrap">
-      <span class="stars-c">★★★★★</span>
-      <span class="r-score">4.6</span>
-      <span class="r-cnt">（25件のレビュー）</span>
+  <div class="hero-overlay-lunch">
+    <span class="hero-overlay-lunch-label">LUNCH</span>
+  </div>
+  <div class="hero-overlay-dinner">
+    <span class="hero-overlay-dinner-label">DINNER</span>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-center">
+    <h1>プースカフェ 高槻</h1>
+    <p>Poos Cafe Takatsuki</p>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- ===== S2: HOURS CARDS ===== -->
+<section class="hours-section">
+  <div class="hours-inner">
+    <div class="hours-header fade-in">
+      <p class="section-label">Opening Hours</p>
+      <h2 class="section-title">ランチとディナー、2つの顔</h2>
+    </div>
+    <div class="hours-cards fade-in">
+      <div class="hours-card lunch" id="lunchCard">
+        <p class="card-type">Lunch</p>
+        <p class="card-time">11:30 — 13:30</p>
+        <p class="card-days">月曜日 〜 金曜日</p>
+      </div>
+      <div class="hours-card dinner" id="dinnerCard">
+        <p class="card-type">Dinner</p>
+        <p class="card-time">18:00 — 22:00</p>
+        <p class="card-days">月曜日 〜 土曜日</p>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <span class="closed-badge">日曜定休</span>
     </div>
   </div>
 </section>
 
-<section class="gallery">
-  <div class="g-head fade-in-up">
-    <span class="g-label">Gallery</span>
-    <h2 class="g-title">店内の風景</h2>
-  </div>
-  <div class="slider-wrap fade-in-up d1">
-    <div class="slider-track" id="sliderTrack">
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfRba02i-Ba8u8DdTT6wSOlXHSHSwouEY6qQ-HB1e2wAE9P_Tru94ndWKvy0jcUYg0JSEAzQtbM810I8PAg90Z3w8t8iBMNjkEDCD0hxcA2Y_d9svSfiqwJxnw3ZhwwGKqnsfQkjWUhQdBqI76juhICWKPZ0NjUMjsKOLAEzKPhNIld5QHUmchNbCvu49xtJDFn2IUyoGoDWD6tJ_9vxLvs0vmhI1lAY11szAGX7L5x7Pc6V1JPQxFQa4Ee3VzP9l6FZWemFrSJdGsFw871_FKD5n-6SYsLdUB7j9RbJp6hewmqUUQRGLfS92NAqsds293IFDb3M0aVTXRvdhhAXq6BsmG_y8jrviAdyWjhEQt41JscSSBIPmWlSIJdD3PJphNv2WZtyUrV9ZU_Kr9GmBKUnBNJ55E&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ写真1" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf98brUorxVWO0v0a5QVMedL3ok2NhjH0Cplx7QpnvCOtDyTrxwwR9gWhoRUx54Ub1CXIyibuV3cRP3TU0JEJnPWw_Ev4i2U2IJpZ6qslHpd-az4fSRQNYOvyj3_HX_6Ac9HMUhkBYt0GiJbEkpyGgUj7nNTyiJP5NJC6OX3O5RnquE75WCyn1wjhRXsUOAb70FEf7oJwIA3KySXMEBsZhnMTCV1QCFLQGVfZgcoL7xlkY4xN2xA-_ALSJuT7BXLkuthHnHb5zmMiDf_wgo3moSjLf8a66Vp03nbWySgKTzpJ5_NQkUXff7k8as3uWdRsG2bXFq8_aGINcQoBN4DT797vEQfz3YbQZM_DSJJc70NH2N0_3upPcF-3hqIC8gojZeSmqUcoM6s-zVs3rrhHB_z60LPrE&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc6eH8f3Ke5vjiEh1er7cWcSueQipEnZbyKWk5zOPkut6Jtyeysowai2m9ngcq4dWqljYaR7AkteljTHZXe8M6ElNqzneHiD1Y19COg1muK3tH7sxunT06zWv7W7X1GYVv4cpkgefsEiLHMMrqowqgBreOGPdJTniGOJEo6rzummStbzn70fivNRwZ9eVrzdmJ72VSBznOocwSjrSSzZNO3XP2MmIqrrPhhYxx41Auvoping6IZomwuJpygDOS82d0LFVkbX5_AJPGgBYCiwZh0zm9tabpid4yN7Bm_80oBDvO1wImdDm9QV78BloeLKFajkN2q9mR1YllG4bgixXiTUjuucYtLsGnBMu-pR7jd98rer-oddm6mvORa_sBUG9XpC0Ao-Y2hn5pMvLHLeOmJ6g9rELg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbjgZl7Cgy98dcNctGXaGM_ekJgE5X4FrM0z-wsLxkj5IvjChX1DIZ2L8qThSpZAzbOS_CBAhT0PxHjBi94mxVHplPJk0-QfI5YnmQl9T3aAcxWFcnLgJRSK_GyBJ-bZJMT0PE0dh7WtfswjF3Q-o1nORCYSpwstb2XgsabEBjRUgnTVs_8yqpgC-R5wcXoYe8czhQTMcNdWCQhC4zLKtDvHrWvJPBFTkfAOGrsjQOFtdmjF4AH5-P-UZ-oYrqKLuxV89yx7SfWytyT0TkEOTXTpwCu4gUmxyFVinp2EX4Jf5VU91lAfRXG6MtT_IkHgIesWIKc00OtWo-eCaooR5_7LXqAwzzzYoJ-efkR4JvRj-Sd87pVPshNWfLLwZpEtghqmRW3anArHRnwtAdAvwXvLyn&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1ySFspAFL5am4MLz1oS8i1v7khaDEivaHcNvbMn2YyeLtOvKNZnuEpupw6ewv-2N3oWm56wdSdh-gPtN4iKqVvlwnunrbdACqICJwTCQf5n-8rHpMYpTNpjwnBBVdBU_XIYzyJ8x37i3V5bR-ETF5Q0jd6fUucnmn8SDOaK0E9lSSpfRgEtiERLrmfjRbecJwyeswGxkVmdBDAiyyiL_ZQWIZkpExACllEDRP0NMY0gnZkRb281yapOTXhixrTOciHcv6OrALWOTFgkMywQbso7K0Bpcu_nZmJ6c6WRfJpJH7blVOZK1GMEJWXR5g_vZDd0phbe4EPiLivdLd0YNdhqhWQYg9nq755HyLitHkykEHZG4nXSK11oeMnuNC0dlABAV4urGFgk4AhRH2Ry0AwCLm00g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
+<!-- ===== S3: PHOTO GRID ===== -->
+<section class="grid-section">
+  <div class="grid-inner">
+    <div class="grid-header fade-in">
+      <p class="section-label">Gallery</p>
+      <h2 class="section-title">店内の風景</h2>
     </div>
-    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
-    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
-  </div>
-  <div class="s-dots" id="sliderDots"></div>
-</section>
-
-<section class="info">
-  <div class="fade-in-up" style="max-width:900px;margin:0 auto 2rem;">
-    <span class="g-label">Information</span>
-    <h2 class="g-title">店舗情報</h2>
-  </div>
-  <div class="info-cards">
-    <div class="i-card c1 fade-in-up d1">
-      <h3>Access</h3>
-      <p>大阪府高槻市城北町１丁目３−３５<br>TNビル2F</p>
-      <a href="https://maps.google.com/?cid=2688000212533508533" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
-    </div>
-    <div class="i-card c2 fade-in-up d2">
-      <h3>Tel</h3>
-      <p>072-675-8200</p>
-      <a href="tel:0726758200" class="i-btn">電話をかける</a>
+    <div class="photo-grid fade-in">
+      <div class="photo-item">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf98brUorxVWO0v0a5QVMedL3ok2NhjH0Cplx7QpnvCOtDyTrxwwR9gWhoRUx54Ub1CXIyibuV3cRP3TU0JEJnPWw_Ev4i2U2IJpZ6qslHpd-az4fSRQNYOvyj3_HX_6Ac9HMUhkBYt0GiJbEkpyGgUj7nNTyiJP5NJC6OX3O5RnquE75WCyn1wjhRXsUOAb70FEf7oJwIA3KySXMEBsZhnMTCV1QCFLQGVfZgcoL7xlkY4xN2xA-_ALSJuT7BXLkuthHnHb5zmMiDf_wgo3moSjLf8a66Vp03nbWySgKTzpJ5_NQkUXff7k8as3uWdRsG2bXFq8_aGINcQoBN4DT797vEQfz3YbQZM_DSJJc70NH2N0_3upPcF-3hqIC8gojZeSmqUcoM6s-zVs3rrhHB_z60LPrE&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+      </div>
+      <div class="photo-item">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc6eH8f3Ke5vjiEh1er7cWcSueQipEnZbyKWk5zOPkut6Jtyeysowai2m9ngcq4dWqljYaR7AkteljTHZXe8M6ElNqzneHiD1Y19COg1muK3tH7sxunT06zWv7W7X1GYVv4cpkgefsEiLHMMrqowqgBreOGPdJTniGOJEo6rzummStbzn70fivNRwZ9eVrzdmJ72VSBznOocwSjrSSzZNO3XP2MmIqrrPhhYxx41Auvoping6IZomwuJpygDOS82d0LFVkbX5_AJPGgBYCiwZh0zm9tabpid4yN7Bm_80oBDvO1wImdDm9QV78BloeLKFajkN2q9mR1YllG4bgixXiTUjuucYtLsGnBMu-pR7jd98rer-oddm6mvORa_sBUG9XpC0Ao-Y2hn5pMvLHLeOmJ6g9rELg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+      </div>
+      <div class="photo-item">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbjgZl7Cgy98dcNctGXaGM_ekJgE5X4FrM0z-wsLxkj5IvjChX1DIZ2L8qThSpZAzbOS_CBAhT0PxHjBi94mxVHplPJk0-QfI5YnmQl9T3aAcxWFcnLgJRSK_GyBJ-bZJMT0PE0dh7WtfswjF3Q-o1nORCYSpwstb2XgsabEBjRUgnTVs_8yqpgC-R5wcXoYe8czhQTMcNdWCQhC4zLKtDvHrWvJPBFTkfAOGrsjQOFtdmjF4AH5-P-UZ-oYrqKLuxV89yx7SfWytyT0TkEOTXTpwCu4gUmxyFVinp2EX4Jf5VU91lAfRXG6MtT_IkHgIesWIKc00OtWo-eCaooR5_7LXqAwzzzYoJ-efkR4JvRj-Sd87pVPshNWfLLwZpEtghqmRW3anArHRnwtAdAvwXvLyn&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+      </div>
+      <div class="photo-item">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1ySFspAFL5am4MLz1oS8i1v7khaDEivaHcNvbMn2YyeLtOvKNZnuEpupw6ewv-2N3oWm56wdSdh-gPtN4iKqVvlwnunrbdACqICJwTCQf5n-8rHpMYpTNpjwnBBVdBU_XIYzyJ8x37i3V5bR-ETF5Q0jd6fUucnmn8SDOaK0E9lSSpfRgEtiERLrmfjRbecJwyeswGxkVmdBDAiyyiL_ZQWIZkpExACllEDRP0NMY0gnZkRb281yapOTXhixrTOciHcv6OrALWOTFgkMywQbso7K0Bpcu_nZmJ6c6WRfJpJH7blVOZK1GMEJWXR5g_vZDd0phbe4EPiLivdLd0YNdhqhWQYg9nq755HyLitHkykEHZG4nXSK11oeMnuNC0dlABAV4urGFgk4AhRH2Ry0AwCLm00g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+      </div>
     </div>
   </div>
 </section>
 
-<section class="hours">
-  <div class="fade-in-up" style="max-width:600px;margin:0 auto 2rem;">
-    <span class="g-label">Hours</span>
-    <h2 class="g-title">営業時間</h2>
-  </div>
-  <div class="h-wrap fade-in-up d1">
-    <table class="h-table">
-      <tr><td>月〜金（昼）</td><td>11:30 〜 13:30</td></tr>
-      <tr><td>月〜金（夜）</td><td>18:00 〜 22:00</td></tr>
-      <tr><td>土（夜）</td><td>18:00 〜 22:00</td></tr>
-      <tr><td><span class="closed-tag">定休</span> 日曜日</td><td>—</td></tr>
-    </table>
+<!-- ===== S4: INFO ===== -->
+<section class="info-section">
+  <div class="info-inner fade-in">
+    <p class="section-label">About</p>
+    <h2 class="section-title">店舗情報</h2>
+    <div class="rating-block">
+      <div class="rating-stars" id="ratingStars"></div>
+      <span class="rating-score">4.6</span>
+      <span class="rating-count">25件の口コミ</span>
+    </div>
+    <div class="info-box">
+      <div>
+        <span class="info-item-label">Address</span>
+        <p class="info-item-val">〒569-0077<br>大阪府高槻市城北町1丁目3−35<br>TNビル 2F</p>
+      </div>
+      <div>
+        <span class="info-item-label">TEL</span>
+        <p class="info-item-val"><a href="tel:0726758200">072-675-8200</a></p>
+      </div>
+    </div>
+    <a class="map-btn" href="https://maps.google.com/?cid=2688000212533508533" target="_blank" rel="noopener">Google Map で開く</a>
   </div>
 </section>
 
-<section class="cta">
-  <div class="fade-in-up">
-    <h2>お気軽にご連絡ください</h2>
-    <p>ご予約・お問い合わせはお電話にてお気軽にどうぞ。<br>スタッフ一同、心よりお待ちしております。</p>
-    <a href="tel:0726758200" class="cta-btn">072-675-8200</a>
-  </div>
-</section>
-
+<!-- ===== FOOTER ===== -->
 <footer>
-  <p>&copy; プースカフェ高槻 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+  <p>POOS CAFE TAKATSUKI</p>
+  <p>© プースカフェ高槻 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
 </footer>
 
+<!-- DEMO BADGE -->
 <div class="demo-badge">※ Demo Page</div>
 
 <script>
-  // Nav scroll
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+// ===== Fade-in =====
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
   });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
 
-  let cur = 0, total = 5;
-  const track = document.getElementById('sliderTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  for (let i = 0; i < total; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dotsWrap.appendChild(d);
-  }
-  function goTo(n) {
-    cur = (n + total) % total;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  }
-  function changeSlide(dir) { goTo(cur + dir); }
-  setInterval(() => changeSlide(1), 3600);
+// ===== Active card highlight by current time =====
+function highlightCard() {
+  const now = new Date();
+  const dow = now.getDay(); // 0=Sun, 1=Mon...6=Sat
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const total = h * 60 + m;
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+  const lunchStart = 11 * 60 + 30;
+  const lunchEnd   = 13 * 60 + 30;
+  const dinnerStart = 18 * 60;
+  const dinnerEnd   = 22 * 60;
+
+  const lunchCard  = document.getElementById('lunchCard');
+  const dinnerCard = document.getElementById('dinnerCard');
+
+  // Lunch: Mon-Fri (1-5)
+  const isLunchDay = dow >= 1 && dow <= 5;
+  // Dinner: Mon-Sat (1-6)
+  const isDinnerDay = dow >= 1 && dow <= 6;
+
+  if (lunchCard) {
+    if (isLunchDay && total >= lunchStart && total < lunchEnd) {
+      lunchCard.classList.add('active-now');
+      const badge = document.createElement('span');
+      badge.className = 'active-badge';
+      badge.textContent = 'Now Open';
+      if (!lunchCard.querySelector('.active-badge')) lunchCard.appendChild(badge);
+    }
+  }
+  if (dinnerCard) {
+    if (isDinnerDay && total >= dinnerStart && total < dinnerEnd) {
+      dinnerCard.classList.add('active-now');
+      const badge = document.createElement('span');
+      badge.className = 'active-badge';
+      badge.textContent = 'Now Open';
+      if (!dinnerCard.querySelector('.active-badge')) dinnerCard.appendChild(badge);
+    }
+  }
+}
+highlightCard();
+
+// ===== Star rating animation =====
+function buildStars(score) {
+  const container = document.getElementById('ratingStars');
+  if (!container) return;
+  const full = Math.floor(score);
+  const half = score - full >= 0.5;
+  for (let i = 0; i < 5; i++) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('width', '22');
+    svg.setAttribute('height', '22');
+    svg.style.opacity = '0';
+    svg.style.transform = 'scale(0.5)';
+    svg.style.transition = `opacity 0.4s ${i * 0.1}s, transform 0.4s ${i * 0.1}s`;
+    let fill = '#ddd';
+    if (i < full) fill = '#e07a5f';
+    else if (i === full && half) fill = 'url(#halfStar)';
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="halfStar">
+          <stop offset="50%" stop-color="#e07a5f"/>
+          <stop offset="50%" stop-color="#ddd"/>
+        </linearGradient>
+      </defs>
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="${fill}"/>
+    `;
+    container.appendChild(svg);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        svg.style.opacity = '1';
+        svg.style.transform = 'scale(1)';
+      }, 100 + i * 100);
+    });
+  }
+}
+
+const ratingObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      buildStars(4.6);
+      ratingObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const ratingBlock = document.querySelector('.rating-block');
+if (ratingBlock) ratingObserver.observe(ratingBlock);
 </script>
 </body>
 </html>

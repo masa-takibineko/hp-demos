@@ -3,241 +3,742 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>テマヒマ</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<title>TEMAHIMA — セレクトショップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,200;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --white: #ffffff;
-    --black: #1a1a1a;
-    --gray1: #f5f5f5;
-    --gray2: #e8e8e8;
-    --gray3: #999999;
-    --gray4: #666666;
-    --accent: #1a1a1a;
+    --black: #0a0a0a;
+    --white: #fafafa;
+    --off-white: #f5f4f0;
+    --mid: #888;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+
   html { scroll-behavior: smooth; }
-  body { background: var(--white); color: var(--black); font-family: 'DM Sans', 'Noto Sans JP', sans-serif; overflow-x: hidden; }
 
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.95); border-bottom: 1px solid transparent; transition: border-color 0.4s; backdrop-filter: blur(8px); }
-  nav.scrolled { border-bottom-color: var(--gray2); }
-  .nav-logo { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; font-weight: 500; letter-spacing: 0.08em; color: var(--black); }
-  .nav-actions { display: flex; gap: 2rem; align-items: center; }
-  .nav-link { font-size: 0.82rem; color: var(--gray4); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s; }
-  .nav-link:hover { color: var(--black); }
-
-  /* HERO — full-bleed minimal */
-  .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; overflow: hidden; }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLfMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
-    background-size: cover; background-position: center;
-    filter: grayscale(0.3);
-    transform: scale(1.0);
-    transition: transform 10s ease;
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
   }
-  .hero-bg.zoomed { transform: scale(1.04); }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.92) 40%, rgba(255,255,255,0.4) 80%, rgba(255,255,255,0) 100%); }
-  .hero-content { position: relative; z-index: 2; padding: 2rem 4rem; padding-top: 7rem; max-width: 600px; }
-  .h-eyebrow { font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gray3); text-transform: uppercase; margin-bottom: 2rem; opacity: 0; animation: slideRight 0.8s 0.3s forwards; }
-  .h-name { font-family: 'DM Sans', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300; line-height: 1.0; color: var(--black); letter-spacing: -0.02em; margin-bottom: 1.5rem; opacity: 0; animation: slideRight 0.8s 0.6s forwards; }
-  .h-jp { font-size: 0.9rem; color: var(--gray4); letter-spacing: 0.25em; margin-bottom: 3rem; opacity: 0; animation: slideRight 0.8s 0.9s forwards; }
-  .h-rating { display: inline-flex; align-items: center; gap: 0.8rem; opacity: 0; animation: slideRight 0.8s 1.2s forwards; }
-  .stars { color: var(--black); font-size: 0.85rem; letter-spacing: 0.15em; }
-  .r-num { font-size: 1.1rem; font-weight: 500; }
-  .r-sep { width: 1px; height: 18px; background: var(--gray2); }
-  .r-cnt { font-size: 0.82rem; color: var(--gray3); }
 
-  /* GALLERY — masonry-style grid */
-  .gallery { padding: 6rem 3rem; background: var(--gray1); }
-  .g-head { margin-bottom: 2.5rem; display: flex; align-items: baseline; gap: 1rem; }
-  .g-label { font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gray3); text-transform: uppercase; }
-  .g-title { font-family: 'DM Sans', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 300; color: var(--black); }
-  .slider-wrap { position: relative; max-width: 900px; overflow: hidden; }
-  .slider-track { display: flex; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
-  .slide { min-width: 100%; aspect-ratio: 16/10; overflow: hidden; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s, filter 0.5s; filter: grayscale(0.15); }
-  .slide img:hover { transform: scale(1.03); filter: grayscale(0); }
-  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--white); border: 1px solid var(--gray2); color: var(--black); width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: all 0.3s; z-index: 10; }
-  .s-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
-  .s-btn.prev { left: 1rem; } .s-btn.next { right: 1rem; }
-  .s-dots { display: flex; justify-content: flex-start; gap: 0.4rem; margin-top: 1.2rem; }
-  .dot { width: 20px; height: 1px; background: var(--gray2); cursor: pointer; transition: all 0.3s; }
-  .dot.active { background: var(--black); }
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    height: 100vh;
+    min-height: 600px;
+    position: relative;
+  }
 
-  /* INFO */
-  .info { padding: 6rem 3rem; background: var(--white); }
-  .info-inner { max-width: 900px; margin: 0 auto; }
-  .info-top { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
-  @media (max-width: 600px) { .info-top { grid-template-columns: 1fr; gap: 2rem; } }
-  .i-block h3 { font-size: 0.72rem; letter-spacing: 0.45em; color: var(--gray3); text-transform: uppercase; margin-bottom: 1rem; }
-  .i-block p { color: var(--gray4); line-height: 1.9; font-size: 0.93rem; }
-  .i-btn { display: inline-block; margin-top: 1rem; padding: 0.6rem 1.5rem; background: var(--black); color: var(--white); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; transition: all 0.3s; }
-  .i-btn:hover { background: var(--gray4); transform: translateY(-2px); }
+  .hero-left {
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 64px;
+    overflow: hidden;
+  }
 
-  /* HOURS */
-  .hours { padding: 6rem 3rem; background: var(--gray1); }
-  .h-inner { max-width: 540px; }
-  .h-table { width: 100%; border-collapse: collapse; }
-  .h-table tr { border-bottom: 1px solid var(--gray2); }
-  .h-table td { padding: 1.1rem 0; font-size: 0.9rem; color: var(--gray4); }
-  .h-table td:first-child { font-weight: 500; color: var(--black); min-width: 120px; }
-  .closed-tag { font-size: 0.72rem; background: var(--black); color: var(--white); padding: 0.1rem 0.5rem; letter-spacing: 0.08em; }
+  .hero-bg-letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20vw;
+    font-family: 'DM Serif Display', serif;
+    color: #f0f0f0;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
 
-  /* CTA */
-  .cta { padding: 6rem 3rem; background: var(--black); text-align: left; }
-  .cta-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; }
-  @media (max-width: 600px) { .cta-inner { grid-template-columns: 1fr; } }
-  .cta h2 { font-family: 'DM Sans', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 300; color: var(--white); line-height: 1.4; }
-  .cta p { color: var(--gray3); margin-top: 0.8rem; line-height: 1.8; font-size: 0.9rem; }
-  .cta-actions { display: flex; flex-direction: column; gap: 0.8rem; }
-  .cta-btn { display: inline-block; padding: 0.9rem 2rem; border: 1px solid rgba(255,255,255,0.3); color: var(--white); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.15em; white-space: nowrap; transition: all 0.3s; }
-  .cta-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
-  .cta-btn.secondary { border-color: rgba(255,255,255,0.15); color: var(--gray3); }
-  .cta-btn.secondary:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: heroFadeIn 1s ease 0.3s forwards;
+  }
 
-  /* FOOTER */
-  footer { background: var(--white); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--gray2); }
-  @media (max-width: 600px) { footer { flex-direction: column; gap: 0.5rem; text-align: center; } }
-  footer p { color: var(--gray3); font-size: 0.8rem; }
-  footer a { color: var(--black); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  @keyframes heroFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.78); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.1); }
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
 
-  @keyframes slideRight { from { opacity:0; transform:translateX(-24px); } to { opacity:1; transform:translateX(0); } }
-  .fade-in-up { opacity:0; transform:translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-in-up.visible { opacity:1; transform:translateY(0); }
-  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+
+  .hero-tagline {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 48px;
+  }
+
+  .hero-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  .stars { color: #c9a84c; letter-spacing: 1px; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+
+  .hero-right:hover img { transform: scale(1.03); }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 64px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+    opacity: 0;
+    animation: heroFadeIn 1s ease 1s forwards;
+  }
+
+  .hero-scroll-hint::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #ccc;
+  }
+
+  /* ========== MARQUEE ========== */
+  .marquee-wrap {
+    background: var(--black);
+    color: #fff;
+    overflow: hidden;
+    padding: 18px 0;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-track span {
+    font-size: 12px;
+    font-weight: 200;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0 32px;
+    flex-shrink: 0;
+  }
+
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ========== CONTENT SECTIONS ========== */
+  .content-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+    overflow: hidden;
+  }
+
+  .content-section.reverse { direction: rtl; }
+  .content-section.reverse > * { direction: ltr; }
+
+  .cs-image {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cs-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+
+  .cs-image:hover img { transform: scale(1.04); }
+
+  .cs-text {
+    background: var(--off-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 72px;
+  }
+
+  .cs-text.dark {
+    background: var(--black);
+    color: #fff;
+  }
+
+  .cs-text.white {
+    background: #fff;
+  }
+
+  .cs-number {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .cs-text.dark .cs-number { color: #666; }
+
+  .cs-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .cs-body {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #555;
+    font-weight: 300;
+    max-width: 400px;
+  }
+
+  .cs-text.dark .cs-body { color: #aaa; }
+
+  .cs-detail {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cs-detail-item {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: #444;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .cs-detail-item .label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #aaa;
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+
+  .cs-text.dark .cs-detail-item { color: #ccc; }
+
+  .cs-divider {
+    width: 32px;
+    height: 1px;
+    background: #ccc;
+    margin-bottom: 32px;
+  }
+
+  .cs-text.dark .cs-divider { background: #444; }
+
+  /* Slide-in animation */
+  .slide-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .slide-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slide-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .slide-in-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ========== GALLERY ========== */
+  .gallery-section {
+    background: #f8f7f3;
+    padding: 100px 60px;
+  }
+
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .gallery-header .section-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-weight: 300;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .gallery-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .masonry-grid {
+    columns: 2;
+    column-gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+  }
+
+  .masonry-item:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  /* ========== CONTACT ========== */
+  .contact-section {
+    background: var(--black);
+    color: #fff;
+    padding: 120px 60px;
+    text-align: center;
+  }
+
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #555;
+    font-weight: 300;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .contact-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .contact-sub {
+    font-size: 15px;
+    color: #666;
+    font-weight: 300;
+    margin-bottom: 64px;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-white {
+    background: #fff;
+    color: var(--black);
+  }
+
+  .btn-white:hover { background: var(--off-white); }
+
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #444;
+  }
+
+  .btn-outline:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .btn-map {
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #333;
+    font-size: 12px;
+  }
+
+  .btn-map:hover {
+    border-color: #666;
+    color: #fff;
+  }
+
+  .contact-map-row { margin-top: 32px; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: #fff;
+    color: var(--black);
+    border-top: 1px solid #eee;
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    text-align: right;
+  }
+
+  .footer-copy a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    transition: border-color 0.2s;
+  }
+
+  .footer-copy a:hover { border-color: #aaa; }
+
+  /* ========== DEMO BADGE ========== */
+  .demo-badge {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(10,10,10,0.85);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    padding: 8px 14px;
+    z-index: 9999;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: 55vh 45vh;
+      height: auto;
+    }
+
+    .hero-left { padding: 48px 32px; }
+    .hero-bg-letter { font-size: 40vw; }
+    .hero-scroll-hint { display: none; }
+
+    .content-section {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .content-section.reverse { direction: ltr; }
+
+    .cs-image { height: 300px; }
+    .cs-text { padding: 48px 32px; }
+
+    .masonry-grid { columns: 1; }
+
+    .gallery-section { padding: 60px 24px; }
+    .contact-section { padding: 80px 32px; }
+
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px 32px;
+    }
+
+    .footer-copy { text-align: left; }
+  }
 </style>
 </head>
 <body>
 
-<nav id="mainNav">
-  <div class="nav-logo">TEMAHIMA</div>
-  <div class="nav-actions">
-    <a href="tel:0726553259" class="nav-link">072-655-3259</a>
-    <a href="mailto:temahimaselect@gmail.com" class="nav-link">Mail</a>
-  </div>
-</nav>
-
+<!-- ========== HERO ========== -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="h-eyebrow">Select Shop — Takatsuki, Osaka</p>
-    <h1 class="h-name">テマ<br>ヒマ</h1>
-    <p class="h-jp">TEMAHIMA — セレクトショップ</p>
-    <div class="h-rating">
-      <span class="stars">★★★★☆</span>
-      <span class="r-num">4.2</span>
-      <div class="r-sep"></div>
-      <span class="r-cnt">102件のレビュー</span>
-    </div>
-  </div>
-</section>
-
-<section class="gallery">
-  <div class="g-head fade-in-up">
-    <span class="g-label">Gallery</span>
-    <h2 class="g-title">— 店内の風景</h2>
-  </div>
-  <div class="slider-wrap fade-in-up d1">
-    <div class="slider-track" id="sliderTrack">
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLfMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="テマヒマ写真1" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd_va3BazSbBrn0Jib7PurcqPCZEDURMBD_7jUApEqUHFT9_JCuBowvbxT6KBhgAZCiXoX1LneBZ6Oo2ahHzh2KLg1KrSQY3xZGi8u-SbfT_n_Gkdw4Hhw5pUe8-3hPa8VtDSdVCGAkprX9sgmLNeibiCJEHp_UHF8f6L18Ji0DUnRhMXgCxqEbbjM6nRfj4-SV6ehLyR5Hs5xC5Mt94eed9Uvxs8KQB16DupjqUMC-lNf3qNc6hfLjV3J8zjhZp5X98OecOT9GYxmp_1qFpH5xJ-JgQ-qxxSinVx_2RSI4vo7bl6OBL4yzUHZJzDjLVNj4lj-ye6nZEcby1DjTk6G2FXAfjF-46nSVgDYkzQU815jLqFJVWoSd95jYmRk6i0wVX8Hlp_RkGGSsWgq-Mg66f3xJTf8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc7Amm4xeCL4QpUkhfuPRSOv5FLx17XLNaPKQF5GVpjiXHKWenNfhMa8xnWvShg9EUEcNtZQdOJHI_saR4TtkKug0kn_-pGAJECacL7Gy-W1KDlnLF_Zuk25l_zdD8jVFxW163os157vN6VxNXZNBf_A3q4rQ0YQac01cpRpT4z7sleVQfDM0MGj8GqcwzH1kl7KISq1D0Fkj12G34uLJtM_lewjGvDwU6hCm5EDoTWS4VzNsdJv9Joekfn4tI4fEF8QPv48lwqU9tIx_7-0bsy2GqnUO8YCJt7QJeviHs_DfizCKcg--9axo1yPFpavZl2p1DXOhbQ0fJg5UpQtMhFUf7xgv-7ZQ2NPEnc3nsuCElDoqFiheQv81mm1f-uhpleXBOcuDzGpicDusb5nITyPQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe0oi2u357VaKgxjZzMpnkpYEZM1KMnEX0h95w06DIfF0sU7A_ucJEUshd6OKWZSceur7SHpv-O21uQs9qKd9KgOM8abP03-sgLuxUgrHei-bHwlzyZYju3kHZtWl0qB5YcW1qohi9_ZbvI14PCXKvwwC9CfJn0TLlQzIUYgG3xvw63xCgTezx-2NhGoRkd2LMYbi-xh06rTQPifGoz-MK_zW-v44x6TDgAC8Qkvqg0wlZYnEGvMceuiLcCV3C-oCSgeiHFAk4-5KuB_nNSfOSlrm5sG2ZvosQgYa3Wa9hCI8zY7QWLEW7q-gUDh8-qWXLpaNgJhVSBd4IJFHsEuKamypspz1xc3mqoD6scfFUSiatLPb_ZDllo38WIYrZqlSYPeyyCGlB9ML_OiBQ7VL2EfQ7f&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
-      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfsRRRRC-bkXvKYAhgtdznxvcOrvY0CE6885p2QwiNRD4EuDaUj4iVLbebvSIo0fmzUzBegMvJ_tZfXSiDm468C1DUI2BOT4SARQyluIoXaAbZrT5WujRMvGjsU_v07ihY9J6ziBiH4GEeCBERkz1nEE9mdkh5-7v2WIaWf1fVwtlEtI89ruI4xAUaIcoWhYb2HINuEy8aODKYx4k1VhVTQ4lAxMAMeG8SL2xMeRmrDylmySrSpOO_9U55swJ-Ni8RYqMsHVBm4NqN8QMDYKnwzkVtjuhhGFxHL-8oWiLiFjPQb7m8AvJwxBLYw7141awYgcLivayMpCpQcVWNWntqjLj6sDKEMff5VT_HOCnBkWx6G-bUJXhe5M3pPpfNA2V-2N8dnj5-gGyKBi_ibxMo79Z8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
-    </div>
-    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
-    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
-  </div>
-  <div class="s-dots" id="sliderDots"></div>
-</section>
-
-<section class="info">
-  <div class="info-inner">
-    <div class="info-top">
-      <div class="i-block fade-in-up">
-        <h3>Access</h3>
-        <p>大阪府高槻市芥川町３丁目１０−１３</p>
-        <a href="https://maps.google.com/?cid=8966259614246090507" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
-      </div>
-      <div class="i-block fade-in-up d1">
-        <h3>Contact</h3>
-        <p>Tel: 072-655-3259<br>Mail: temahimaselect@gmail.com</p>
-        <a href="tel:0726553259" class="i-btn">電話をかける</a>
+  <div class="hero-left">
+    <div class="hero-bg-letter">T</div>
+    <div class="hero-content">
+      <p class="hero-label">Select Shop · Takatsuki</p>
+      <h1 class="hero-name">TEMA<br>HIMA</h1>
+      <p class="hero-tagline">手間と暇をかけて選んだもの</p>
+      <div class="hero-rating">
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+        <span>4.2</span>
+        <span style="color:#ccc;">&middot;</span>
+        <span style="color:#888;">102 reviews</span>
       </div>
     </div>
+    <div class="hero-scroll-hint">Scroll</div>
+  </div>
+  <div class="hero-right">
+    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLFMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA">
   </div>
 </section>
 
-<section class="hours">
-  <div style="max-width:900px;margin:0 auto;">
-    <div class="fade-in-up" style="margin-bottom:2.5rem;">
-      <span class="g-label" style="font-size:0.72rem;letter-spacing:0.5em;color:var(--gray3);text-transform:uppercase;display:block;margin-bottom:0.5rem;">Hours</span>
-      <h2 style="font-family:'DM Sans',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:300;color:var(--black);">— 営業時間</h2>
+<!-- ========== MARQUEE ========== -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>TEMAHIMA</span><span>&middot;</span>
+    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
+    <span>11:00&ndash;18:00</span><span>&middot;</span>
+    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
+    <span>TEL 072-655-3259</span><span>&middot;</span>
+    <span>TEMAHIMA</span><span>&middot;</span>
+    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
+    <span>11:00&ndash;18:00</span><span>&middot;</span>
+    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
+    <span>TEL 072-655-3259</span><span>&middot;</span>
+    <span>TEMAHIMA</span><span>&middot;</span>
+    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
+    <span>11:00&ndash;18:00</span><span>&middot;</span>
+    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
+    <span>TEL 072-655-3259</span><span>&middot;</span>
+    <span>TEMAHIMA</span><span>&middot;</span>
+    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
+    <span>11:00&ndash;18:00</span><span>&middot;</span>
+    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
+    <span>TEL 072-655-3259</span><span>&middot;</span>
+  </div>
+</div>
+
+<!-- ========== SECTION 1: Review ========== -->
+<div class="content-section">
+  <div class="cs-image slide-in-left">
+    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd_va3BazSbBrn0Jib7PurcqPCZEDURMBD_7jUApEqUHFT9_JCuBowvbxT6KBhgAZCiXoX1LneBZ6Oo2ahHzh2KLg1KrSQY3xZGi8u-SbfT_n_Gkdw4Hhw5pUe8-3hPa8VtDSdVCGAkprX9sgmLNeibiCJEHp_UHF8f6L18Ji0DUnRhMXgCxqEbbjM6nRfj4-SV6ehLyR5Hs5xC5Mt94eed9Uvxs8KQB16DupjqUMC-lNf3qNc6hfLjV3J8zjhZp5X98OecOT9GYxmp_1qFpH5xJ-JgQ-qxxSinVx_2RSI4vo7bl6OBL4yzUHZJzDjLVNj4lj-ye6nZEcby1DjTk6G2FXAfjF-46nSVgDYkzQU815jLqFJVWoSd95jYmRk6i0wVX8Hlp_RkGGSsWgq-Mg66f3xJTf8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内">
+  </div>
+  <div class="cs-text slide-in-right">
+    <p class="cs-number">01 &middot; Reviews</p>
+    <div class="cs-divider"></div>
+    <h2 class="cs-heading">102件の<br>お客様の声</h2>
+    <p class="cs-body">Googleマップにて、102件の口コミで★4.2の高評価をいただいております。手間と暇をかけて選んだセレクトに、多くのお客様からご支持をいただいています。</p>
+    <div class="cs-detail">
+      <div class="cs-detail-item">
+        <span class="label">Rating</span>
+        <span>&#9733; 4.2 / 5.0</span>
+      </div>
+      <div class="cs-detail-item">
+        <span class="label">Reviews</span>
+        <span>102件</span>
+      </div>
     </div>
-    <div class="h-inner fade-in-up d1">
-      <table class="h-table">
-        <tr><td><span class="closed-tag">定休</span> 火・水曜日</td><td>—</td></tr>
-        <tr><td>月・木・金・土・日</td><td>11:00 〜 18:00</td></tr>
-      </table>
+  </div>
+</div>
+
+<!-- ========== SECTION 2: Address ========== -->
+<div class="content-section reverse">
+  <div class="cs-text dark slide-in-left">
+    <p class="cs-number">02 &middot; Location</p>
+    <div class="cs-divider"></div>
+    <h2 class="cs-heading">高槻市<br>芥川町</h2>
+    <div class="cs-detail">
+      <div class="cs-detail-item">
+        <span class="label">住所</span>
+        <span>大阪府高槻市芥川町３丁目１０−１３</span>
+      </div>
+      <div class="cs-detail-item">
+        <span class="label">TEL</span>
+        <span>072-655-3259</span>
+      </div>
+      <div class="cs-detail-item">
+        <span class="label">Mail</span>
+        <span>temahimaselect@gmail.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="cs-image slide-in-right">
+    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc7Amm4xeCL4QpUkhfuPRSOv5FLx17XLNaPKQF5GVpjiXHKWenNfhMa8xnWvShg9EUEcNtZQdOJHI_saR4TtkKug0kn_-pGAJECacL7Gy-W1KDlnLF_Zuk25l_zdD8jVFxW163os157vN6VxNXZNBf_A3q4rQ0YQac01cpRpT4z7sleVQfDM0MGj8GqcwzH1kl7KISq1D0Fkj12G34uLJtM_lewjGvDwU6hCm5EDoTWS4VzNsdJv9Joekfn4tI4fEF8QPv48lwqU9tIx_7-0bsy2GqnUO8YCJt7QJeviHs_DfizCKcg--9axo1yPFpavZl2p1DXOhbQ0fJg5UpQtMhFUf7xgv-7ZQ2NPEnc3nsuCElDoqFiheQv81mm1f-uhpleXBOcuDzGpicDusb5nITyPQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="外観">
+  </div>
+</div>
+
+<!-- ========== SECTION 3: Hours ========== -->
+<div class="content-section">
+  <div class="cs-image slide-in-left">
+    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe0oi2u357VaKgxjZzMpnkpYEZM1KMnEX0h95w06DIfF0sU7A_ucJEUshd6OKWZSceur7SHpv-O21uQs9qKd9KgOM8abP03-sgLuxUgrHei-bHwlzyZYju3kHZtWl0qB5YcW1qohi9_ZbvI14PCXKvwwC9CfJn0TLlQzIUYgG3xvw63xCgTezx-2NhGoRkd2LMYbi-xh06rTQPifGoz-MK_zW-v44x6TDgAC8Qkvqg0wlZYnEGvMceuiLcCV3C-oCSgeiHFAk4-5KuB_nNSfOSlrm5sG2ZvosQgYa3Wa9hCI8zY7QWLEW7q-gUDh8-qWXLpaNgJhVSBd4IJFHsEuKamypspz1xc3mqoD6scfFUSiatLPb_ZDllo38WIYrZqlSYPeyyCGlB9ML_OiBQ7VL2EfQ7f&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="商品">
+  </div>
+  <div class="cs-text white slide-in-right">
+    <p class="cs-number">03 &middot; Hours</p>
+    <div class="cs-divider"></div>
+    <h2 class="cs-heading">営業時間</h2>
+    <div class="cs-detail">
+      <div class="cs-detail-item">
+        <span class="label">木〜月</span>
+        <span>11:00 &mdash; 18:00</span>
+      </div>
+      <div class="cs-detail-item" style="margin-top:8px;">
+        <span class="label">定休日</span>
+        <span style="color:#c0392b;">火曜日・水曜日</span>
+      </div>
+    </div>
+    <p class="cs-body" style="margin-top:32px;">お時間のある日に、ゆっくりとお越しください。<br>スタッフ一同お待ちしております。</p>
+  </div>
+</div>
+
+<!-- ========== GALLERY ========== -->
+<section class="gallery-section">
+  <div class="gallery-header slide-in">
+    <span class="section-label">Photo Gallery</span>
+    <h2>Shop Photos</h2>
+  </div>
+  <div class="masonry-grid slide-in">
+    <div class="masonry-item">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLFMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 1">
+    </div>
+    <div class="masonry-item">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd_va3BazSbBrn0Jib7PurcqPCZEDURMBD_7jUApEqUHFT9_JCuBowvbxT6KBhgAZCiXoX1LneBZ6Oo2ahHzh2KLg1KrSQY3xZGi8u-SbfT_n_Gkdw4Hhw5pUe8-3hPa8VtDSdVCGAkprX9sgmLNeibiCJEHp_UHF8f6L18Ji0DUnRhMXgCxqEbbjM6nRfj4-SV6ehLyR5Hs5xC5Mt94eed9Uvxs8KQB16DupjqUMC-lNf3qNc6hfLjV3J8zjhZp5X98OecOT9GYxmp_1qFpH5xJ-JgQ-qxxSinVx_2RSI4vo7bl6OBL4yzUHZJzDjLVNj4lj-ye6nZEcby1DjTk6G2FXAfjF-46nSVgDYkzQU815jLqFJVWoSd95jYmRk6i0wVX8Hlp_RkGGSsWgq-Mg66f3xJTf8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 2">
+    </div>
+    <div class="masonry-item">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc7Amm4xeCL4QpUkhfuPRSOv5FLx17XLNaPKQF5GVpjiXHKWenNfhMa8xnWvShg9EUEcNtZQdOJHI_saR4TtkKug0kn_-pGAJECacL7Gy-W1KDlnLF_Zuk25l_zdD8jVFxW163os157vN6VxNXZNBf_A3q4rQ0YQac01cpRpT4z7sleVQfDM0MGj8GqcwzH1kl7KISq1D0Fkj12G34uLJtM_lewjGvDwU6hCm5EDoTWS4VzNsdJv9Joekfn4tI4fEF8QPv48lwqU9tIx_7-0bsy2GqnUO8YCJt7QJeviHs_DfizCKcg--9axo1yPFpavZl2p1DXOhbQ0fJg5UpQtMhFUf7xgv-7ZQ2NPEnc3nsuCElDoqFiheQv81mm1f-uhpleXBOcuDzGpicDusb5nITyPQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 3">
+    </div>
+    <div class="masonry-item">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe0oi2u357VaKgxjZzMpnkpYEZM1KMnEX0h95w06DIfF0sU7A_ucJEUshd6OKWZSceur7SHpv-O21uQs9qKd9KgOM8abP03-sgLuxUgrHei-bHwlzyZYju3kHZtWl0qB5YcW1qohi9_ZbvI14PCXKvwwC9CfJn0TLlQzIUYgG3xvw63xCgTezx-2NhGoRkd2LMYbi-xh06rTQPifGoz-MK_zW-v44x6TDgAC8Qkvqg0wlZYnEGvMceuiLcCV3C-oCSgeiHFAk4-5KuB_nNSfOSlrm5sG2ZvosQgYa3Wa9hCI8zY7QWLEW7q-gUDh8-qWXLpaNgJhVSBd4IJFHsEuKamypspz1xc3mqoD6scfFUSiatLPb_ZDllo38WIYrZqlSYPeyyCGlB9ML_OiBQ7VL2EfQ7f&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 4">
+    </div>
+    <div class="masonry-item">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfsRRRRC-bkXvKYAhgtdznxvcOrvY0CE6885p2QwiNRD4EuDaUj4iVLbebvSIo0fmzUzBegMvJ_tZfXSiDm468C1DUI2BOT4SARQyluIoXaAbZrT5WujRMvGjsU_v07ihY9J6ziBiH4GEeCBERkz1nEE9mdkh5-7v2WIaWf1fVwtlEtI89ruI4xAUaIcoWhYb2HINuEy8aODKYx4k1VhVTQ4lAxMAMeG8SL2xMeRmrDylmySrSpOO_9U55swJ-Ni8RYqMsHVBm4NqN8QMDYKnwzkVtjuhhGFxHL-8oWiLiFjPQb7m8AvJwxBLYw7141awYgcLivayMpCpQcVWNWntqjLj6sDKEMff5VT_HOCnBkWx6G-bUJXhe5M3pPpfNA2V-2N8dnj5-gGyKBi_ibxMo79Z8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 5">
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="cta-inner">
-    <div class="fade-in-up">
-      <h2>お気軽にご連絡ください</h2>
-      <p>電話またはメールにてお問い合わせいただけます。</p>
-    </div>
-    <div class="cta-actions fade-in-up d1">
-      <a href="tel:0726553259" class="cta-btn">072-655-3259</a>
-      <a href="mailto:temahimaselect@gmail.com" class="cta-btn secondary">メールで問い合わせ</a>
-    </div>
+<!-- ========== CONTACT ========== -->
+<section class="contact-section">
+  <span class="contact-label">Contact</span>
+  <h2 class="contact-heading slide-in">お気軽に<br>ご連絡ください</h2>
+  <p class="contact-sub slide-in">どんなご質問でもお受けしています</p>
+  <div class="contact-buttons slide-in">
+    <a href="mailto:temahimaselect@gmail.com" class="btn btn-white">Mail Us</a>
+    <a href="https://www.instagram.com/temahima.jp" target="_blank" rel="noopener" class="btn btn-outline">Instagram</a>
+  </div>
+  <div class="contact-map-row slide-in">
+    <a href="https://maps.google.com/?cid=8966259614246090507" target="_blank" rel="noopener" class="btn btn-map">Google マップで見る &rarr;</a>
   </div>
 </section>
 
+<!-- ========== FOOTER ========== -->
 <footer>
-  <p>&copy; テマヒマ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
-  <p><a href="https://maps.google.com/?cid=8966259614246090507" target="_blank" rel="noopener">Google Maps</a></p>
+  <div class="footer-brand">TEMAHIMA</div>
+  <div class="footer-copy">
+    &copy; テマヒマ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a>
+  </div>
 </footer>
 
 <div class="demo-badge">※ Demo Page</div>
 
 <script>
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
-  });
-  window.addEventListener('load', () => {
-    setTimeout(() => document.getElementById('heroBg').classList.add('zoomed'), 100);
-  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-  let cur = 0, total = 5;
-  const track = document.getElementById('sliderTrack');
-  const dotsWrap = document.getElementById('sliderDots');
-  for (let i = 0; i < total; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
-    d.onclick = () => goTo(i);
-    dotsWrap.appendChild(d);
-  }
-  function goTo(n) {
-    cur = (n + total) % total;
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  }
-  function changeSlide(dir) { goTo(cur + dir); }
-  setInterval(() => changeSlide(1), 3600);
-
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+  document.querySelectorAll('.slide-in, .slide-in-left, .slide-in-right').forEach(el => {
+    observer.observe(el);
+  });
 </script>
 </body>
 </html>
