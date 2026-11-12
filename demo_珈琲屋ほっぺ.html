@@ -3,145 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>珈琲屋ほっぺ | 高槻のカフェ</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>珈琲屋ほっぺ</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0f0b08; --bg2:#1a1310; --gold:#c9a96e; --cream:#f5f0e8;
-  --text:#ede8de; --dim:#9a8878; --border:rgba(201,169,110,0.2);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(to bottom,rgba(15,11,8,0.95),transparent);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
-.nav-links a:hover{opacity:1;color:var(--gold);}
-/* HERO */
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background:radial-gradient(ellipse at center, #2a1f14 0%, #0f0b08 70%);
-  position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 60%, rgba(201,169,110,0.08) 0%, transparent 60%);}
-.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
-  color:var(--cream);letter-spacing:0.05em;line-height:1.1;margin-bottom:1rem;}
-.hero-sub{font-size:0.9rem;color:var(--dim);letter-spacing:0.2em;margin-bottom:3rem;}
-.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
-  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;
-  transition:all 0.3s;}
-.btn:hover{background:var(--gold);color:var(--bg);}
-/* CONCEPT */
-.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
-  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
-.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
-/* MENU */
-.menu-section{background:var(--bg2);padding:6rem 2rem;}
-.menu-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
-.menu-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
-.menu-card:hover{border-color:var(--gold);}
-.menu-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
-.menu-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
-.menu-price{margin-top:1rem;font-size:0.8rem;color:var(--cream);letter-spacing:0.1em;}
-/* INFO */
-.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
-.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
-.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
-/* DEMO BADGE */
-.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,169,110,0.15);
-  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
-  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
-footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
-@media(max-width:600px){
-  .info-grid{grid-template-columns:1fr;}
-  .nav-links{display:none;}
-}
+  :root {
+    --bg: #faf6f0;
+    --terra: #c4663c;
+    --terra-dark: #a0522d;
+    --terra-light: #e88a62;
+    --warm: #f0e8dc;
+    --text: #3a2318;
+    --muted: #8a6e5c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; overflow-x: hidden; }
+
+  /* HERO */
+  .hero { position: relative; height: 100vh; min-height: 580px; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcq3vvfQZC_5LBj5nVIEuYNufq24kVkyepIzx4H08qMnwDvjkxKeJgWM623FXI0xdA92SK8rgbhQnzB7TAmfw_rh_OKO7iIRuvGEo8tviJLAPpzNHuU25RVZK9Smo-ama3l_STwzIepjyfan-ELSCkB8F7_0TIYNkVJaMX_uoBbRUliC-rzCEP-5ZxuRL52AEiNvg42qEBBct-yZVB3lc1DtgCyyMbIu0L_YKXiGJxg7LeVcYPN6z1Swbv8qwGN-pr3n93T01QFlVdMwmAkCo-QBtD4fvf49w2TVyQJXYVnlpvHIShWuv6whYyJO4Y3_q4YGuChUETpUgXT78WGCmpQx6_2Hh2RK-6PNzF8oDzC5ApuQn_xUk6KjiYs1vdsUumZpK-md5xaSnQh0-U6b1zt9xSKZbM&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-size: cover; background-position: center;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(58,35,24,0.9) 0%, rgba(58,35,24,0.4) 50%, rgba(58,35,24,0.1) 100%); }
+  .hero-content { position: relative; z-index: 2; padding: 3rem 3rem 4rem; width: 100%; max-width: 900px; margin: 0 auto; }
+  .hero-tag { display: inline-block; background: var(--terra); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.2rem; opacity: 0; animation: slideLeft 0.9s 0.3s forwards; }
+  .hero-name { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 1rem; opacity: 0; animation: slideLeft 0.9s 0.6s forwards; }
+  .hero-stars { display: flex; align-items: center; gap: 1rem; opacity: 0; animation: slideLeft 0.9s 0.9s forwards; }
+  .star-row { color: var(--terra-light); font-size: 1.3rem; }
+  .r-score { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 2rem; font-weight: 800; color: #fff; }
+  .r-cnt { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+
+  /* GALLERY GRID */
+  .gallery { padding: 5rem 2rem; background: var(--warm); }
+  .sec-label { font-size: 0.72rem; letter-spacing: 0.45em; color: var(--terra); text-transform: uppercase; display: block; margin-bottom: 0.6rem; }
+  .sec-title { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.3rem); font-weight: 800; color: var(--text); margin-bottom: 2.5rem; }
+  .slider-wrap { position: relative; max-width: 900px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(58,35,24,0.18); }
+  .slider-track { display: flex; transition: transform 0.65s cubic-bezier(0.68,-0.55,0.27,1.55); }
+  .slide { min-width: 100%; aspect-ratio: 4/3; overflow: hidden; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+  .slide img:hover { transform: scale(1.04); }
+  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; color: var(--terra); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+  .s-btn:hover { background: var(--terra); color: #fff; transform: translateY(-50%) scale(1.1); }
+  .s-btn.prev { left: 1rem; } .s-btn.next { right: 1rem; }
+  .s-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(196,102,60,0.25); cursor: pointer; transition: all 0.3s; }
+  .dot.active { background: var(--terra); transform: scale(1.3); }
+
+  /* INFO */
+  .info { padding: 5rem 2rem; background: var(--bg); }
+  .info-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 600px) { .info-inner { grid-template-columns: 1fr; } }
+  .i-card { background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(58,35,24,0.07); transition: transform 0.3s, box-shadow 0.3s; }
+  .i-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(58,35,24,0.14); }
+  .i-card .ico { width: 44px; height: 44px; background: rgba(196,102,60,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
+  .i-card h3 { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--terra); text-transform: uppercase; font-weight: 700; margin-bottom: 0.7rem; }
+  .i-card p { color: var(--muted); line-height: 1.8; font-size: 0.93rem; }
+  .i-btn { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.3rem; background: var(--terra); color: #fff; text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; border-radius: 100px; font-weight: 700; transition: all 0.3s; }
+  .i-btn:hover { background: var(--terra-dark); transform: translateY(-1px); }
+
+  /* HOURS */
+  .hours { padding: 5rem 2rem; background: var(--warm); }
+  .hours-inner { max-width: 580px; margin: 0 auto; }
+  .h-table { width: 100%; border-collapse: collapse; }
+  .h-table tr { border-bottom: 1px solid rgba(196,102,60,0.12); }
+  .h-table tr:hover { background: rgba(196,102,60,0.04); }
+  .h-table td { padding: 1rem 0.5rem; font-size: 0.95rem; color: var(--muted); }
+  .h-table td:first-child { font-family: 'M PLUS Rounded 1c', sans-serif; font-weight: 700; color: var(--terra); min-width: 110px; }
+  .closed-tag { display: inline-block; background: rgba(196,102,60,0.1); color: var(--terra); font-size: 0.72rem; padding: 0.15rem 0.6rem; border-radius: 100px; font-weight: 700; }
+
+  /* CTA */
+  .cta { padding: 6rem 2rem; background: var(--terra); text-align: center; }
+  .cta h2 { font-family: 'M PLUS Rounded 1c', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: #fff; margin-bottom: 1rem; }
+  .cta p { color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; line-height: 1.9; max-width: 440px; margin-inline: auto; }
+  .cta-btn { display: inline-block; padding: 1rem 2.8rem; background: #fff; color: var(--terra); text-decoration: none; font-family: 'M PLUS Rounded 1c', sans-serif; font-size: 1rem; font-weight: 800; border-radius: 100px; transition: all 0.3s; letter-spacing: 0.05em; }
+  .cta-btn:hover { background: var(--warm); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer { background: var(--text); padding: 2rem; text-align: center; }
+  footer p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+  footer a { color: var(--terra-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.75); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); }
+
+  @keyframes slideLeft { from { opacity:0; transform:translateX(-30px); } to { opacity:1; transform:translateX(0); } }
+  .fade-in-up { opacity:0; transform:translateY(35px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in-up.visible { opacity:1; transform:translateY(0); }
+  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; }
 </style>
 </head>
 <body>
-<nav>
-  <div class="logo">珈琲屋ほっぺ</div>
-  <ul class="nav-links">
-    <li><a href="#concept">CONCEPT</a></li>
-    <li><a href="#menu">MENU</a></li>
-    <li><a href="#info">ACCESS</a></li>
-  </ul>
-</nav>
 
 <section class="hero">
-  <p class="hero-eyebrow">Takatsuki Coffee</p>
-  <h1>珈琲屋ほっぺ</h1>
-  <p class="hero-sub">一杯のコーヒーが、今日を特別にする</p>
-  <a href="#info" class="btn">アクセスを見る</a>
-</section>
-
-<section class="section" id="concept">
-  <p class="section-label">Our Story</p>
-  <h2>こだわりの一杯を、<br>あなたのそばに。</h2>
-  <p>高槻の街に根ざし、毎日丁寧に淹れたコーヒーをお届けしています。<br>
-  豆の選定から抽出まで、妥協なく追い求めた味をぜひご堪能ください。</p>
-</section>
-
-<div class="menu-section" id="menu">
-  <div style="max-width:900px;margin:0 auto;">
-    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Menu</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--cream);margin-top:1rem;">おすすめメニュー</h2>
-  </div>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <h3>Blend Coffee</h3>
-      <p>自家焙煎のブレンドコーヒー。深みのある味わいと豊かな香りが特徴です。</p>
-      <p class="menu-price">¥ 450〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Latte</h3>
-      <p>エスプレッソとスチームミルクのやさしい一杯。ラテアートも楽しめます。</p>
-      <p class="menu-price">¥ 550〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Single Origin</h3>
-      <p>産地にこだわった豆を使ったスペシャルティコーヒー。季節ごとに変わります。</p>
-      <p class="menu-price">¥ 650〜</p>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Takatsuki, Osaka</span>
+    <h1 class="hero-name">珈琲屋<br>ほっぺ</h1>
+    <div class="hero-stars">
+      <span class="star-row">★★★★★</span>
+      <span class="r-score">4.7</span>
+      <span class="r-cnt">（53件のレビュー）</span>
     </div>
   </div>
-</div>
+</section>
 
-<section class="info-section" id="info">
-  <p class="section-label">Access</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
-  <div class="info-grid">
-    <div class="info-item">
-      <h4>Address</h4>
-      <p>大阪府高槻市</p>
+<section class="gallery">
+  <div class="fade-in-up">
+    <span class="sec-label">Gallery</span>
+    <h2 class="sec-title">店内の風景</h2>
+  </div>
+  <div class="slider-wrap fade-in-up d1">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcq3vvfQZC_5LBj5nVIEuYNufq24kVkyepIzx4H08qMnwDvjkxKeJgWM623FXI0xdA92SK8rgbhQnzB7TAmfw_rh_OKO7iIRuvGEo8tviJLAPpzNHuU25RVZK9Smo-ama3l_STwzIepjyfan-ELSCkB8F7_0TIYNkVJaMX_uoBbRUliC-rzCEP-5ZxuRL52AEiNvg42qEBBct-yZVB3lc1DtgCyyMbIu0L_YKXiGJxg7LeVcYPN6z1Swbv8qwGN-pr3n93T01QFlVdMwmAkCo-QBtD4fvf49w2TVyQJXYVnlpvHIShWuv6whYyJO4Y3_q4YGuChUETpUgXT78WGCmpQx6_2Hh2RK-6PNzF8oDzC5ApuQn_xUk6KjiYs1vdsUumZpK-md5xaSnQh0-U6b1zt9xSKZbM&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="珈琲屋ほっぺ写真1" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfzdWIloFLvoP1U6aOGQ8PZJAMYY2FcufPF1UyCAlDBQ9ULd50EFY276o1vjYQPdBmQS8dQB23vwX13xucWpbwDB4aJ7Nq9uEkZH9wCxCLGlQnRdloOSmH_u9oi3K48iFJpSzcLafWipjRsBD11-Khc5Djio5ptOzL5a-DUqM27YOGPfQ24Iziz1fGjLJ7XGZW9FMJVOS_4CRe19L4QNZgl7iMdyrqcNDb3XpEr8efzMJMlf1k0zqD8s9KPQ8JwCM4JzM4mH_qtq_x9SIyCu_wMHghqtnNZHEAE98a19f5aaM4k-JnjXoeyN66Vo1ki6gCVL1x_FRUyIVDnFrV1QxKs9-jBtLVCbqmPyjPJvhc9uiYTfmbUfd9s15NGr53Lqis8BFvtFBRtztFj4tqVClmTnEZMlrk&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeEZqj-5kx-n9S8tnO2p4YlnJDWbt7TzYaocbjKYkdPHsPBP8rdxxBTGUGM--QWbTlRLOxiuabFqjQ3WODUVxBI6w-THGQ0eqxRxsYpz0JUE0zYGvN8Z0yS6VOjIXDlLuMpoy-pTOyOi4Gbd2EYz70D5t5GrKJhDJ7jNJJu5fWf4ecFlwjMCraKiWkkdkdxxwHFYRNFWFIwq0krac1xewmDS4Q3FxAc2WJclU7iNFJjkyBcEcqh5Gppfj_88CiajiJBz0nNLbkFenis3qL417KWe6haUCv5L9PffQqA2wuV_G-5cxj8aezrBZ_5mx0kTnoWvXq6sKqPXTkstud9lZWqgGIJwD8UY3gKyLMh1zP5zm-6KdBB7jqfQyBIJWym9gVRHoFEYpz6ugF5XRdwEZLYe12e6hvD2cRL3QCcBIod&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLddnCbJ9LA0fsOMxcGtS7uaAyuQibzh1jxdxgoyE0n9SgyDrbV_STd-InoHBdkcx-CVX2CeWpDv04sog42nChg9-z9tOj6NdWJKaWd5kW6vTgouuqSLAvBAnVVmMeQu5ln7SafA73-i4rhcv8DPbNYNnUJUvA2I_qnrfECWTeSw35UoC5eQhcpN9RIkGWVhQZCiDBQVuVcwxdxNl7Fn5EajE2x21vjIBtZLny7zJFc8ZbeIkihQ0GJwzlviAn_rAeXLNrbadLwMw5MDsEMjaHC_-KBe4mxVxqELPyYvGb2quVF_C_bGHYjxR7SB3LXWAuaoUiCdbi7fifh9nuHcHGXf3MWArwPkj2WBP4l6WSKczCVftMLBXaiuAT7okAG2V0sqKb-9f3gaJ0GLPRoJxDqAtpKTRMMaQSYQn5j2ihB8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcIjipoHEIWt2sudhJ1IjozN98TeAO-PI61uKaPk2R0ng472wbXowiTMaqIEj5cZfrjmwaFIhSMhLzvfAct4MQY1At_OrkZbDtF2Wj-IGMBxgKUZFmcUMBxQI19vqm4A-jeqTUpb79HTd-VQoh7HITuvkizVW4XTDKQRUKKAJgjBqoVInP6KyeZC2dIMWeMKH3mCrPfskHaZpcgOk1XPq0g782rUh3xm71NEvLMSdC1ZbZnZ4dQLbd-OJyIRJS8AFaSnHyfBL8a09r4SSHdBJidvs4dfYERT8EHIebCwK2d64eYFlpdoEG7XPLV3xmg6YFkrZ9Vr0hiUauyHHz6yIQlevUpglP9MHekULx1W12yWBxkZu_NpCaRn8Q0nCmWvZ4kP58bhed0SWa2SgnQ0SurlqJH&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
     </div>
-    <div class="info-item">
-      <h4>Tel</h4>
+    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
+    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
+  </div>
+  <div class="s-dots" id="sliderDots"></div>
+</section>
+
+<section class="info">
+  <div class="fade-in-up" style="max-width:900px;margin:0 auto 3rem;">
+    <span class="sec-label">Information</span>
+    <h2 class="sec-title">店舗情報</h2>
+  </div>
+  <div class="info-inner">
+    <div class="i-card fade-in-up d1">
+      <div class="ico">&#128205;</div>
+      <h3>アクセス</h3>
+      <p>大阪府高槻市野見町３−４<br>井上ビル２F</p>
+      <a href="https://maps.google.com/?cid=13911791282864964227" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
+    </div>
+    <div class="i-card fade-in-up d2">
+      <div class="ico">&#128222;</div>
+      <h3>お電話</h3>
       <p>072-648-3750</p>
-    </div>
-    <div class="info-item">
-      <h4>Hours</h4>
-      <p>月〜金　10:00 – 20:00<br>土日祝　9:00 – 19:00</p>
-    </div>
-    <div class="info-item">
-      <h4>Closed</h4>
-      <p>水曜定休</p>
+      <a href="tel:0726483750" class="i-btn">電話をかける</a>
     </div>
   </div>
 </section>
+
+<section class="hours">
+  <div class="fade-in-up" style="max-width:580px;margin:0 auto 3rem;">
+    <span class="sec-label">Hours</span>
+    <h2 class="sec-title">営業時間</h2>
+  </div>
+  <div class="hours-inner fade-in-up d1">
+    <table class="h-table">
+      <tr><td><span class="closed-tag">定休</span> 月曜日</td><td>—</td></tr>
+      <tr><td>火〜土</td><td>9:00 〜 16:30</td></tr>
+      <tr><td>日</td><td>10:00 〜 16:30</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="fade-in-up">
+    <h2>お気軽にご連絡ください</h2>
+    <p>ご来店・お問い合わせはお電話にてお気軽にどうぞ。<br>スタッフ一同、心よりお待ちしております。</p>
+    <a href="tel:0726483750" class="cta-btn">072-648-3750</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 珈琲屋ほっぺ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+</footer>
 
 <div class="demo-badge">※ Demo Page</div>
 
-<footer>
-  <p>© 珈琲屋ほっぺ | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
-</footer>
+<script>
+  let cur = 0, total = 5;
+  const track = document.getElementById('sliderTrack');
+  const dotsWrap = document.getElementById('sliderDots');
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsWrap.appendChild(d);
+  }
+  function goTo(n) {
+    cur = (n + total) % total;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function changeSlide(dir) { goTo(cur + dir); }
+  setInterval(() => changeSlide(1), 3600);
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

@@ -3,145 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>COFFEE 館 | 高槻のカフェ</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>COFFEE 館</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0f0b08; --bg2:#1a1310; --gold:#c9a96e; --cream:#f5f0e8;
-  --text:#ede8de; --dim:#9a8878; --border:rgba(201,169,110,0.2);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(to bottom,rgba(15,11,8,0.95),transparent);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
-.nav-links a:hover{opacity:1;color:var(--gold);}
-/* HERO */
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background:radial-gradient(ellipse at center, #2a1f14 0%, #0f0b08 70%);
-  position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 60%, rgba(201,169,110,0.08) 0%, transparent 60%);}
-.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
-  color:var(--cream);letter-spacing:0.05em;line-height:1.1;margin-bottom:1rem;}
-.hero-sub{font-size:0.9rem;color:var(--dim);letter-spacing:0.2em;margin-bottom:3rem;}
-.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
-  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;
-  transition:all 0.3s;}
-.btn:hover{background:var(--gold);color:var(--bg);}
-/* CONCEPT */
-.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
-  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
-.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
-/* MENU */
-.menu-section{background:var(--bg2);padding:6rem 2rem;}
-.menu-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
-.menu-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
-.menu-card:hover{border-color:var(--gold);}
-.menu-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
-.menu-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
-.menu-price{margin-top:1rem;font-size:0.8rem;color:var(--cream);letter-spacing:0.1em;}
-/* INFO */
-.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
-.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
-.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
-/* DEMO BADGE */
-.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,169,110,0.15);
-  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
-  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
-footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
-@media(max-width:600px){
-  .info-grid{grid-template-columns:1fr;}
-  .nav-links{display:none;}
-}
+  :root {
+    --bg: #0d0608;
+    --gold: #c9a84c;
+    --gold-pale: #e8d49a;
+    --bg2: #120810;
+    --text: #e8e0d0;
+    --muted: #8a7d6a;
+    --border: rgba(201,168,76,0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Serif JP', serif; overflow-x: hidden; }
+
+  /* HERO — split layout */
+  .hero { position: relative; height: 100vh; min-height: 600px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+  @media (max-width: 768px) { .hero { grid-template-columns: 1fr; } .hero-left { display: none; } .hero-right { width: 100%; } }
+  .hero-left { position: relative; overflow: hidden; }
+  .hero-left img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; transform: scale(1.05); animation: slowZoom 12s ease infinite alternate; }
+  @keyframes slowZoom { from { transform: scale(1.05); } to { transform: scale(1.0); } }
+  .hero-left::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, var(--bg2) 100%); }
+  .hero-right { background: var(--bg2); display: flex; align-items: center; justify-content: center; padding: 3rem 3rem 3rem 2rem; position: relative; overflow: hidden; }
+  .hero-right::before { content: '館'; position: absolute; font-family: 'Cormorant Garamond', serif; font-size: 20rem; font-weight: 300; color: rgba(201,168,76,0.04); right: -2rem; bottom: -3rem; line-height: 1; pointer-events: none; }
+  .hero-content { position: relative; z-index: 1; }
+  .h-eyebrow { font-size: 0.7rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; font-family: 'Cormorant Garamond', serif; margin-bottom: 2rem; opacity: 0; animation: fadeUp 1s 0.3s forwards; }
+  .h-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 300; color: var(--text); line-height: 1.2; margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 1s 0.6s forwards; }
+  .h-name strong { font-weight: 600; color: var(--gold); }
+  .h-jp { font-size: 0.9rem; color: var(--muted); letter-spacing: 0.3em; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 1s 0.9s forwards; }
+  .h-rating { display: flex; align-items: baseline; gap: 0.8rem; border-left: 2px solid var(--gold); padding-left: 1rem; opacity: 0; animation: fadeUp 1s 1.2s forwards; }
+  .stars { color: var(--gold); letter-spacing: 0.05em; font-size: 0.95rem; }
+  .r-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--gold-pale); line-height: 1; }
+  .r-cnt { font-size: 0.8rem; color: var(--muted); }
+
+  /* GALLERY */
+  .gallery { padding: 6rem 2rem; background: var(--bg); }
+  .sec-head { margin-bottom: 3rem; }
+  .s-label { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 0.6rem; }
+  .s-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300; color: var(--text); font-style: italic; }
+  .slider-wrap { position: relative; max-width: 900px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 0 60px rgba(0,0,0,0.5), 0 0 0 4px rgba(201,168,76,0.05); }
+  .slider-track { display: flex; transition: transform 0.8s cubic-bezier(0.77,0,0.175,1); }
+  .slide { min-width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+  .slide img:hover { transform: scale(1.03); }
+  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,6,8,0.8); border: 1px solid var(--border); color: var(--gold); width: 48px; height: 48px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; z-index: 10; }
+  .s-btn:hover { background: var(--gold); color: var(--bg); }
+  .s-btn.prev { left: 0; } .s-btn.next { right: 0; }
+  .s-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+  .dot { width: 24px; height: 1px; background: rgba(201,168,76,0.25); cursor: pointer; transition: all 0.3s; }
+  .dot.active { background: var(--gold); }
+
+  /* INFO */
+  .info { padding: 6rem 2rem; background: var(--bg2); }
+  .info-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+  .i-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 2.5rem 2rem; transition: background 0.3s; }
+  .i-card:hover { background: rgba(201,168,76,0.03); }
+  .i-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+  .i-card p { color: var(--muted); line-height: 2; font-size: 0.93rem; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+  .i-btn { display: inline-block; margin-top: 1.2rem; padding: 0.6rem 1.5rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; letter-spacing: 0.25em; transition: all 0.3s; }
+  .i-btn:hover { background: var(--gold); color: var(--bg); }
+
+  /* HOURS */
+  .hours { padding: 6rem 2rem; background: var(--bg); }
+  .h-wrap { max-width: 540px; margin: 0 auto; }
+  .h-table { width: 100%; border-collapse: collapse; }
+  .h-table tr { border-bottom: 1px solid var(--border); }
+  .h-table td { padding: 1.2rem 0.5rem; color: var(--muted); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; }
+  .h-table td:first-child { color: var(--gold-pale); font-weight: 600; min-width: 90px; }
+
+  /* CTA */
+  .cta { padding: 7rem 2rem; background: var(--bg2); text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; }
+  .cta::before, .cta::after { content: ''; position: absolute; left: 2rem; right: 2rem; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .cta::before { top: 1.5rem; } .cta::after { bottom: 1.5rem; }
+  .cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3.5rem); font-weight: 300; color: var(--text); margin-bottom: 1rem; font-style: italic; }
+  .cta p { color: var(--muted); margin-bottom: 2.5rem; line-height: 2; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+  .cta-btn { display: inline-block; padding: 1rem 3rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 1rem; letter-spacing: 0.3em; transition: all 0.4s; }
+  .cta-btn:hover { background: var(--gold); color: var(--bg); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background: #080406; padding: 2rem; text-align: center; }
+  footer p { color: rgba(232,224,208,0.3); font-size: 0.8rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.78); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.1); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+  .fade-in-up { opacity:0; transform:translateY(35px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade-in-up.visible { opacity:1; transform:translateY(0); }
+  .fade-in-up.d1 { transition-delay: 0.15s; } .fade-in-up.d2 { transition-delay: 0.3s; }
 </style>
 </head>
 <body>
-<nav>
-  <div class="logo">COFFEE 館</div>
-  <ul class="nav-links">
-    <li><a href="#concept">CONCEPT</a></li>
-    <li><a href="#menu">MENU</a></li>
-    <li><a href="#info">ACCESS</a></li>
-  </ul>
-</nav>
 
 <section class="hero">
-  <p class="hero-eyebrow">Takatsuki Coffee</p>
-  <h1>COFFEE 館</h1>
-  <p class="hero-sub">一杯のコーヒーが、今日を特別にする</p>
-  <a href="#info" class="btn">アクセスを見る</a>
-</section>
-
-<section class="section" id="concept">
-  <p class="section-label">Our Story</p>
-  <h2>こだわりの一杯を、<br>あなたのそばに。</h2>
-  <p>高槻の街に根ざし、毎日丁寧に淹れたコーヒーをお届けしています。<br>
-  豆の選定から抽出まで、妥協なく追い求めた味をぜひご堪能ください。</p>
-</section>
-
-<div class="menu-section" id="menu">
-  <div style="max-width:900px;margin:0 auto;">
-    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Menu</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--cream);margin-top:1rem;">おすすめメニュー</h2>
+  <div class="hero-left">
+    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd35sCoW8Jkd0GGzQr0VkpNvTxnxzBAgQwoO8B-5bcb3tASLjt0xYiUvSVi8TGnv6s3UNx62qmujuYyEuCTpHadNGFnplXl4fUEvjWA0XDTyTBLhMS6j5h3cyF3tKH9SKhXMJlyLFCh2UyRZa5GEYVhoYNjCAcSYpwGJLIYM-lBuz_50WOK4bqdHgsnWJ7ZD_0Dg5RX2kF-ICwZu01RSATm_C4WZmChajO5w2BP8Ri-D4WVcwBdUD5EFVQj51wFP-7UxgNulnslJb0-Oy6IcxZVr7f4vhgsYYeeNKhKsbpWcHYOVTZHiQIFl_pVayUzKB_asn2B_pZvGhUR5CgMC56stXDVmuYfVjT0fbSbqVFLWDYXxMHpPY6irIflc2EsMb0PTPl5xmChMZEzJKxEuPZNFH3NrTY&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
   </div>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <h3>Blend Coffee</h3>
-      <p>自家焙煎のブレンドコーヒー。深みのある味わいと豊かな香りが特徴です。</p>
-      <p class="menu-price">¥ 450〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Latte</h3>
-      <p>エスプレッソとスチームミルクのやさしい一杯。ラテアートも楽しめます。</p>
-      <p class="menu-price">¥ 550〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Single Origin</h3>
-      <p>産地にこだわった豆を使ったスペシャルティコーヒー。季節ごとに変わります。</p>
-      <p class="menu-price">¥ 650〜</p>
+  <div class="hero-right">
+    <div class="hero-content">
+      <p class="h-eyebrow">Takatsuki Izumaru-cho</p>
+      <h1 class="h-name"><strong>COFFEE</strong><br>館</h1>
+      <p class="h-jp">コーヒー カン</p>
+      <div class="h-rating">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="r-cnt">（34件のレビュー）</div>
+        </div>
+        <div class="r-num">4.6</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<section class="info-section" id="info">
-  <p class="section-label">Access</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
+<section class="gallery">
+  <div class="sec-head fade-in-up">
+    <span class="s-label">Gallery</span>
+    <h2 class="s-title">店内の風景</h2>
+  </div>
+  <div class="slider-wrap fade-in-up d1">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd35sCoW8Jkd0GGzQr0VkpNvTxnxzBAgQwoO8B-5bcb3tASLjt0xYiUvSVi8TGnv6s3UNx62qmujuYyEuCTpHadNGFnplXl4fUEvjWA0XDTyTBLhMS6j5h3cyF3tKH9SKhXMJlyLFCh2UyRZa5GEYVhoYNjCAcSYpwGJLIYM-lBuz_50WOK4bqdHgsnWJ7ZD_0Dg5RX2kF-ICwZu01RSATm_C4WZmChajO5w2BP8Ri-D4WVcwBdUD5EFVQj51wFP-7UxgNulnslJb0-Oy6IcxZVr7f4vhgsYYeeNKhKsbpWcHYOVTZHiQIFl_pVayUzKB_asn2B_pZvGhUR5CgMC56stXDVmuYfVjT0fbSbqVFLWDYXxMHpPY6irIflc2EsMb0PTPl5xmChMZEzJKxEuPZNFH3NrTY&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館写真1" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcDeJ3Wbwkr_OF11mdVOPFuRDFl9Iq8n5o_T6ETeYMDn3LqrEsX4YTjK1lsHiZt1z3PObW0t9EvKlBFLx-l-ZDeidhI8GVtFk0cxFpT8p0J5fQNxU0POZojMDg-KEA-Gjwc9_sKbXF43h8VFcjwkWZIO86zKJdAhGGOqN85UwuB2Or-zx4QKL2Xa5ItdC3J7PrkC5a6P1ToFXN3cXgrUycNlBptJhjPiDYk4FyBmXMfzxLqi2R75RzNX-0anRFF0nqHUIcavIk3dbRuFQ2hSOnVmCiRzyYzs4VzFYTWJRd6geSyKq_gHBLwAd07QJtY0FHGW5smx-rhZQs44ed3Kq0lUCxiHBP9DW0dtaT6OEb_Oqx7R5LPH19Xjj3aTAxd_h371Pru1V-LBwzpL0KZMXqhQtBM_tDbtfvlWH0xL9xnDg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLffNcjK5IZ1F2QCxfpCT2Prn2EdVnwXPwNO_YhtlEiIYpfu7OROtqattJwRLSFhKCTEWDIO049SzjxdbQ6uHye-t1MIE-kr80BRybBtWtFy4If1nYLf63Z9ueXdYR1FnCxrYKOYIEneW7kjBiaNw0RUeR8C-r4JBrquxsFgOQQqi74IQgo5r_309YaqEYheHsr8Satkc8rnsYFESVgvCVa0hJcT6G8KIvkQIVJFUFGlNs4DVzHIDAzxBgN0NuFbfk7LUdS0pe2yCGNueFAY20kIDZ3_A-zeQOHKkxpvuDmXWl77kYGY_-yCuJvLNMTA9l8v4-uxWpHMiA87-Y06wQ5P3grRHtIq4H523BMQG23ObRWiFHxTErmhTILtvnnzOH6a8fkOlgeZHmAMVLLpwH_qWEvaT93bjXogpeO8y6Vrlg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfpFfHYo79dg0omhCZR47WvARZmS0Pk4SCS6wjaPZxHQay_qClEy4ffW7enc89AHxVW1cu36M5uze1guYEmCZZE09Y6vfoizmlPUYDfyJelyP4Zxuki2lhBSz-6rM2pOLNkivoitaNJoTPsRCRU9VgRCKOD_fHfqWtvuu-FXiPYbdiFKOt5gvpwtsOM86GYO0_1ovI-_phfzARvn8_VYe_T-Uj9EXEkS3PJr7QMvGCBYo5d1zBFvFtmg8xxTUzZ6QF-MK0zWhSEoO7gN1ThU7nQMygcNiHTwOJZKbH2yjP61ha8UUv7GDJcvmqeoIzWHOwAcE6ElurGCJr6ArCvQuF3tpVH4-zM58zT2HCmLOK_pproASa7dxC9a9Z035KUuTLnns-Pk5RNqzkFUP8qEWsBwbsmzlPIC3Lujm_e2Mxv6w&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfjHGytHhSes-FVweOweB6j5da7JYpa2tpwJjxdHqujOegC1n0mHCx3rZJ3w1AXcJl9NftT-_Hn0z3i-pC-hePqjOjhPio6upM8tUNsw5WjnrZzTXSAgkVND-0ui83HZiO9F3OT9xMwJKp_jlpV2ezAwtR6T0ItNhoYxv5xcitZrsviqEsXiDGSSFyF6FPq4CZX9tgtPo0AKYF7Om9glxqmjfZwWtBz3-FTqgCkeb-e_vJbpYTpk72xLUa8hZETwwvYv0C6CmSI-C9MbpCJDMe_dT8L7Ij8-_k5RrdBN6Z78dZJHFbAxoHdbRzOEbAUiDg33u7KACbOPN28wT-g0xdzHN-sYbQdHeWqFM_qEk8fYSHmnXYvr9-G1Z9Bkib2dcvfTMRJow1r_BwQX2_afzCEy8k-C081SUOP9IiMsrzzSQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
+    </div>
+    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
+    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
+  </div>
+  <div class="s-dots" id="sliderDots"></div>
+</section>
+
+<section class="info">
+  <div class="sec-head fade-in-up" style="max-width:900px;margin:0 auto 3rem;">
+    <span class="s-label">Information</span>
+    <h2 class="s-title">店舗情報</h2>
+  </div>
   <div class="info-grid">
-    <div class="info-item">
-      <h4>Address</h4>
-      <p>大阪府高槻市</p>
+    <div class="i-card fade-in-up d1">
+      <h3>アクセス</h3>
+      <p>大阪府高槻市出丸町２−２８</p>
+      <a href="https://maps.google.com/?cid=13280689858295980926" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
     </div>
-    <div class="info-item">
-      <h4>Tel</h4>
+    <div class="i-card fade-in-up d2">
+      <h3>お電話</h3>
       <p>072-674-0167</p>
-    </div>
-    <div class="info-item">
-      <h4>Hours</h4>
-      <p>月〜金　10:00 – 20:00<br>土日祝　9:00 – 19:00</p>
-    </div>
-    <div class="info-item">
-      <h4>Closed</h4>
-      <p>水曜定休</p>
+      <a href="tel:0726740167" class="i-btn">電話をかける</a>
     </div>
   </div>
 </section>
+
+<section class="hours">
+  <div class="sec-head fade-in-up" style="max-width:540px;margin:0 auto 3rem;">
+    <span class="s-label">Hours</span>
+    <h2 class="s-title">営業時間</h2>
+  </div>
+  <div class="h-wrap fade-in-up d1">
+    <table class="h-table">
+      <tr><td>毎日</td><td>6:30 〜 17:30</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="fade-in-up">
+    <h2>お気軽にご連絡ください</h2>
+    <p>早朝より営業しております。ご来店をお待ちしております。</p>
+    <a href="tel:0726740167" class="cta-btn">072-674-0167</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; COFFEE 館 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+</footer>
 
 <div class="demo-badge">※ Demo Page</div>
 
-<footer>
-  <p>© COFFEE 館 | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
-</footer>
+<script>
+  let cur = 0, total = 5;
+  const track = document.getElementById('sliderTrack');
+  const dotsWrap = document.getElementById('sliderDots');
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsWrap.appendChild(d);
+  }
+  function goTo(n) {
+    cur = (n + total) % total;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function changeSlide(dir) { goTo(cur + dir); }
+  setInterval(() => changeSlide(1), 3800);
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

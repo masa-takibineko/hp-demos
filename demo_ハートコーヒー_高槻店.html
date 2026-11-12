@@ -3,145 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ハートコーヒー 高槻店 | 高槻のカフェ</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>ハートコーヒー 高槻店</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0f0b08; --bg2:#1a1310; --gold:#c9a96e; --cream:#f5f0e8;
-  --text:#ede8de; --dim:#9a8878; --border:rgba(201,169,110,0.2);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(to bottom,rgba(15,11,8,0.95),transparent);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
-.nav-links a:hover{opacity:1;color:var(--gold);}
-/* HERO */
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background:radial-gradient(ellipse at center, #2a1f14 0%, #0f0b08 70%);
-  position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 60%, rgba(201,169,110,0.08) 0%, transparent 60%);}
-.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
-  color:var(--cream);letter-spacing:0.05em;line-height:1.1;margin-bottom:1rem;}
-.hero-sub{font-size:0.9rem;color:var(--dim);letter-spacing:0.2em;margin-bottom:3rem;}
-.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
-  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;
-  transition:all 0.3s;}
-.btn:hover{background:var(--gold);color:var(--bg);}
-/* CONCEPT */
-.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
-  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
-.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
-/* MENU */
-.menu-section{background:var(--bg2);padding:6rem 2rem;}
-.menu-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
-.menu-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
-.menu-card:hover{border-color:var(--gold);}
-.menu-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
-.menu-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
-.menu-price{margin-top:1rem;font-size:0.8rem;color:var(--cream);letter-spacing:0.1em;}
-/* INFO */
-.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
-.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
-.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
-/* DEMO BADGE */
-.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,169,110,0.15);
-  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
-  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
-footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
-@media(max-width:600px){
-  .info-grid{grid-template-columns:1fr;}
-  .nav-links{display:none;}
-}
+  :root {
+    --bg: #1a0f0a;
+    --gold: #d4a853;
+    --gold-light: #e8c97a;
+    --cream: #f5f0e8;
+    --text-light: #c8bfb0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--cream); font-family: 'Noto Serif JP', serif; overflow-x: hidden; }
+
+  /* HERO */
+  .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-size: cover; background-position: center;
+    transform: scale(1.08); transition: transform 10s ease;
+  }
+  .hero-bg.zoomed { transform: scale(1); }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(26,15,10,0.88) 0%, rgba(26,15,10,0.55) 60%, rgba(40,20,10,0.75) 100%); }
+  .hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
+  .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 1s 0.4s forwards; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.0; color: var(--cream); margin-bottom: 0.4rem; opacity: 0; animation: fadeUp 1s 0.7s forwards; }
+  .hero-name em { font-style: italic; color: var(--gold); }
+  .hero-jp { font-size: clamp(1rem, 2.5vw, 1.3rem); letter-spacing: 0.3em; color: var(--text-light); margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 1s 1s forwards; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.8rem; background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.5); padding: 0.7rem 1.8rem; border-radius: 100px; opacity: 0; animation: fadeUp 1s 1.3s forwards; }
+  .stars { color: var(--gold); letter-spacing: 0.05em; }
+  .rating-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+  .review-cnt { font-size: 0.82rem; color: var(--text-light); }
+  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeIn 1s 2s forwards; }
+  .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold)); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* GALLERY SLIDER */
+  .gallery { padding: 6rem 2rem; background: #110a06; }
+  .sec-head { text-align: center; margin-bottom: 3rem; }
+  .sec-eyebrow { font-size: 0.72rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 0.8rem; }
+  .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3.5vw, 2.5rem); color: var(--cream); }
+  .slider-wrap { position: relative; max-width: 920px; margin: 0 auto; border-radius: 2px; overflow: hidden; box-shadow: 0 25px 70px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,168,83,0.15); }
+  .slider-track { display: flex; transition: transform 0.75s cubic-bezier(0.77,0,0.175,1); }
+  .slide { min-width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .slide img:hover { transform: scale(1.03); }
+  .s-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(26,15,10,0.72); border: 1px solid rgba(212,168,83,0.6); color: var(--gold); width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 10; }
+  .s-btn:hover { background: var(--gold); color: var(--bg); }
+  .s-btn.prev { left: 1.2rem; } .s-btn.next { right: 1.2rem; }
+  .s-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(212,168,83,0.3); cursor: pointer; transition: all 0.3s; }
+  .dot.active { background: var(--gold); transform: scale(1.5); }
+
+  /* INFO */
+  .info { padding: 6rem 2rem; background: var(--bg); }
+  .info-cards { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 600px) { .info-cards { grid-template-columns: 1fr; } }
+  .i-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(212,168,83,0.18); padding: 2rem 2rem 1.8rem; border-radius: 2px; transition: border-color 0.4s, transform 0.4s; }
+  .i-card:hover { border-color: rgba(212,168,83,0.5); transform: translateY(-4px); }
+  .i-card .ico { font-size: 1.6rem; margin-bottom: 1rem; }
+  .i-card h3 { font-size: 0.7rem; letter-spacing: 0.45em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem; }
+  .i-card p { color: var(--text-light); line-height: 1.9; font-size: 0.93rem; }
+  .i-btn { display: inline-block; margin-top: 1.1rem; padding: 0.5rem 1.3rem; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.18em; border-radius: 1px; transition: all 0.3s; }
+  .i-btn:hover { background: var(--gold); color: var(--bg); }
+
+  /* HOURS */
+  .hours { padding: 6rem 2rem; background: #0d0806; }
+  .h-wrap { max-width: 580px; margin: 0 auto; }
+  .h-table { width: 100%; border-collapse: collapse; }
+  .h-table tr { border-bottom: 1px solid rgba(212,168,83,0.1); transition: background 0.3s; }
+  .h-table tr:hover { background: rgba(212,168,83,0.04); }
+  .h-table td { padding: 1.1rem 0.5rem; font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
+  .h-table td:first-child { color: var(--gold); font-weight: 700; min-width: 110px; }
+
+  /* CTA */
+  .cta { padding: 7rem 2rem; background: linear-gradient(135deg, #2d1507 0%, #1a0f0a 60%); text-align: center; }
+  .cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); color: var(--cream); margin-bottom: 1.2rem; }
+  .cta p { color: var(--text-light); margin-bottom: 2.5rem; line-height: 1.9; max-width: 480px; margin-inline: auto; }
+  .cta-btn { display: inline-block; padding: 1.1rem 3rem; background: var(--gold); color: var(--bg); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1rem; letter-spacing: 0.15em; font-weight: 700; border-radius: 1px; transition: all 0.35s; }
+  .cta-btn:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 10px 35px rgba(212,168,83,0.45); }
+
+  /* FOOTER */
+  footer { background: #080503; padding: 2.2rem 2rem; text-align: center; border-top: 1px solid rgba(212,168,83,0.12); }
+  footer p { color: rgba(200,191,176,0.45); font-size: 0.8rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* DEMO BADGE */
+  .demo-badge { position: fixed; bottom: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.78); color: #fff; padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.74rem; letter-spacing: 0.08em; z-index: 9999; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.12); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .fade-in-up { opacity:0; transform:translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade-in-up.visible { opacity:1; transform:translateY(0); }
+  .fade-in-up.d1 { transition-delay: 0.1s; } .fade-in-up.d2 { transition-delay: 0.2s; } .fade-in-up.d3 { transition-delay: 0.3s; }
 </style>
 </head>
 <body>
-<nav>
-  <div class="logo">ハートコーヒー 高槻店</div>
-  <ul class="nav-links">
-    <li><a href="#concept">CONCEPT</a></li>
-    <li><a href="#menu">MENU</a></li>
-    <li><a href="#info">ACCESS</a></li>
-  </ul>
-</nav>
 
 <section class="hero">
-  <p class="hero-eyebrow">Takatsuki Coffee</p>
-  <h1>ハートコーヒー 高槻店</h1>
-  <p class="hero-sub">一杯のコーヒーが、今日を特別にする</p>
-  <a href="#info" class="btn">アクセスを見る</a>
-</section>
-
-<section class="section" id="concept">
-  <p class="section-label">Our Story</p>
-  <h2>こだわりの一杯を、<br>あなたのそばに。</h2>
-  <p>高槻の街に根ざし、毎日丁寧に淹れたコーヒーをお届けしています。<br>
-  豆の選定から抽出まで、妥協なく追い求めた味をぜひご堪能ください。</p>
-</section>
-
-<div class="menu-section" id="menu">
-  <div style="max-width:900px;margin:0 auto;">
-    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Menu</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--cream);margin-top:1rem;">おすすめメニュー</h2>
-  </div>
-  <div class="menu-grid">
-    <div class="menu-card">
-      <h3>Blend Coffee</h3>
-      <p>自家焙煎のブレンドコーヒー。深みのある味わいと豊かな香りが特徴です。</p>
-      <p class="menu-price">¥ 450〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Latte</h3>
-      <p>エスプレッソとスチームミルクのやさしい一杯。ラテアートも楽しめます。</p>
-      <p class="menu-price">¥ 550〜</p>
-    </div>
-    <div class="menu-card">
-      <h3>Single Origin</h3>
-      <p>産地にこだわった豆を使ったスペシャルティコーヒー。季節ごとに変わります。</p>
-      <p class="menu-price">¥ 650〜</p>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Takatsuki, Osaka — Since Est.</p>
+    <h1 class="hero-name">Heart<em>Coffee</em></h1>
+    <p class="hero-jp">ハートコーヒー 高槻店</p>
+    <div class="hero-badge">
+      <span class="stars">★★★★☆</span>
+      <span class="rating-num">4.4</span>
+      <span class="review-cnt">（112件のレビュー）</span>
     </div>
   </div>
-</div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
 
-<section class="info-section" id="info">
-  <p class="section-label">Access</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
-  <div class="info-grid">
-    <div class="info-item">
-      <h4>Address</h4>
-      <p>大阪府高槻市</p>
+<section class="gallery">
+  <div class="sec-head fade-in-up">
+    <span class="sec-eyebrow">Gallery</span>
+    <h2 class="sec-title">店内の風景</h2>
+  </div>
+  <div class="slider-wrap fade-in-up d1">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="ハートコーヒー写真1" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真2" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真3" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真4" loading="lazy"></div>
+      <div class="slide"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="写真5" loading="lazy"></div>
     </div>
-    <div class="info-item">
-      <h4>Tel</h4>
+    <button class="s-btn prev" onclick="changeSlide(-1)" aria-label="前へ">&#8592;</button>
+    <button class="s-btn next" onclick="changeSlide(1)" aria-label="次へ">&#8594;</button>
+  </div>
+  <div class="s-dots" id="sliderDots"></div>
+</section>
+
+<section class="info">
+  <div class="sec-head fade-in-up">
+    <span class="sec-eyebrow">Information</span>
+    <h2 class="sec-title">店舗情報</h2>
+  </div>
+  <div class="info-cards">
+    <div class="i-card fade-in-up d1">
+      <div class="ico">&#128205;</div>
+      <h3>アクセス</h3>
+      <p>大阪府高槻市高槻町１２−７</p>
+      <a href="https://maps.google.com/?cid=2778037305847829364" target="_blank" rel="noopener" class="i-btn">Google Maps で開く</a>
+    </div>
+    <div class="i-card fade-in-up d2">
+      <div class="ico">&#128222;</div>
+      <h3>お電話</h3>
       <p>072-685-0900</p>
-    </div>
-    <div class="info-item">
-      <h4>Hours</h4>
-      <p>月〜金　10:00 – 20:00<br>土日祝　9:00 – 19:00</p>
-    </div>
-    <div class="info-item">
-      <h4>Closed</h4>
-      <p>水曜定休</p>
+      <a href="tel:0726850900" class="i-btn">電話をかける</a>
     </div>
   </div>
 </section>
+
+<section class="hours">
+  <div class="sec-head fade-in-up">
+    <span class="sec-eyebrow">Hours</span>
+    <h2 class="sec-title">営業時間</h2>
+  </div>
+  <div class="h-wrap fade-in-up d1">
+    <table class="h-table">
+      <tr><td>月〜金</td><td>10:00 〜 19:00</td></tr>
+      <tr><td>土・日</td><td>10:00 〜 18:00</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="fade-in-up">
+    <h2>お気軽にご連絡ください</h2>
+    <p>ご来店・お問い合わせはお電話にてお気軽にどうぞ。<br>スタッフ一同、心よりお待ちしております。</p>
+    <a href="tel:0726850900" class="cta-btn">072-685-0900</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; ハートコーヒー 高槻店 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a></p>
+</footer>
 
 <div class="demo-badge">※ Demo Page</div>
 
-<footer>
-  <p>© ハートコーヒー 高槻店 | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
-</footer>
+<script>
+  window.addEventListener('load', () => { document.getElementById('heroBg').classList.add('zoomed'); });
+
+  let cur = 0, total = 5;
+  const track = document.getElementById('sliderTrack');
+  const dotsWrap = document.getElementById('sliderDots');
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsWrap.appendChild(d);
+  }
+  function goTo(n) {
+    cur = (n + total) % total;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function changeSlide(dir) { goTo(cur + dir); }
+  setInterval(() => changeSlide(1), 3800);
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in-up').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

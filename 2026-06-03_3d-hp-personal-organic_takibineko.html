@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>takibineko | Developer & Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ── CSS Variables (Pattern D: Organic/Fluid) ── */
+:root{
+  --bg:#0a0a12;
+  --bg2:#0d0d1a;
+  --primary:#a78bfa;
+  --accent:#34d399;
+  --accent2:#f472b6;
+  --surface:rgba(167,139,250,0.08);
+  --surface-solid:rgba(14,13,24,0.96);
+  --border:rgba(167,139,250,0.18);
+  --text:#f0eafa;
+  --text-dim:#b0a0c4;   /* 修正: #5a4a6a(コントラスト比2:1) → #b0a0c4(7:1) */
+  --text-muted:#7a6a8a; /* 最も控えめな補助テキスト用 */
+  --glow-v:rgba(167,139,250,0.3);
+  --glow-e:rgba(52,211,153,0.3);
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:auto;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;overflow-x:hidden;cursor:none;}
+
+/* ── Demo Bar ── */
+#demo-bar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:rgba(10,10,18,0.7);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:7px 28px;display:flex;justify-content:space-between;align-items:center;
+}
+#demo-bar span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--primary);}
+#demo-bar a{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--primary);text-decoration:none;
+  border:1px solid var(--primary);padding:3px 14px;
+  transition:all .3s;
+}
+#demo-bar a:hover{background:var(--primary);color:var(--bg);}
+
+/* ── Custom Cursor ── */
+#cursor{
+  width:8px;height:8px;background:var(--primary);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9998;transition:transform .2s,opacity .2s;
+  box-shadow:0 0 12px var(--primary),0 0 24px var(--glow-v);
+}
+#cursor-ring{
+  width:36px;height:36px;border:1px solid rgba(167,139,250,0.5);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9997;transition:transform .4s,opacity .4s;
+}
+body:not(:hover) #cursor,body:not(:hover) #cursor-ring{opacity:0;}
+
+/* ── Scroll Progress ── */
+#progress-bar{
+  position:fixed;top:28px;left:0;height:2px;z-index:9990;
+  background:linear-gradient(to right,var(--primary),var(--accent));width:0%;
+}
+
+/* ── Hero Background Layers ── */
+#hero-bg{position:fixed;inset:0;z-index:0;}
+#hero-gradient{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(107,70,230,0.18) 0%,transparent 60%),
+              radial-gradient(ellipse at 70% 60%,rgba(16,185,129,0.12) 0%,transparent 60%),
+              var(--bg);
+}
+#hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity 2s ease;
+  /* mix-blend-mode:screen を削除 → 背景が明るくなってテキストが埋もれる問題を解消 */
+}
+#hero-video.loaded{opacity:0.5;}
+#hero-overlay-dim{
+  position:absolute;inset:0;
+  /* Hero中央のテキストエリアを確実に暗く保つ */
+  background:linear-gradient(to bottom,
+    rgba(8,8,15,0.55) 0%,
+    rgba(8,8,15,0.60) 45%,
+    rgba(8,8,15,0.72) 75%,
+    rgba(8,8,15,0.97) 100%);
+}
+
+/* ── Noise Grain ── */
+#grain{
+  position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+
+/* ── Three.js Canvas ── */
+#three-canvas{position:fixed;inset:0;z-index:3;display:block;pointer-events:none;}
+
+/* ── Scroll Spacer ── */
+#scroll-spacer{height:500vh;}
+
+/* ── NAV ── */
+#main-nav{
+  position:fixed;top:28px;left:0;right:0;z-index:200;
+  padding:1.4rem 5vw;display:flex;justify-content:space-between;align-items:center;
+  transition:all .5s;
+}
+#main-nav.solid{
+  background:rgba(10,10,18,0.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:0.6rem;
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;
+  color:var(--text);letter-spacing:0.05em;text-decoration:none;
+}
+.nav-logo img{
+  width:32px;height:32px;object-fit:contain;
+  filter:brightness(1.1);
+  transition:filter .3s;
+}
+.nav-logo:hover img{filter:drop-shadow(0 0 8px var(--primary)) brightness(1.2);}
+.nav-logo span{color:var(--primary);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--text);text-decoration:none;
+  transition:color .3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--primary);transition:width .3s;
+}
+.nav-links a:hover{color:var(--primary);}
+.nav-links a:hover::after{width:100%;}
+
+/* ── HUD ── */
+#hud{
+  position:fixed;top:50%;right:2rem;transform:translateY(-50%);
+  z-index:50;display:flex;flex-direction:column;gap:1.2rem;align-items:flex-end;
+}
+.hud-item{
+  display:flex;align-items:center;gap:0.6rem;opacity:0.2;
+  transition:all .4s;cursor:pointer;
+}
+.hud-item.active,.hud-item:hover{opacity:1;}
+.hud-dot{
+  width:5px;height:5px;border-radius:50%;
+  border:1px solid var(--primary);background:transparent;transition:all .4s;
+}
+.hud-item.active .hud-dot{
+  background:var(--primary);
+  box-shadow:0 0 8px var(--primary),0 0 16px var(--glow-v);
+}
+.hud-label{
+  font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;
+  color:var(--text-dim);text-transform:uppercase;
+}
+.hud-item.active .hud-label,.hud-item:hover .hud-label{color:var(--primary);}
+
+/* ── Hero Overlay ── */
+#hero-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:15;
+  pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 5vw;
+}
+.hero-eyebrow{
+  font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.5em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:2rem;
+  opacity:0;animation:fadeInUp 1s ease 0.6s forwards;
+  text-shadow:0 0 20px var(--glow-e);
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,13vw,9.5rem);font-weight:300;line-height:0.92;
+  color:#fff;letter-spacing:-0.02em;
+  text-shadow:0 2px 40px rgba(0,0,0,0.8);
+  opacity:0;animation:fadeInUp 1s ease 0.9s forwards;
+}
+.hero-title em{
+  font-style:italic;color:var(--primary);
+  text-shadow:0 0 60px var(--glow-v),0 0 120px var(--glow-v);
+}
+.hero-sub{
+  margin-top:2rem;
+  font-family:'DM Mono',monospace;font-size:clamp(0.7rem,1.5vw,0.88rem);
+  color:#d4c8e8; /* var(--text-dim)より明るく */
+  letter-spacing:0.12em;min-height:1.5em;
+  text-shadow:0 1px 12px rgba(0,0,0,0.9);
+  opacity:0;animation:fadeInUp 1s ease 1.2s forwards;
+}
+.hero-cta{
+  margin-top:3.5rem;display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fadeInUp 1s ease 1.5s forwards;pointer-events:all;
+}
+.btn-p{
+  padding:1rem 2.4rem;background:transparent;
+  border:1px solid var(--primary);color:var(--primary);
+  font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;
+  text-transform:uppercase;text-decoration:none;cursor:pointer;
+  position:relative;overflow:hidden;transition:color .4s;
+}
+.btn-p::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--primary),var(--accent2));
+  transform:translateX(-101%);transition:transform .4s;z-index:-1;
+}
+.btn-p:hover::before{transform:translateX(0);}
+.btn-p:hover{color:var(--bg);}
+.btn-s{
+  padding:1rem 2.4rem;background:transparent;
+  border:1px solid rgba(240,234,250,0.4);color:var(--text); /* 明るい色に修正 */
+  font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;
+  text-transform:uppercase;text-decoration:none;transition:all .4s;
+}
+.btn-s:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ── Scroll Hint ── */
+#scroll-hint{
+  position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  z-index:20;pointer-events:none;text-align:center;
+  opacity:0;animation:fadeIn 1s ease 2.2s forwards;
+}
+#scroll-hint span{
+  font-family:'DM Mono',monospace;font-size:0.55rem;
+  letter-spacing:0.4em;color:var(--text);text-transform:uppercase;
+  display:block;margin-bottom:0.6rem;
+  text-shadow:0 1px 8px rgba(0,0,0,0.8);
+}
+.scroll-line{
+  width:1px;height:45px;
+  background:linear-gradient(to bottom,var(--primary),transparent);
+  margin:0 auto;animation:scrollPulse 2s ease-in-out infinite;
+}
+
+/* ── Sections ── */
+.section{position:relative;z-index:10;padding:8rem 10vw;}
+/* セクション内テキストが背景と被らないよう保証 */
+.section p,.section li,.section span:not(.skill-tag):not(.stat-num):not(.section-label){
+  position:relative;z-index:1;
+}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-label{
+  font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.55em;
+  color:var(--primary);text-transform:uppercase;margin-bottom:0.8rem;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,6vw,4.5rem);font-weight:300;color:#fff;
+  margin-bottom:1.5rem;line-height:1.05;
+}
+.section-line{
+  width:50px;height:1px;
+  background:linear-gradient(to right,var(--primary),var(--accent));
+  margin-bottom:4rem;
+}
+
+/* Glass card */
+.card{
+  background:rgba(18,16,30,0.88); /* 十分な不透明度で文字を読みやすく */
+  border:1px solid var(--border);
+  border-radius:12px;padding:2.2rem;
+  transition:border-color .4s,transform .4s,box-shadow .4s;
+  backdrop-filter:blur(12px);
+}
+.card:hover{
+  border-color:rgba(167,139,250,0.35);
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(107,70,230,0.12);
+}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+
+/* About section */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.about-text p{color:var(--text-dim);line-height:2;font-size:0.95rem;margin-bottom:1.2rem;}
+.about-text p:last-child{margin-bottom:0;}
+.about-text strong{color:var(--text);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.stat-card{
+  background:rgba(18,16,30,0.88);border:1px solid var(--border);
+  border-radius:10px;padding:1.8rem;text-align:center;
+  backdrop-filter:blur(12px);
+}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:600;color:var(--primary);display:block;
+  text-shadow:0 0 40px var(--glow-v);
+}
+.stat-label{
+  font-family:'DM Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;
+  display:block;margin-top:0.4rem;
+}
+
+/* Skills */
+.skill-list{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:2rem;}
+.skill-tag{
+  font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;
+  color:var(--primary);border:1px solid rgba(167,139,250,0.25);
+  padding:0.4rem 1rem;border-radius:100px;
+  transition:all .3s;background:rgba(167,139,250,0.05);
+}
+.skill-tag:hover{background:rgba(167,139,250,0.12);border-color:var(--primary);}
+.skill-category{margin-bottom:2.5rem;}
+.skill-category h3{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;
+  color:var(--text);margin-bottom:1rem;
+}
+.skill-category h3 span{color:var(--accent);font-style:italic;}
+
+/* Works */
+.works-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.8rem;}
+.work-card{
+  background:rgba(18,16,30,0.92);border:1px solid var(--border);
+  border-radius:12px;padding:0;overflow:hidden;
+  transition:all .4s;cursor:pointer;
+  backdrop-filter:blur(12px);
+}
+.work-card:hover{
+  border-color:rgba(52,211,153,0.3);
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(52,211,153,0.08);
+}
+.work-thumb{
+  height:180px;
+  background:linear-gradient(135deg,rgba(107,70,230,0.2),rgba(52,211,153,0.1));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--primary);
+  border-bottom:1px solid var(--border);transition:all .4s;
+}
+.work-card:hover .work-thumb{
+  background:linear-gradient(135deg,rgba(107,70,230,0.35),rgba(52,211,153,0.2));
+}
+.work-info{padding:1.6rem;}
+.work-cat{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.work-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;
+  color:#fff;margin-bottom:0.6rem;
+}
+.work-desc{color:var(--text-dim);font-size:0.85rem;line-height:1.7;}
+.work-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.work-tag{
+  font-family:'DM Mono',monospace;font-size:0.58rem;
+  color:var(--text-dim);border:1px solid rgba(255,255,255,0.08);
+  padding:0.2rem 0.7rem;border-radius:4px;
+}
+
+/* Blog / Note */
+.note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+.note-card{
+  background:rgba(18,16,30,0.88);border:1px solid var(--border);
+  border-radius:12px;padding:1.8rem;transition:all .4s;
+  backdrop-filter:blur(12px);
+}
+.note-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-4px);}
+.note-date{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.8rem;
+}
+.note-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+  color:#fff;margin-bottom:0.6rem;line-height:1.4;
+}
+.note-excerpt{color:var(--text-dim);font-size:0.85rem;line-height:1.7;}
+
+/* Contact */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.contact-info h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:300;color:var(--text);
+  margin-bottom:1.5rem;line-height:1.5;
+}
+.contact-info p{color:var(--text-dim);line-height:2;font-size:0.92rem;margin-bottom:2rem;}
+.contact-links{display:flex;flex-direction:column;gap:0.8rem;}
+.contact-link{
+  font-family:'DM Mono',monospace;font-size:0.7rem;
+  color:var(--text-dim);text-decoration:none;letter-spacing:0.12em;
+  transition:color .3s;display:flex;align-items:center;gap:0.8rem;
+}
+.contact-link::before{
+  content:'→';color:var(--primary);font-size:0.9rem;transition:transform .3s;
+}
+.contact-link:hover{color:var(--primary);}
+.contact-link:hover::before{transform:translateX(4px);}
+.contact-cta{
+  display:flex;flex-direction:column;gap:1rem;padding-top:1rem;
+}
+
+/* Footer */
+footer{
+  position:relative;z-index:10;padding:3rem 10vw;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,10,18,0.9);backdrop-filter:blur(20px);
+}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;
+  color:var(--text-dim);
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  color:var(--text-dim);letter-spacing:0.15em;
+}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{
+  font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;
+  color:var(--text-dim);text-decoration:none;transition:color .3s;
+}
+.footer-links a:hover{color:var(--primary);}
+
+/* Animations */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(35px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes scrollPulse{0%,100%{opacity:0.2;}50%{opacity:1;}}
+
+/* ── Section Aurora Background ── */
+.section::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at var(--ax,30%) var(--ay,50%),
+    rgba(167,139,250,0.06) 0%,transparent 60%);
+  transition:background 0.8s ease;
+}
+#about::before{--ax:20%;--ay:60%;}
+#skills::before{--ax:80%;--ay:40%;background:radial-gradient(ellipse at 80% 40%,rgba(52,211,153,0.05) 0%,transparent 55%);}
+#works::before{--ax:50%;--ay:50%;}
+#note::before{background:radial-gradient(ellipse at 70% 30%,rgba(244,114,182,0.05) 0%,transparent 55%);}
+#contact::before{background:radial-gradient(ellipse at 30% 70%,rgba(167,139,250,0.08) 0%,transparent 60%);}
+
+/* ── Floating Micro Dots (CSS only) ── */
+.float-dot{
+  position:absolute;border-radius:50%;pointer-events:none;z-index:1;
+  animation:floatDot var(--fd,12s) ease-in-out var(--fdelay,0s) infinite;
+  opacity:0;
+}
+@keyframes floatDot{
+  0%{opacity:0;transform:translateY(0) scale(0.5);}
+  15%{opacity:var(--fop,0.4);}
+  85%{opacity:var(--fop,0.4);}
+  100%{opacity:0;transform:translateY(calc(var(--fy,-60px))) scale(1);}
+}
+
+/* ── Work Card 3D Tilt ── */
+.work-card{transform-style:preserve-3d;will-change:transform;}
+.work-card .work-thumb{
+  transition:background .4s,transform .3s;
+}
+.work-card:hover .work-thumb{transform:translateZ(8px);}
+.work-card .work-info{transform:translateZ(0);transition:transform .3s;}
+.work-card:hover .work-info{transform:translateZ(4px);}
+
+/* ── Card Shimmer on Hover ── */
+.work-card::after,.note-card::after,.stat-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(167,139,250,0.08) 50%,transparent 60%);
+  background-size:200% 100%;background-position:200% 0;
+  transition:background-position 0.6s ease;
+}
+.work-card:hover::after,.note-card:hover::after,.stat-card:hover::after{
+  background-position:-200% 0;
+}
+.work-card,.note-card,.stat-card{position:relative;overflow:hidden;}
+
+/* ── Skill Tag Wave ── */
+.skill-tag{
+  transition:all .3s;
+  opacity:0;transform:translateY(10px);
+}
+.skill-tag.revealed{opacity:1;transform:translateY(0);}
+.skill-tag.glowing{
+  background:rgba(167,139,250,0.18);
+  border-color:var(--primary);
+  box-shadow:0 0 12px rgba(167,139,250,0.4),0 0 24px rgba(167,139,250,0.15);
+  color:#fff;
+}
+
+/* ── Section Title Split Chars ── */
+.char{
+  display:inline-block;
+  opacity:0;transform:translateY(40px) rotateX(30deg);
+  transition:opacity 0.5s ease,transform 0.5s ease;
+}
+.char.in{opacity:1;transform:translateY(0) rotateX(0);}
+.char-space{display:inline-block;width:0.25em;}
+
+/* ── Skill Progress Bars ── */
+.skill-bar-wrap{margin-bottom:2rem;}
+.skill-bar-row{display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;}
+.skill-bar-name{
+  font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;
+  color:var(--text);min-width:140px;
+}
+.skill-bar-track{
+  flex:1;height:4px;background:rgba(167,139,250,0.12);
+  border-radius:2px;overflow:hidden;position:relative;
+}
+.skill-bar-fill{
+  height:100%;border-radius:2px;width:0%;
+  background:linear-gradient(to right,var(--primary),var(--accent));
+  transition:width 1.2s cubic-bezier(0.22,1,0.36,1);
+  box-shadow:0 0 8px rgba(167,139,250,0.5);
+}
+.skill-bar-pct{
+  font-family:'DM Mono',monospace;font-size:0.58rem;
+  color:var(--text-dim);min-width:32px;text-align:right;
+}
+
+/* ── Contact Pulse Ring ── */
+.contact-pulse-wrap{
+  position:relative;display:inline-block;
+}
+.pulse-ring{
+  position:absolute;inset:-20px;border-radius:50%;pointer-events:none;
+  border:1px solid rgba(167,139,250,0.3);
+  animation:pulseRing 2.5s ease-out infinite;
+}
+.pulse-ring:nth-child(2){animation-delay:0.8s;}
+.pulse-ring:nth-child(3){animation-delay:1.6s;}
+@keyframes pulseRing{
+  0%{transform:scale(0.85);opacity:0.8;}
+  100%{transform:scale(1.4);opacity:0;}
+}
+
+/* ── Magnetic Button ── */
+.btn-magnetic{transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);}
+
+/* ── Note card date line ── */
+.note-date{
+  font-family:'DM Mono',monospace;font-size:0.6rem;
+  color:var(--accent);letter-spacing:0.15em;margin-bottom:0.8rem;
+}
+
+/* ── Section divider line ── */
+.section-divider{
+  position:absolute;bottom:0;left:10vw;right:10vw;height:1px;z-index:2;
+  background:linear-gradient(to right,transparent,var(--border),transparent);
+}
+
+/* ── Hamburger Button ── */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:36px;height:36px;background:none;border:none;cursor:pointer;
+  padding:4px;z-index:300;position:relative;
+}
+.hamburger span{
+  display:block;width:22px;height:1px;background:var(--text);
+  transition:all .35s cubic-bezier(0.22,1,0.36,1);transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+/* ── Mobile Menu Overlay ── */
+#mobile-menu{
+  position:fixed;inset:0;z-index:250;
+  background:rgba(10,10,18,0.97);backdrop-filter:blur(24px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .4s ease;
+}
+#mobile-menu.open{opacity:1;pointer-events:all;}
+#mobile-menu a{
+  font-family:'DM Mono',monospace;font-size:1.1rem;letter-spacing:0.35em;
+  text-transform:uppercase;color:var(--text);text-decoration:none;
+  transition:color .3s;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .4s ease, transform .4s ease, color .3s;
+}
+#mobile-menu.open a{opacity:1;transform:translateY(0);}
+#mobile-menu.open a:nth-child(1){transition-delay:.05s;}
+#mobile-menu.open a:nth-child(2){transition-delay:.1s;}
+#mobile-menu.open a:nth-child(3){transition-delay:.15s;}
+#mobile-menu.open a:nth-child(4){transition-delay:.2s;}
+#mobile-menu a:hover{color:var(--primary);}
+#mobile-menu .mobile-contact-btn{
+  margin-top:1rem;padding:0.9rem 2.5rem;border:1px solid var(--primary);
+  color:var(--primary);font-size:0.75rem;letter-spacing:0.25em;
+  transition-delay:.25s !important;
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;}
+  .contact-wrap{grid-template-columns:1fr;}
+  #main-nav{padding:1rem 5vw;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  #hud{display:none;}
+  .section{padding:5rem 5vw;}
+  .hero-title{font-size:clamp(3rem,15vw,6rem);}
+  .works-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1.2rem;text-align:center;padding:2.5rem 5vw;}
+  .footer-links{gap:1.2rem;}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .hero-cta{flex-direction:column;align-items:center;}
+  .hero-cta a{width:100%;max-width:260px;text-align:center;}
+  .skill-tags{gap:0.5rem;}
+  .skill-tag{font-size:0.62rem;padding:0.35rem 0.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Demo Bar -->
+<div id="demo-bar">
+  <span>DEMO VERSION — Higgsfield AI × Three.js Portfolio</span>
+  <a href="#contact">お仕事の依頼</a>
+</div>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Scroll Progress -->
+<div id="progress-bar"></div>
+
+<!-- Hero Background -->
+<div id="hero-bg">
+  <div id="hero-gradient"></div>
+  <!-- Higgsfield 生成動画 (Pattern D: Organic/Fluid) -->
+  <video id="hero-video" autoplay muted loop playsinline>
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3DHVl0BBx3AB39cguctDjkf2NMW/hf_20260603_130426_19dcf246-f537-4aa5-9f35-1afdcfe88a10.mp4" type="video/mp4">
+    <!-- job_id: 19dcf246-f537-4aa5-9f35-1afdcfe88a10 -->
+  </video>
+  <div id="hero-overlay-dim"></div>
+</div>
+
+<!-- Grain Overlay -->
+<div id="grain"></div>
+
+<!-- Three.js Canvas (alpha:true で動画上に透明描画) -->
+<canvas id="three-canvas"></canvas>
+
+<!-- Scroll Spacer (Three.js ScrollTrigger 用) -->
+<div id="scroll-spacer"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#hero-overlay">
+    <img src="takibineko-logo.png" alt="takibineko logo">
+    taki<span>bineko</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#works">Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#works" class="mobile-link">Works</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="mobile-contact-btn mobile-link">お仕事の依頼</a>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-item active" data-target="hero-overlay">
+    <span class="hud-label">Hero</span>
+    <div class="hud-dot"></div>
+  </div>
+  <div class="hud-item" data-target="about">
+    <span class="hud-label">About</span>
+    <div class="hud-dot"></div>
+  </div>
+  <div class="hud-item" data-target="skills">
+    <span class="hud-label">Skills</span>
+    <div class="hud-dot"></div>
+  </div>
+  <div class="hud-item" data-target="works">
+    <span class="hud-label">Works</span>
+    <div class="hud-dot"></div>
+  </div>
+  <div class="hud-item" data-target="contact">
+    <span class="hud-label">Contact</span>
+    <div class="hud-dot"></div>
+  </div>
+</div>
+
+<!-- Hero Overlay Text -->
+<div id="hero-overlay">
+  <img src="takibineko-logo.png" alt="takibineko"
+    style="width:clamp(80px,12vw,140px);height:auto;margin-bottom:1.5rem;
+           filter:drop-shadow(0 0 24px rgba(167,139,250,0.5));
+           opacity:0;animation:fadeInUp 1s ease 0.3s forwards;">
+  <p class="hero-eyebrow">Developer &amp; Creator — AI × Automation</p>
+  <h1 class="hero-title">taki<em>bineko</em></h1>
+  <p class="hero-sub" id="typewriter"></p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-p">お仕事のご依頼はこちら</a>
+    <a href="#works" class="btn-s">実績を見る</a>
+  </div>
+</div>
+
+<!-- Scroll Hint -->
+<div id="scroll-hint">
+  <span>Scroll</span>
+  <div class="scroll-line"></div>
+</div>
+
+<!-- ── About ── -->
+<section class="section" id="about" style="background:rgba(8,8,15,0.96);backdrop-filter:blur(28px);">
+  <div class="section-divider"></div>
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Turning Ideas into<br><em style="font-style:italic;color:var(--primary);">Digital Reality</em></h2>
+    <div class="section-line"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>HP制作・ボット開発・AI自動化を中心に、<strong>業務をもっとシンプルに</strong>するためのソリューションを個人・中小企業向けに提供しています。</p>
+        <p>Claude・ChatGPTなどの最新AIを活用し、<strong>繰り返しの作業を自動化</strong>することで、あなたの時間を本当に大切なことに使えるようにします。</p>
+        <p>「技術は、使いこなしてこそ意味がある」という信念のもと、<strong>実用的で動くもの</strong>を作り続けています。</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-num" data-count="40">0</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-count="95">0</span>
+          <span class="stat-label">% 満足度</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-count="3">0</span>
+          <span class="stat-label">× 効率化</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" data-count="365">0</span>
+          <span class="stat-label">Days/Year</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section class="section" id="skills" style="background:rgba(8,8,15,0.94);backdrop-filter:blur(20px);">
+  <div class="section-divider"></div>
+  <div class="section-inner">
+    <p class="section-label">Skills</p>
+    <h2 class="section-title split-title">得意なこと</h2>
+    <div class="section-line"></div>
+
+    <!-- スキルバー -->
+    <div class="skill-bar-wrap" id="skill-bars">
+      <div class="skill-bar-row">
+        <span class="skill-bar-name">HP / LP 制作</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div>
+        <span class="skill-bar-pct">92%</span>
+      </div>
+      <div class="skill-bar-row">
+        <span class="skill-bar-name">AI 自動化</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="88"></div></div>
+        <span class="skill-bar-pct">88%</span>
+      </div>
+      <div class="skill-bar-row">
+        <span class="skill-bar-name">Bot 開発</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div>
+        <span class="skill-bar-pct">85%</span>
+      </div>
+      <div class="skill-bar-row">
+        <span class="skill-bar-name">SNS 自動化</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div>
+        <span class="skill-bar-pct">80%</span>
+      </div>
+      <div class="skill-bar-row">
+        <span class="skill-bar-name">Three.js / WebGL</span>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div>
+        <span class="skill-bar-pct">75%</span>
+      </div>
+    </div>
+
+    <!-- スキルタグ（波状グロー） -->
+    <div class="skill-category">
+      <h3>Web制作 <span>/ HP・LP</span></h3>
+      <div class="skill-list">
+        <span class="skill-tag">HTML / CSS / JS</span>
+        <span class="skill-tag">Three.js</span>
+        <span class="skill-tag">GSAP</span>
+        <span class="skill-tag">Next.js</span>
+        <span class="skill-tag">Tailwind CSS</span>
+        <span class="skill-tag">Framer Motion</span>
+        <span class="skill-tag">Figma</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>AI・自動化 <span>/ Bot開発</span></h3>
+      <div class="skill-list">
+        <span class="skill-tag">Claude API</span>
+        <span class="skill-tag">OpenAI API</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">n8n</span>
+        <span class="skill-tag">Make</span>
+        <span class="skill-tag">Zapier</span>
+        <span class="skill-tag">Slack Bot</span>
+        <span class="skill-tag">LINE Bot</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <h3>SNS・コンテンツ <span>/ 自動化</span></h3>
+      <div class="skill-list">
+        <span class="skill-tag">Threads API</span>
+        <span class="skill-tag">YouTube Shorts</span>
+        <span class="skill-tag">note自動投稿</span>
+        <span class="skill-tag">Higgsfield AI</span>
+        <span class="skill-tag">動画生成</span>
+        <span class="skill-tag">Canva API</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Works ── -->
+<section class="section" id="works" style="background:rgba(8,8,15,0.96);backdrop-filter:blur(28px);">
+  <div class="section-divider"></div>
+  <div class="section-inner">
+    <p class="section-label">Works</p>
+    <h2 class="section-title">制作実績</h2>
+    <div class="section-line"></div>
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="work-thumb">✦</div>
+        <div class="work-info">
+          <p class="work-cat">AI自動化</p>
+          <h3 class="work-title">SNS自動投稿システム</h3>
+          <p class="work-desc">Threads・YouTube・noteへの毎日自動投稿。Claude APIで文章生成からHiggsfield動画まで一気通貫で自動化。</p>
+          <div class="work-tags">
+            <span class="work-tag">Python</span>
+            <span class="work-tag">Claude API</span>
+            <span class="work-tag">Higgsfield</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb" style="color:var(--accent);">◈</div>
+        <div class="work-info">
+          <p class="work-cat">HP制作</p>
+          <h3 class="work-title">3D スクロールポートフォリオ</h3>
+          <p class="work-desc">Three.js × GSAP ScrollTrigger で宇宙をスクロールするインタラクティブポートフォリオ。カスタムカーソル・パーティクル実装。</p>
+          <div class="work-tags">
+            <span class="work-tag">Three.js</span>
+            <span class="work-tag">GSAP</span>
+            <span class="work-tag">HTML/CSS</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb" style="color:var(--accent2);">⬡</div>
+        <div class="work-info">
+          <p class="work-cat">Bot開発</p>
+          <h3 class="work-title">社内業務自動化Bot</h3>
+          <p class="work-desc">Slack連携・スプレッドシート操作・メール送信を自動化。週40時間の作業を5時間に圧縮。</p>
+          <div class="work-tags">
+            <span class="work-tag">Python</span>
+            <span class="work-tag">Slack API</span>
+            <span class="work-tag">Google Sheets</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-thumb" style="color:var(--primary);">⊗</div>
+        <div class="work-info">
+          <p class="work-cat">LP制作</p>
+          <h3 class="work-title">ペットサロン Next.js LP</h3>
+          <p class="work-desc">Next.js × Framer Motion × microCMSで構築。スライダー・ライトボックス・カスタムカーソル実装。Vercelデプロイ。</p>
+          <div class="work-tags">
+            <span class="work-tag">Next.js</span>
+            <span class="work-tag">Tailwind</span>
+            <span class="work-tag">microCMS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="section" id="contact" style="background:rgba(8,8,15,0.97);backdrop-filter:blur(28px);">
+  <div class="section-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">お仕事のご依頼</h2>
+    <div class="section-line"></div>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>まずはお気軽に<br>ご相談ください。</h3>
+        <p>HP制作・LP制作・業務自動化・Bot開発など、<br>どんな小さなことでもご相談いただけます。<br>初回相談は無料です。</p>
+        <div class="contact-links">
+          <a href="https://www.threads.net/@takibineko" class="contact-link" target="_blank">Threads でメッセージ</a>
+          <a href="mailto:baseball.masa.89@gmail.com" class="contact-link">メールで問い合わせ</a>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <div class="card" style="text-align:left;">
+          <p class="section-label" style="margin-bottom:0.5rem;">こんな方に</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.8rem;margin-top:1rem;">
+            <li style="color:var(--text-dim);font-size:0.9rem;display:flex;gap:0.6rem;">
+              <span style="color:var(--accent);">✓</span>インパクトのあるHPを作りたい
+            </li>
+            <li style="color:var(--text-dim);font-size:0.9rem;display:flex;gap:0.6rem;">
+              <span style="color:var(--accent);">✓</span>繰り返しの作業を自動化したい
+            </li>
+            <li style="color:var(--text-dim);font-size:0.9rem;display:flex;gap:0.6rem;">
+              <span style="color:var(--accent);">✓</span>AIをビジネスに活用したい
+            </li>
+            <li style="color:var(--text-dim);font-size:0.9rem;display:flex;gap:0.6rem;">
+              <span style="color:var(--accent);">✓</span>SNS運用を自動化したい
+            </li>
+          </ul>
+          <div style="margin-top:2rem;display:flex;justify-content:center;">
+            <div class="contact-pulse-wrap">
+              <div class="pulse-ring"></div>
+              <div class="pulse-ring"></div>
+              <div class="pulse-ring"></div>
+              <a href="mailto:baseball.masa.89@gmail.com" class="btn-p btn-magnetic" style="display:inline-block;position:relative;z-index:1;">相談してみる →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">taki<span style="color:var(--primary)">bineko</span></div>
+  <div class="footer-copy">© 2026 takibineko. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="https://www.threads.net/@takibineko" target="_blank">Threads</a>
+  </div>
+</footer>
+
+<script>
+// ── Cursor ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = (mx - 4) + 'px';
+  cursor.style.top  = (my - 4) + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.1;
+  ry += (my - ry) * 0.1;
+  cursorRing.style.left = (rx - 18) + 'px';
+  cursorRing.style.top  = (ry - 18) + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.card,.work-card,.note-card,.skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(3)';
+    cursor.style.opacity = '0.5';
+    cursorRing.style.transform = 'scale(2)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    cursor.style.opacity = '1';
+    cursorRing.style.transform = 'scale(1)';
+  });
+});
+
+// ── Progress Bar ──
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('main-nav').classList.toggle('solid', window.scrollY > 60);
+  // Hero overlay フェードアウト
+  const heroOpacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.6));
+  document.getElementById('hero-overlay').style.opacity = heroOpacity;
+  document.getElementById('scroll-hint').style.opacity = heroOpacity;
+});
+
+// ── Hamburger Menu ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('#mobile-menu .mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ── Video Fallback ──
+const vid = document.getElementById('hero-video');
+const isMobile = window.innerWidth < 768;
+if (isMobile) {
+  vid.style.display = 'none';
+} else {
+  vid.addEventListener('canplaythrough', () => vid.classList.add('loaded'));
+}
+
+// ── Typewriter ──
+const phrases = ['HP制作 / AI自動化', 'Developer & Creator', 'Bot開発 / SNS自動化', 'Turning Ideas into Reality'];
+let pi = 0, ci = 0, del = false;
+const tw = document.getElementById('typewriter');
+function type() {
+  const cur = phrases[pi];
+  tw.textContent = cur.substring(0, del ? ci - 1 : ci + 1);
+  del ? ci-- : ci++;
+  let d = del ? 35 : 80;
+  if (!del && ci === cur.length) { d = 2000; del = true; }
+  else if (del && ci === 0) { del = false; pi = (pi + 1) % phrases.length; d = 400; }
+  setTimeout(type, d);
+}
+setTimeout(type, 1800);
+
+// ── Three.js ──
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.getElementById('three-canvas'),
+  antialias: true,
+  alpha: true
+});
+renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1 : 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x000000, 0); // 完全透明
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 100);
+camera.position.set(0, 0, 5.5);
+
+// Lights
+const aLight = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(aLight);
+const pLight1 = new THREE.PointLight(0xa78bfa, 3, 25);
+pLight1.position.set(4, 4, 4);
+scene.add(pLight1);
+const pLight2 = new THREE.PointLight(0x34d399, 2, 25);
+pLight2.position.set(-4, -3, 3);
+scene.add(pLight2);
+const pLight3 = new THREE.PointLight(0xf472b6, 1.5, 20);
+pLight3.position.set(0, 5, -2);
+scene.add(pLight3);
+
+// Main Sphere (Pattern D — organic feel)
+const sphereGeo = new THREE.SphereGeometry(1.6, 64, 64);
+const sphereMat = new THREE.MeshPhongMaterial({
+  color: 0xa78bfa,
+  emissive: 0x2a1060,
+  shininess: 80,
+  transparent: true,
+  opacity: 0.18,
+  wireframe: false,
+});
+const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+scene.add(sphere);
+
+// Wireframe overlay
+const wGeo = new THREE.SphereGeometry(1.62, 28, 28);
+const wMat = new THREE.MeshBasicMaterial({
+  color: 0xa78bfa, wireframe: true,
+  transparent: true, opacity: 0.12,
+});
+const wireSphere = new THREE.Mesh(wGeo, wMat);
+scene.add(wireSphere);
+
+// Orbiting spheres x3
+const orbiters = [];
+const orbitData = [
+  { r: 2.8, speed: 0.45, size: 0.12, color: 0x34d399, tilt: 0.4 },
+  { r: 3.4, speed: -0.3, size: 0.08, color: 0xf472b6, tilt: 1.1 },
+  { r: 2.2, speed: 0.7,  size: 0.06, color: 0xa78bfa, tilt: 0.8 },
+];
+orbitData.forEach(d => {
+  const g = new THREE.SphereGeometry(d.size, 8, 8);
+  const m = new THREE.MeshBasicMaterial({
+    color: d.color, transparent: true, opacity: 0.9,
+  });
+  const mesh = new THREE.Mesh(g, m);
+  scene.add(mesh);
+  orbiters.push({ mesh, ...d, angle: Math.random() * Math.PI * 2 });
+});
+
+// Torus ring
+const torusGeo = new THREE.TorusGeometry(2.1, 0.006, 8, 120);
+const torusMat = new THREE.LineBasicMaterial({
+  color: 0xa78bfa, transparent: true, opacity: 0.2,
+});
+const torusEdges = new THREE.LineSegments(new THREE.EdgesGeometry(torusGeo), torusMat);
+torusEdges.rotation.x = Math.PI / 3;
+scene.add(torusEdges);
+
+// Particles
+const pCount = isMobile ? 350 : 1000;
+const pPos = new Float32Array(pCount * 3);
+const pOrig = new Float32Array(pCount * 3);
+for (let i = 0; i < pCount * 3; i++) {
+  const v = (Math.random() - 0.5) * 18;
+  pPos[i] = v;
+  pOrig[i] = v;
+}
+const pGeo = new THREE.BufferGeometry();
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({
+  color: 0xa78bfa, size: 0.028, transparent: true, opacity: 0.45,
+});
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+// GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+gsap.to(camera.position, {
+  z: 3.5, y: -1,
+  scrollTrigger: {
+    trigger: '#scroll-spacer',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 2,
+  }
+});
+gsap.to(sphere.rotation, {
+  y: Math.PI * 2,
+  scrollTrigger: {
+    trigger: '#scroll-spacer',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 3,
+  }
+});
+
+// HUD
+const hudItems = document.querySelectorAll('.hud-item');
+const hudTargets = ['hero-overlay','about','skills','works','contact'];
+// noteセクション削除済み
+hudTargets.forEach((id, i) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  ScrollTrigger.create({
+    trigger: el, start: 'top 60%', end: 'bottom 40%',
+    onEnter:     () => { hudItems.forEach(h => h.classList.remove('active')); hudItems[i]?.classList.add('active'); },
+    onEnterBack: () => { hudItems.forEach(h => h.classList.remove('active')); hudItems[i]?.classList.add('active'); },
+  });
+});
+hudItems.forEach((item, i) => {
+  item.addEventListener('click', () => {
+    const el = document.getElementById(hudTargets[i]);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Section fade in
+document.querySelectorAll('.section').forEach(sec => {
+  gsap.fromTo(sec, { opacity: 0, y: 50 }, {
+    opacity: 1, y: 0, duration: 1.2, ease: 'power2.out',
+    scrollTrigger: { trigger: sec, start: 'top 82%' }
+  });
+});
+document.querySelectorAll('.card,.work-card,.note-card,.stat-card').forEach((el, i) => {
+  gsap.fromTo(el, { opacity: 0, y: 30 }, {
+    opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+    delay: (i % 4) * 0.1,
+    scrollTrigger: { trigger: el, start: 'top 90%' }
+  });
+});
+
+// Count-up animation
+document.querySelectorAll('[data-count]').forEach(el => {
+  const target = parseInt(el.dataset.count);
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%',
+    onEnter: () => {
+      let cur = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        el.textContent = Math.floor(cur) + (el.dataset.count == '95' ? '%' : el.dataset.count == '3' ? 'x' : '+');
+        if (cur >= target) clearInterval(timer);
+      }, 16);
+    }, once: true
+  });
+});
+
+// Animate
+let time = 0;
+const origPos = sphereGeo.attributes.position.array.slice();
+
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.008;
+
+  // Sphere vertex displacement (organic morph)
+  const posArr = sphereGeo.attributes.position.array;
+  for (let i = 0; i < posArr.length; i += 3) {
+    const ox = origPos[i], oy = origPos[i+1], oz = origPos[i+2];
+    const noise = Math.sin(ox * 1.8 + time) * Math.cos(oy * 1.8 + time * 0.7) * 0.12;
+    const len = Math.sqrt(ox*ox + oy*oy + oz*oz);
+    const scale = (1.0 + noise) / len;
+    posArr[i]   = ox * scale;
+    posArr[i+1] = oy * scale;
+    posArr[i+2] = oz * scale;
+  }
+  sphereGeo.attributes.position.needsUpdate = true;
+  sphereGeo.computeVertexNormals();
+
+  // Wireframe gentle rotation
+  wireSphere.rotation.y = time * 0.12;
+  wireSphere.rotation.x = time * 0.06;
+
+  // Orbiters
+  orbiters.forEach(o => {
+    o.angle += o.speed * 0.012;
+    o.mesh.position.x = Math.cos(o.angle) * o.r;
+    o.mesh.position.y = Math.sin(o.angle * 0.6) * o.r * 0.3 * Math.sin(o.tilt);
+    o.mesh.position.z = Math.sin(o.angle) * o.r * 0.5;
+  });
+
+  // Torus slow spin
+  torusEdges.rotation.z = time * 0.08;
+
+  // Particles drift
+  const pp = pGeo.attributes.position.array;
+  for (let i = 0; i < pp.length; i += 3) {
+    pp[i+1] += 0.004;
+    if (pp[i+1] > 9) pp[i+1] = -9;
+  }
+  pGeo.attributes.position.needsUpdate = true;
+  particles.rotation.y = time * 0.025;
+
+  // Light animation
+  pLight1.position.x = Math.sin(time * 0.4) * 5;
+  pLight1.position.y = Math.cos(time * 0.3) * 4;
+  pLight2.position.x = Math.cos(time * 0.35) * -5;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ── 後半セクション アニメーション群 ──
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// ── 1. セクションタイトル フェード＋スライドイン (文字分割は日本語バグ回避で行単位に) ──
+document.querySelectorAll('.section-title').forEach(el => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 50, filter: 'blur(8px)' },
+    {
+      opacity: 1, y: 0, filter: 'blur(0px)',
+      duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 82%', once: true }
+    }
+  );
+});
+
+// ── 2. Skill Tag 波状グロー ──
+const allTags = document.querySelectorAll('.skill-tag');
+allTags.forEach(tag => tag.style.transition = 'all 0.4s ease');
+
+const tagObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const tags = entry.target.querySelectorAll('.skill-tag');
+    tags.forEach((tag, i) => {
+      // 出現アニメーション
+      setTimeout(() => {
+        tag.classList.add('revealed');
+      }, i * 60);
+      // グロー波
+      setTimeout(() => {
+        tag.classList.add('glowing');
+        setTimeout(() => tag.classList.remove('glowing'), 600);
+      }, i * 80 + 200);
+    });
+    tagObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.skill-list').forEach(list => tagObserver.observe(list));
+
+// 初期状態でページ内にあるものは即出現
+document.querySelectorAll('.skill-tag').forEach(tag => {
+  const rect = tag.getBoundingClientRect();
+  if (rect.top < window.innerHeight) tag.classList.add('revealed');
+});
+
+// ── 3. Skill Progress Bars ──
+ScrollTrigger.create({
+  trigger: '#skill-bars',
+  start: 'top 75%',
+  onEnter: () => {
+    document.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.width = bar.dataset.pct + '%';
+      }, i * 150);
+    });
+  },
+  once: true
+});
+
+// ── 4. Work Card 3D Tilt ──
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    card.style.transform =
+      `perspective(800px) rotateY(${dx * 8}deg) rotateX(${-dy * 6}deg) translateY(-6px) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ── 5. Stat Card Tilt ──
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const dx = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    const dy = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+    card.style.transform =
+      `perspective(600px) rotateY(${dx * 12}deg) rotateX(${-dy * 10}deg) scale(1.04)`;
+    card.style.boxShadow = `${-dx*8}px ${-dy*8}px 30px rgba(167,139,250,0.15)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
+});
+
+// ── 6. 磁気ボタン (Magnetic Button) ──
+document.querySelectorAll('.btn-magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    btn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.35}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// ── 7. フローティング マイクロドット (各セクションに動的生成) ──
+document.querySelectorAll('.section').forEach(sec => {
+  const colors = ['rgba(167,139,250,', 'rgba(52,211,153,', 'rgba(244,114,182,'];
+  for (let i = 0; i < 6; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'float-dot';
+    const size = Math.random() * 4 + 2;
+    const color = colors[i % colors.length];
+    const opacity = (Math.random() * 0.25 + 0.1).toFixed(2);
+    dot.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${color}${opacity});
+      left:${Math.random() * 90 + 5}%;
+      top:${Math.random() * 80 + 10}%;
+      --fd:${(Math.random() * 8 + 8).toFixed(1)}s;
+      --fdelay:-${(Math.random() * 8).toFixed(1)}s;
+      --fy:-${(Math.random() * 80 + 40).toFixed(0)}px;
+      --fop:${opacity};
+      box-shadow:0 0 ${size*3}px ${color}0.4);
+    `;
+    sec.appendChild(dot);
+  }
+});
+
+// ── 9. Contact Links 順次出現 ──
+gsap.utils.toArray('.contact-link').forEach((link, i) => {
+  gsap.fromTo(link,
+    { opacity: 0, x: -30 },
+    {
+      opacity: 1, x: 0,
+      duration: 0.6, ease: 'power2.out',
+      delay: i * 0.12,
+      scrollTrigger: { trigger: link, start: 'top 90%', once: true }
+    }
+  );
+});
+
+// ── 10. Skill Category タイトル スライドイン ──
+gsap.utils.toArray('.skill-category h3').forEach((h, i) => {
+  gsap.fromTo(h,
+    { opacity: 0, x: -40 },
+    {
+      opacity: 1, x: 0,
+      duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: h, start: 'top 85%', once: true }
+    }
+  );
+});
+
+// ── 11. About テキスト 行ごとに出現 ──
+gsap.utils.toArray('.about-text p').forEach((p, i) => {
+  gsap.fromTo(p,
+    { opacity: 0, y: 20 },
+    {
+      opacity: 1, y: 0,
+      duration: 0.7, ease: 'power2.out',
+      delay: i * 0.1,
+      scrollTrigger: { trigger: p, start: 'top 88%', once: true }
+    }
+  );
+});
+
+// ── 12. Work Thumb アイコン ぷるぷる ──
+document.querySelectorAll('.work-thumb').forEach(thumb => {
+  thumb.addEventListener('mouseenter', () => {
+    gsap.to(thumb, { scale: 1.2, rotation: 15, duration: 0.3, ease: 'back.out(3)' });
+  });
+  thumb.addEventListener('mouseleave', () => {
+    gsap.to(thumb, { scale: 1, rotation: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
+  });
+});
+
+// ── 13. Section Line アニメーション ──
+gsap.utils.toArray('.section-line').forEach(line => {
+  gsap.fromTo(line,
+    { scaleX: 0, transformOrigin: 'left center' },
+    {
+      scaleX: 1,
+      duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: line, start: 'top 85%', once: true }
+    }
+  );
+});
+</script>
+</body>
+</html>
