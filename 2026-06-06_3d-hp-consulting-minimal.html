@@ -14,12 +14,9 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:auto;}
 body{background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
-#demo-bar{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:6px 24px;display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--primary);}
-#demo-bar a{color:var(--primary);text-decoration:none;border:1px solid var(--primary);padding:3px 12px;font-size:9px;transition:all .3s;}
-#demo-bar a:hover{background:var(--primary);color:var(--bg);}
 .cursor{width:8px;height:8px;background:var(--primary);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;box-shadow:0 0 10px var(--primary),0 0 20px var(--primary);}
 .cursor-ring{width:32px;height:32px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9997;}
-#progress-bar{position:fixed;top:28px;left:0;height:2px;z-index:9990;background:linear-gradient(to right,var(--primary),var(--accent));width:0%;transition:width .1s linear;}
+#progress-bar{position:fixed;top:0;left:0;height:2px;z-index:9990;background:linear-gradient(to right,var(--primary),var(--accent));width:0%;transition:width .1s linear;}
 #hero-bg{position:fixed;inset:0;z-index:0;}
 #hero-gradient{position:absolute;inset:0;background:linear-gradient(135deg,var(--bg) 0%,rgba(0,0,0,0.7) 100%);}
 #hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.5s ease;}
@@ -29,7 +26,7 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
 #scroll-veil{position:fixed;inset:0;background:#000;opacity:0;z-index:9;pointer-events:none;transition:opacity 0.06s linear;}
 #scroll-spacer{height:80vh;}
 @media(max-width:900px){#scroll-spacer{display:none;}}
-#main-nav{position:fixed;top:28px;left:0;right:0;z-index:200;padding:1.2rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s;}
+#main-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1.2rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s;}
 #main-nav.solid{background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);}
 .nav-links{display:flex;gap:2rem;list-style:none;}
 .nav-links a{color:var(--text-dim);text-decoration:none;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;transition:color .3s;}
@@ -114,7 +111,6 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;}
 </style>
 </head>
 <body>
-<div id="demo-bar"><span>DEMO — 3D HP × UI/UX PRO MAX</span><a href="#contact">お問い合わせ</a></div>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
 <div id="progress-bar"></div>
@@ -140,9 +136,7 @@ body{font-family:'Inter','Noto Sans JP',sans-serif;}
 <div id="hero-overlay">
   <p class="hero-eyebrow">Management Consulting · Strategy · Transformation</p>
   <h1 class="hero-title-e">MERIDIAN<br><span style="color:var(--accent);">CONSULTING</span></h1>
-  <div class="hero-kpis">
-    <div><span class="hero-kpi-num">150+</span><span class="hero-kpi-label">支援企業</span></div>
-    <div><span class="hero-kpi-num">¥12B+</span><span class="hero-kpi-label">創出価値</span></div>
+<div><span class="hero-kpi-num">¥12B+</span><span class="hero-kpi-label">創出価値</span></div>
     <div><span class="hero-kpi-num">98%</span><span class="hero-kpi-label">継続率</span></div>
   </div>
   <div class="hero-cta">
@@ -332,9 +326,5 @@ if(!isMobile){
   updateVeil();
 })();
 </script>
-</body>
-</html>
-</body>
-</html>
 </body>
 </html>
