@@ -3,19 +3,267 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HP制作デモ一覧</title>
+<title>takibineko | HP制作デモ一覧</title>
+<meta name="description" content="takibineko — Web制作・AI自動化・Bot開発のフリーランス開発者のデモポートフォリオ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body { font-family: sans-serif; max-width: 600px; margin: 4rem auto; padding: 1rem; }
-h1 { font-size: 1.4rem; margin-bottom: 2rem; }
-a { display: block; padding: 1rem; margin-bottom: 1rem; background: #f5f5f5; text-decoration: none; color: #333; border-radius: 4px; }
-a:hover { background: #e0e0e0; }
+:root{
+  --bg:#1e1a5e;
+  --primary:#e0ccff;
+  --primary-d:#b899ff;
+  --accent:#5fffd8;
+  --accent2:#ffaaee;
+  --gold:#f5da96;
+  --border:rgba(224,204,255,0.25);
+  --text:#ffffff;
+  --text-dim:#c8bcf0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Mono',monospace;
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(100,60,255,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(40,200,160,0.30) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 10%, rgba(220,100,180,0.25) 0%, transparent 45%);
+}
+
+/* Header */
+header{
+  padding:3.5rem 5vw 2rem;
+  max-width:1000px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:600;letter-spacing:0.04em;
+  color:var(--text);
+}
+.logo span{color:var(--primary);}
+.header-sub{
+  font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--text-dim);
+}
+
+/* Main layout */
+main{max-width:1000px;margin:0 auto;padding:3rem 5vw 6rem;}
+
+/* Featured section */
+.section-label{
+  font-size:1rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:1.5rem;display:block;
+  font-weight:500;
+}
+
+/* Portfolio card — featured */
+.portfolio-featured{
+  display:block;text-decoration:none;
+  background:linear-gradient(135deg,rgba(100,60,255,0.28),rgba(40,200,160,0.14));
+  border:1px solid rgba(224,204,255,0.4);
+  border-radius:16px;padding:2.8rem;
+  position:relative;overflow:hidden;
+  transition:transform .4s,border-color .4s,box-shadow .4s;
+  margin-bottom:3rem;
+}
+.portfolio-featured::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(167,139,250,0.07) 50%,transparent 60%);
+  background-size:200% 100%;background-position:200% 0;
+  transition:background-position .6s ease;
+}
+.portfolio-featured:hover::before{background-position:-200% 0;}
+.portfolio-featured:hover{
+  transform:translateY(-4px);
+  border-color:rgba(167,139,250,0.55);
+  box-shadow:0 24px 64px rgba(100,60,255,0.18),0 0 0 1px rgba(167,139,250,0.2);
+}
+.pf-eyebrow{
+  font-size:0.72rem;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;display:block;
+}
+.pf-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,5vw,3rem);font-weight:300;
+  color:#fff;line-height:1.1;margin-bottom:1rem;
+  text-shadow:0 0 40px rgba(167,139,250,0.3);
+}
+.pf-title span{color:var(--primary);font-style:italic;}
+.pf-desc{
+  color:var(--text-dim);font-size:0.84rem;line-height:1.9;
+  letter-spacing:0.04em;max-width:600px;margin-bottom:1.8rem;
+}
+.pf-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem;}
+.pf-tag{
+  font-size:0.74rem;letter-spacing:0.14em;
+  color:var(--primary-d);border:1px solid rgba(184,153,255,0.3);
+  padding:0.3rem 0.9rem;border-radius:100px;
+  background:rgba(184,153,255,0.06);
+}
+.pf-cta{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--primary);border:1px solid var(--primary);
+  padding:0.75rem 1.8rem;border-radius:4px;
+  transition:all .3s;
+}
+.pf-cta:hover{background:var(--primary);color:var(--bg);}
+.pf-badge{
+  position:absolute;top:2rem;right:2rem;
+  font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--accent);border:1px solid rgba(95,255,216,0.3);
+  padding:0.3rem 0.8rem;border-radius:100px;
+  background:rgba(95,255,216,0.06);
+}
+
+/* Demo grid */
+.demo-section{margin-top:1rem;}
+.demo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+.demo-card{
+  display:block;text-decoration:none;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;padding:1.4rem 1.6rem;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.demo-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(105deg,transparent 40%,rgba(167,139,250,0.05) 50%,transparent 60%);
+  background-size:200% 100%;background-position:200% 0;
+  transition:background-position .5s ease;
+}
+.demo-card:hover::after{background-position:-200% 0;}
+.demo-card:hover{
+  border-color:rgba(224,204,255,0.4);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(60,40,180,0.15);
+}
+.demo-plan{
+  font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;
+  margin-bottom:0.4rem;display:block;
+}
+.demo-plan.premium{color:var(--gold);}
+.demo-plan.standard{color:var(--primary);}
+.demo-plan.light{color:var(--text-dim);}
+.demo-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:400;color:#fff;
+  margin-bottom:0.3rem;line-height:1.3;
+}
+.demo-type{
+  font-size:0.74rem;letter-spacing:0.08em;
+  color:var(--text-dim);
+}
+.demo-arrow{
+  position:absolute;right:1.4rem;top:50%;transform:translateY(-50%);
+  font-size:0.8rem;color:var(--primary);
+  opacity:0;transition:opacity .3s,transform .3s;
+}
+.demo-card:hover .demo-arrow{opacity:1;transform:translateY(-50%) translateX(3px);}
+
+/* Footer */
+footer{
+  max-width:1000px;margin:0 auto;
+  padding:1.5rem 5vw 3rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.72rem;letter-spacing:0.15em;color:var(--text-dim);
+}
+footer a{color:var(--text-dim);text-decoration:none;transition:color .3s;}
+footer a:hover{color:var(--primary);}
+
+@media(max-width:600px){
+  header{flex-direction:column;gap:0.8rem;align-items:flex-start;}
+  .portfolio-featured{padding:2rem 1.4rem;}
+  .pf-badge{position:static;display:inline-block;margin-bottom:1rem;}
+  .demo-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:0.8rem;}
+}
 </style>
 </head>
 <body>
-<h1>HP制作デモページ</h1>
-<a href="demo_lumiere.html">LUMIÈRE hair atelier（高級ヘアサロン / プレミアムプラン：AI動画×3D・管理画面付き）</a>
-<a href="demo_jasmine.html">ジャスミン（整体・マッサージ）</a>
-<a href="demo_over365.html">Over365 松本店（整体・マッサージ）</a>
-<a href="demo_thaithai.html">Thai Thai Massage（タイ古式）</a>
+
+<header>
+  <div class="logo">taki<span>bineko</span></div>
+  <div class="header-sub">Web × AI × Automation</div>
+</header>
+
+<main>
+  <!-- Portfolio -->
+  <span class="section-label">My Portfolio</span>
+  <a class="portfolio-featured" href="2026-11-12_portfolio_v3_takibineko.html">
+    <span class="pf-badge">Updated Nov 2026</span>
+    <span class="pf-eyebrow">takibineko — Developer & Creator</span>
+    <h1 class="pf-title">taki<span>bineko</span><br>Portfolio</h1>
+    <p class="pf-desc">Web制作 × AI自動化 × Bot開発。Three.js / GSAP / Next.js を使ったインタラクティブなWebと、Claude API × Python による業務自動化が得意なフリーランス開発者のポートフォリオ。</p>
+    <div class="pf-tags">
+      <span class="pf-tag">Three.js</span>
+      <span class="pf-tag">GSAP</span>
+      <span class="pf-tag">Next.js</span>
+      <span class="pf-tag">Claude API</span>
+      <span class="pf-tag">Python</span>
+      <span class="pf-tag">Higgsfield AI</span>
+    </div>
+    <span class="pf-cta">ポートフォリオを見る →</span>
+  </a>
+
+  <!-- Demos -->
+  <div class="demo-section">
+    <span class="section-label">HP制作デモ</span>
+    <div class="demo-grid">
+
+      <a class="demo-card" href="demo_lumiere.html">
+        <span class="demo-plan premium">Premium Plan</span>
+        <div class="demo-name">Lumière hair atelier</div>
+        <div class="demo-type">高級ヘアサロン — AI動画 × 3D × 管理画面</div>
+        <span class="demo-arrow">→</span>
+      </a>
+
+      <a class="demo-card" href="demo_jasmine.html">
+        <span class="demo-plan standard">Standard Plan</span>
+        <div class="demo-name">ジャスミン</div>
+        <div class="demo-type">整体・マッサージサロン</div>
+        <span class="demo-arrow">→</span>
+      </a>
+
+      <a class="demo-card" href="demo_over365.html">
+        <span class="demo-plan standard">Standard Plan</span>
+        <div class="demo-name">Over365 松本店</div>
+        <div class="demo-type">整体・マッサージサロン</div>
+        <span class="demo-arrow">→</span>
+      </a>
+
+      <a class="demo-card" href="demo_thaithai.html">
+        <span class="demo-plan standard">Standard Plan</span>
+        <div class="demo-name">Thai Thai Massage</div>
+        <div class="demo-type">タイ古式マッサージ</div>
+        <span class="demo-arrow">→</span>
+      </a>
+
+      <a class="demo-card" href="demo_lumiere.html">
+        <span class="demo-plan premium">Premium Plan</span>
+        <div class="demo-name">Lumière — 旧バージョン</div>
+        <div class="demo-type">高級ヘアサロン — 参考デモ</div>
+        <span class="demo-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 takibineko</span>
+  <a href="2026-11-12_portfolio_v3_takibineko.html">Portfolio</a>
+</footer>
+
 </body>
 </html>
