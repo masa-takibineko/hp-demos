@@ -3,108 +3,438 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>これこれ 骨董品と珈琲 | 高槻</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>これこれ | 骨董品と珈琲 高槻</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0c0a06; --bg2:#151208; --gold:#c9a84c; --cream:#f5eed8;
-  --text:#ede6cc; --dim:#9a9080; --border:rgba(201,168,76,0.2);
+:root {
+  --bg: #12100e;
+  --bg2: #1a1714;
+  --bg3: #221e1a;
+  --amber: #d4931a;
+  --amber-light: #f0b040;
+  --amber-dim: rgba(212,147,26,0.12);
+  --brown: #6b4c2a;
+  --brown-light: #8a6540;
+  --text: #e8ddd0;
+  --text-dim: #9a8870;
+  --text-light: #c8baa8;
+  --border: rgba(212,147,26,0.2);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;overflow-x:hidden;}
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 2rem;
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(to bottom,rgba(12,10,6,0.95),transparent);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--gold);}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{color:var(--cream);text-decoration:none;font-size:0.75rem;letter-spacing:0.15em;opacity:0.8;transition:opacity 0.3s;}
-.nav-links a:hover{opacity:1;color:var(--gold);}
-.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background:radial-gradient(ellipse at center,#1e1608 0%,#0c0a06 70%);position:relative;}
-.hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 50%,rgba(201,168,76,0.07) 0%,transparent 60%);}
-.hero-eyebrow{font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0.8;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,8vw,5rem);font-weight:300;
-  color:var(--cream);letter-spacing:0.08em;line-height:1.1;margin-bottom:1rem;}
-.hero-sub{font-size:0.85rem;color:var(--dim);letter-spacing:0.25em;margin-bottom:3rem;}
-.btn{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--gold);color:var(--gold);
-  text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;transition:all 0.3s;}
-.btn:hover{background:var(--gold);color:var(--bg);}
-.section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.section-label{font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;
-  color:var(--cream);margin-bottom:1.5rem;line-height:1.3;}
-.section p{color:var(--dim);line-height:2;font-size:0.95rem;}
-.items-section{background:var(--bg2);padding:6rem 2rem;}
-.items-grid{max-width:900px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;}
-.item-card{border:1px solid var(--border);padding:2rem;transition:border-color 0.3s;}
-.item-card:hover{border-color:var(--gold);}
-.item-card h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--gold);margin-bottom:0.8rem;}
-.item-card p{color:var(--dim);font-size:0.85rem;line-height:1.8;}
-.info-section{padding:6rem 2rem;max-width:900px;margin:0 auto;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;}
-.info-item h4{font-size:0.65rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
-.info-item p{color:var(--dim);font-size:0.9rem;line-height:1.9;}
-.demo-badge{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(201,168,76,0.12);
-  border:1px solid var(--gold);padding:0.6rem 1.2rem;font-size:0.65rem;letter-spacing:0.15em;
-  color:var(--gold);backdrop-filter:blur(8px);z-index:200;}
-footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;}
-footer p{color:var(--dim);font-size:0.75rem;letter-spacing:0.1em;}
-@media(max-width:600px){.info-grid{grid-template-columns:1fr;} .nav-links{display:none;}}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Serif JP', serif; overflow-x: hidden; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--amber); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(50px); } to { opacity:1; transform:translateY(0); } }
+@keyframes heroSlide { from { transform:scale(1.06); } to { transform:scale(1.0); } }
+@keyframes scrollAnim { 0%,100% { opacity:1; top:5px; } 70% { opacity:0; top:14px; } }
+
+.reveal { opacity:0; transition:opacity 0.9s cubic-bezier(.4,0,.2,1), transform 0.9s cubic-bezier(.4,0,.2,1); transform:translateY(40px); }
+.reveal.left { transform:translateX(-40px); }
+.reveal.right { transform:translateX(40px); }
+.reveal.visible { opacity:1; transform:none; }
+.d1 { transition-delay:0.1s; } .d2 { transition-delay:0.25s; } .d3 { transition-delay:0.4s; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:300;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 2.5rem;
+  background:rgba(18,16,14,0.88);
+  backdrop-filter:blur(16px);
+  transition:background 0.4s;
+}
+.nav-brand { display:flex; flex-direction:column; text-decoration:none; }
+.nav-brand-ja { font-family:'Noto Serif JP',serif; font-size:1.1rem; font-weight:500; color:var(--amber); letter-spacing:0.2em; }
+.nav-brand-en { font-family:'Courier New',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.3em; text-transform:uppercase; }
+.nav-menu { display:flex; align-items:center; gap:2rem; list-style:none; }
+.nav-menu a {
+  color:var(--text-dim); text-decoration:none; font-size:0.68rem;
+  letter-spacing:0.2em; text-transform:uppercase; font-family:'Courier New',monospace;
+  position:relative; padding-bottom:2px;
+}
+.nav-menu a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--amber); transition:width 0.3s; }
+.nav-menu a:hover { color:var(--amber); }
+.nav-menu a:hover::after { width:100%; }
+.nav-tel { font-family:'Courier New',monospace; font-size:0.72rem; color:var(--amber); letter-spacing:0.08em; border:1px solid rgba(212,147,26,0.4); padding:0.4rem 1rem; text-decoration:none; transition:background 0.3s; }
+.nav-tel:hover { background:var(--amber-dim); }
+
+/* HERO */
+.hero { height:100vh; min-height:700px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; filter:brightness(0.35) sepia(0.4) contrast(1.1); transform:scale(1.06); animation:heroSlide 14s ease-out forwards; }
+.hero-overlay { position:absolute; inset:0; z-index:2; background:radial-gradient(ellipse at center, rgba(18,16,14,0.3) 0%, rgba(18,16,14,0.8) 100%); }
+.hero-content { position:relative; z-index:3; text-align:center; padding:0 2rem; max-width:900px; }
+.hero-tag { display:inline-block; border:1px solid var(--amber); padding:0.4rem 1.4rem; font-family:'Courier New',monospace; font-size:0.62rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:2.5rem; animation:fadeUp 0.8s 0.3s both; }
+.hero-title { font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(3rem,8vw,7rem); color:var(--text); line-height:1; letter-spacing:-0.02em; animation:fadeUp 0.9s 0.5s both; }
+.hero-title-ja { font-family:'Noto Serif JP',serif; font-size:0.3em; color:var(--amber); display:block; letter-spacing:0.5em; font-weight:300; margin-top:0.5em; }
+.hero-korekore { font-family:'Courier New',monospace; font-size:0.65rem; color:var(--text-dim); letter-spacing:0.6em; text-transform:uppercase; margin:2rem 0 1.5rem; display:block; animation:fadeUp 0.9s 0.8s both; }
+.hero-sub { font-size:0.85rem; color:var(--text-dim); line-height:2; letter-spacing:0.08em; max-width:480px; margin:0 auto 2.5rem; animation:fadeUp 0.9s 1s both; }
+.hero-btns { display:flex; gap:1rem; justify-content:center; animation:fadeUp 0.9s 1.2s both; flex-wrap:wrap; }
+.btn-primary { padding:0.9rem 2rem; background:var(--amber); color:var(--bg); font-size:0.75rem; letter-spacing:0.2em; text-decoration:none; font-family:'Courier New',monospace; text-transform:uppercase; transition:background 0.3s, transform 0.2s; display:inline-block; }
+.btn-primary:hover { background:var(--amber-light); transform:translateY(-2px); }
+.btn-ghost { padding:0.9rem 2rem; border:1px solid rgba(212,147,26,0.4); color:var(--amber); font-size:0.75rem; letter-spacing:0.2em; text-decoration:none; font-family:'Courier New',monospace; text-transform:uppercase; transition:border-color 0.3s, color 0.3s; display:inline-block; }
+.btn-ghost:hover { border-color:var(--amber); color:var(--amber-light); }
+.hero-scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; font-family:'Courier New',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.3em; text-transform:uppercase; animation:fadeUp 1s 1.5s both; z-index:3; }
+.scroll-wheel { width:22px; height:34px; border:1px solid rgba(212,147,26,0.4); border-radius:11px; position:relative; }
+.scroll-wheel::after { content:''; position:absolute; top:5px; left:50%; transform:translateX(-50%); width:3px; height:6px; background:var(--amber); border-radius:2px; animation:scrollAnim 1.5s ease-in-out infinite; }
+
+/* STORY */
+.story { padding:9rem 2rem; overflow:hidden; }
+.story-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:5fr 7fr; gap:5rem; align-items:center; }
+.story-img-wrap { position:relative; }
+.story-img-bg { width:100%; height:520px; object-fit:cover; filter:sepia(0.25) brightness(0.85); transition:filter 0.5s; display:block; }
+.story-img-wrap:hover .story-img-bg { filter:sepia(0.1) brightness(0.95); }
+.story-img-frame { position:absolute; top:1.5rem; left:1.5rem; right:-1.5rem; bottom:-1.5rem; border:1px solid rgba(212,147,26,0.25); pointer-events:none; z-index:-1; }
+.story-year { position:absolute; bottom:-1.5rem; right:0; font-family:'Playfair Display',serif; font-size:5rem; font-weight:700; color:rgba(212,147,26,0.08); line-height:1; pointer-events:none; letter-spacing:-0.05em; }
+.story-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.5em; color:var(--amber); text-transform:uppercase; display:block; margin-bottom:1.5rem; }
+.story-heading { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; color:var(--text); line-height:1.3; margin-bottom:2rem; letter-spacing:-0.01em; }
+.story-heading em { font-style:italic; color:var(--amber); }
+.story-body { font-size:0.88rem; color:var(--text-dim); line-height:2.5; letter-spacing:0.06em; margin-bottom:2rem; }
+.story-quote { border-left:3px solid var(--amber); padding-left:1.5rem; margin:2rem 0; }
+.story-quote p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; color:var(--text-light); line-height:1.8; }
+.story-quote cite { font-size:0.68rem; color:var(--text-dim); letter-spacing:0.2em; text-transform:uppercase; display:block; margin-top:0.8rem; font-family:'Courier New',monospace; }
+
+/* PRODUCTS */
+.products { padding:6rem 2rem; background:var(--bg2); }
+.products-inner { max-width:1200px; margin:0 auto; }
+.products-header { text-align:center; margin-bottom:5rem; }
+.products-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.5em; color:var(--amber); text-transform:uppercase; display:block; margin-bottom:1rem; }
+.products-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:400; color:var(--text); letter-spacing:-0.01em; }
+.products-cols { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
+.product-col { position:relative; overflow:hidden; }
+.product-col-img { width:100%; height:480px; object-fit:cover; filter:brightness(0.5) sepia(0.3); transition:filter 0.6s, transform 0.6s; display:block; }
+.product-col:hover .product-col-img { filter:brightness(0.65) sepia(0.15); transform:scale(1.03); }
+.product-col-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:3rem 2.5rem; background:linear-gradient(to top, rgba(18,16,14,0.9) 0%, transparent 60%); }
+.product-col-num { font-family:'Playfair Display',serif; font-size:5rem; font-weight:700; color:rgba(212,147,26,0.12); position:absolute; top:1.5rem; left:2rem; line-height:1; }
+.product-col-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:0.8rem; }
+.product-col-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; color:var(--text); letter-spacing:-0.01em; margin-bottom:1rem; }
+.product-col-title span { font-family:'Noto Serif JP',serif; font-size:0.5em; display:block; color:var(--amber); letter-spacing:0.2em; margin-bottom:0.3rem; }
+.product-col-desc { font-size:0.8rem; color:var(--text-dim); line-height:2; opacity:0; transform:translateY(15px); transition:opacity 0.4s, transform 0.4s; }
+.product-col:hover .product-col-desc { opacity:1; transform:translateY(0); }
+.product-col-line { width:0; height:2px; background:var(--amber); margin-top:1.5rem; transition:width 0.5s 0.1s; }
+.product-col:hover .product-col-line { width:60px; }
+
+/* GALLERY */
+.gallery { padding:7rem 2rem; }
+.gallery-inner { max-width:1200px; margin:0 auto; }
+.gallery-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; }
+.gallery-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; color:var(--text); }
+.gallery-link { font-family:'Courier New',monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--amber); text-decoration:none; text-transform:uppercase; border-bottom:1px solid rgba(212,147,26,0.4); padding-bottom:2px; transition:border-color 0.3s; }
+.gallery-link:hover { border-color:var(--amber); }
+.gallery-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-template-rows:auto; gap:4px; }
+.g1 { grid-column:span 7; grid-row:span 2; }
+.g2 { grid-column:span 5; }
+.g3 { grid-column:span 5; }
+.g4 { grid-column:span 4; }
+.g5 { grid-column:span 4; }
+.g6 { grid-column:span 4; }
+.gallery-item { position:relative; overflow:hidden; background:var(--bg3); }
+.g1 .gallery-img { height:500px; }
+.g2 .gallery-img, .g3 .gallery-img { height:245px; }
+.g4 .gallery-img, .g5 .gallery-img, .g6 .gallery-img { height:200px; }
+.gallery-img { width:100%; object-fit:cover; display:block; filter:sepia(0.2) brightness(0.85); transition:filter 0.5s, transform 0.6s; }
+.gallery-item:hover .gallery-img { filter:sepia(0.1) brightness(0.95); transform:scale(1.04); }
+.gallery-hover { position:absolute; inset:0; background:rgba(18,16,14,0.7); opacity:0; display:flex; align-items:center; justify-content:center; transition:opacity 0.4s; }
+.gallery-item:hover .gallery-hover { opacity:1; }
+.gallery-hover span { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; }
+
+/* ACCESS */
+.access { padding:8rem 2rem; background:var(--bg2); }
+.access-inner { max-width:900px; margin:0 auto; }
+.access-top { display:flex; align-items:flex-end; gap:2rem; margin-bottom:4rem; }
+.access-num { font-family:'Playfair Display',serif; font-size:6rem; font-weight:700; color:rgba(212,147,26,0.08); line-height:1; flex-shrink:0; }
+.access-heading { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,3vw,2.5rem); font-weight:400; color:var(--text); padding-bottom:1rem; border-bottom:1px solid var(--border); }
+.access-heading span { font-family:'Noto Serif JP',serif; font-size:0.5em; color:var(--amber); display:block; letter-spacing:0.3em; margin-bottom:0.3rem; }
+.access-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; }
+.info-block { margin-bottom:2rem; }
+.info-label { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:0.6rem; }
+.info-value { font-size:0.88rem; color:var(--text-dim); line-height:1.9; }
+.info-value a { color:var(--amber); text-decoration:none; }
+.info-value a:hover { text-decoration:underline; }
+.hours-table { width:100%; border-collapse:collapse; }
+.hours-table td { padding:0.8rem 0; border-bottom:1px solid rgba(212,147,26,0.1); font-size:0.82rem; }
+.hours-table td:last-child { text-align:right; }
+.closed { color:var(--brown-light); }
+.note-box { background:rgba(212,147,26,0.05); border:1px solid rgba(212,147,26,0.15); padding:1.5rem; margin-top:2rem; font-size:0.78rem; color:var(--text-dim); line-height:1.9; }
+
+/* FOOTER */
+footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); padding:4rem 2rem 2rem; }
+.footer-inner { max-width:1200px; margin:0 auto; }
+.footer-top { display:grid; grid-template-columns:1fr 2fr 1fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(212,147,26,0.12); margin-bottom:2rem; }
+.footer-brand-name { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--amber); display:block; margin-bottom:0.3rem; }
+.footer-brand-ja { font-family:'Noto Serif JP',serif; font-size:0.75rem; color:var(--text-dim); letter-spacing:0.15em; }
+.footer-tagline { font-family:'Courier New',monospace; font-size:0.62rem; color:var(--text-dim); letter-spacing:0.08em; line-height:1.8; padding-top:0.5rem; }
+.footer-nav-title { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:1.2rem; }
+.footer-nav-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+.footer-nav-list a { color:var(--text-dim); text-decoration:none; font-size:0.78rem; transition:color 0.3s; }
+.footer-nav-list a:hover { color:var(--amber); }
+.footer-contact-title { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:1.2rem; }
+.footer-tel { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); display:block; margin-bottom:0.5rem; }
+.footer-hours { font-size:0.72rem; color:var(--text-dim); line-height:1.8; }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; }
+.footer-copy { font-size:0.68rem; color:var(--text-dim); letter-spacing:0.08em; font-family:'Courier New',monospace; }
+.footer-copy a { color:var(--amber); text-decoration:none; }
+.footer-copy a:hover { text-decoration:underline; }
+
+/* DEMO BADGE */
+.demo-badge { position:fixed; bottom:1.5rem; right:1.5rem; z-index:999; background:rgba(18,16,14,0.92); border:1px solid rgba(212,147,26,0.3); color:var(--text-dim); font-size:0.6rem; letter-spacing:0.1em; padding:0.4rem 0.8rem; font-family:'Courier New',monospace; backdrop-filter:blur(8px); }
+
+/* RESPONSIVE */
+@media(max-width:900px) {
+  nav { padding:1rem 1.5rem; }
+  .nav-menu { display:none; }
+  .story-inner { grid-template-columns:1fr; }
+  .story-text { padding-left:0; }
+  .products-cols { grid-template-columns:1fr; }
+  .product-col-img { height:320px; }
+  .g1 { grid-column:span 12; grid-row:span 1; }
+  .g1 .gallery-img { height:280px; }
+  .g2,.g3 { grid-column:span 6; }
+  .g4,.g5,.g6 { grid-column:span 4; }
+  .access-grid { grid-template-columns:1fr; gap:2rem; }
+  .footer-top { grid-template-columns:1fr; gap:2rem; }
+  .footer-bottom { flex-direction:column; gap:1rem; }
+}
+@media(max-width:600px) {
+  .g2,.g3 { grid-column:span 12; }
+  .g4,.g5,.g6 { grid-column:span 6; }
+  .hero-btns { flex-direction:column; align-items:center; }
+  .gallery-header { flex-direction:column; gap:1rem; align-items:flex-start; }
+}
 </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
-  <div class="logo">これこれ 骨董品と珈琲</div>
-  <ul class="nav-links">
-    <li><a href="#about">ABOUT</a></li>
-    <li><a href="#items">ITEMS</a></li>
-    <li><a href="#info">ACCESS</a></li>
+  <a href="#" class="nav-brand">
+    <span class="nav-brand-ja">これこれ</span>
+    <span class="nav-brand-en">Korekore — Antiques & Coffee</span>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#products">Items</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#access">Access</a></li>
   </ul>
+  <a href="#access" class="nav-tel">高槻市 ― Open Daily</a>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">Takatsuki</p>
-  <h1>これこれ 骨董品と珈琲</h1>
-  <p class="hero-sub">高槻の街で、本物と出会う。</p>
-  <a href="#items" class="btn">商品を見る</a>
-</section>
-
-<section class="section" id="about">
-  <p class="section-label">Our Story</p>
-  <h2>選び抜かれたもの、<br>だけを。</h2>
-  <p>長年にわたって地域のお客様に愛され続けてきたこれこれ 骨董品と珈琲。<br>
-  本物の価値を知るお客様に、丁寧に選んだ商品をお届けしています。</p>
-</section>
-
-<div class="items-section" id="items">
-  <div style="max-width:900px;margin:0 auto;">
-    <p class="section-label" style="font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;">Items</p>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-top:1rem;">取り扱い商品</h2>
+  <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=1920&q=80" alt="アンティーク" class="hero-bg" loading="eager">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Est. in Takatsuki, Osaka</span>
+    <h1 class="hero-title">
+      korekore
+      <span class="hero-title-ja">骨董品と珈琲</span>
+    </h1>
+    <span class="hero-korekore">古いものと、コーヒーだけがある場所</span>
+    <p class="hero-sub">時代を越えた骨董品と、丁寧に淹れた珈琲。<br>ここでしか出会えない「これこれ」を探しに来てください。</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Collections</a>
+      <a href="#story" class="btn-ghost">Our Story</a>
+    </div>
   </div>
-  <div class="items-grid">
-    <div class="item-card"><h3>こだわりの逸品</h3><p>厳選した商品を取り揃えております。ぜひ店頭でお手に取ってご覧ください。</p></div>
-    <div class="item-card"><h3>季節の新入荷</h3><p>定期的に新しい商品を入荷しています。お気に入りの一点をぜひ見つけてください。</p></div>
-    <div class="item-card"><h3>ギフト対応</h3><p>大切な方へのプレゼントにも。ご要望に応じてラッピング対応いたします。</p></div>
-  </div>
-</div>
-
-<section class="info-section" id="info">
-  <p class="section-label">Access</p>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);margin-bottom:1rem;">店舗情報</h2>
-  <div class="info-grid">
-    <div class="info-item"><h4>Address</h4><p>大阪府高槻市</p></div>
-    <div class="info-item"><h4>Tel</h4><p>お問い合わせはInstagramのDMまで</p></div>
-    <div class="info-item"><h4>Hours</h4><p>10:00 – 19:00</p></div>
-    <div class="info-item"><h4>Closed</h4><p>不定休</p></div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-wheel"></div>
+    <span>Scroll</span>
   </div>
 </section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="story-img-wrap reveal left">
+      <img src="https://images.unsplash.com/photo-1512207736890-6ffed8a84e8d?w=800&q=80" alt="古いカメラや雑貨" class="story-img-bg" loading="lazy">
+      <div class="story-img-frame"></div>
+      <div class="story-year">1962</div>
+    </div>
+    <div class="story-text reveal right">
+      <span class="story-label">Our Story</span>
+      <h2 class="story-heading">古いものと、<br><em>コーヒー</em>だけが<br>ある場所</h2>
+      <p class="story-body">
+        「これこれ」は、骨董品と珈琲という異なる文化が<br>
+        奇妙なほど自然に共存する場所です。<br><br>
+        棚に並ぶのは、昭和の家庭で使われた食器、<br>
+        戦前の雑誌、旅先で拾ってきた陶器のかけら——<br>
+        それぞれに、誰かの時間が宿っています。<br><br>
+        そしてカウンターには、コーヒーの煙がゆっくりと上がる。
+      </p>
+      <div class="story-quote">
+        <p>"物に歴史あり、珈琲に深みあり。<br>どちらも時間をかけてはじめて、味が出る。"</p>
+        <cite>— 店主より</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-inner">
+    <div class="products-header reveal">
+      <span class="products-label">What We Offer</span>
+      <h2 class="products-title">骨董と珈琲、<br>二つの世界</h2>
+    </div>
+    <div class="products-cols">
+      <div class="product-col reveal left">
+        <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=800&q=80" alt="骨董品" class="product-col-img" loading="lazy">
+        <div class="product-col-content">
+          <div class="product-col-num">I</div>
+          <div class="product-col-label">Antiques</div>
+          <div class="product-col-title">
+            <span>骨董品</span>
+            Antiques
+          </div>
+          <p class="product-col-desc">昭和・大正・明治の生活用品、陶磁器、古書、玩具、雑貨。全て真品のみを厳選。一点物の出会いをお楽しみください。</p>
+          <div class="product-col-line"></div>
+        </div>
+      </div>
+      <div class="product-col reveal right">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="珈琲" class="product-col-img" loading="lazy">
+        <div class="product-col-content">
+          <div class="product-col-num">II</div>
+          <div class="product-col-label">Coffee</div>
+          <div class="product-col-title">
+            <span>珈琲</span>
+            Coffee
+          </div>
+          <p class="product-col-desc">自家焙煎の豆を使ったハンドドリップ珈琲。産地別に味わいの違いを感じてください。豆の販売も行っています。</p>
+          <div class="product-col-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header reveal">
+      <h2 class="gallery-title">Gallery</h2>
+      <a href="#" class="gallery-link">View All</a>
+    </div>
+    <div class="gallery-grid reveal d1">
+      <div class="gallery-item g1">
+        <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=800&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Antiques</span></div>
+      </div>
+      <div class="gallery-item g2">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Coffee</span></div>
+      </div>
+      <div class="gallery-item g3">
+        <img src="https://images.unsplash.com/photo-1512207736890-6ffed8a84e8d?w=800&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Collectibles</span></div>
+      </div>
+      <div class="gallery-item g4">
+        <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Items</span></div>
+      </div>
+      <div class="gallery-item g5">
+        <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=400&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Space</span></div>
+      </div>
+      <div class="gallery-item g6">
+        <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80" alt="" class="gallery-img" loading="lazy">
+        <div class="gallery-hover"><span>Details</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="access" id="access">
+  <div class="access-inner">
+    <div class="access-top reveal">
+      <div class="access-num">04</div>
+      <h2 class="access-heading">
+        <span>Access / 店舗情報</span>
+        これこれ 骨董品と珈琲
+      </h2>
+    </div>
+    <div class="access-grid">
+      <div class="reveal left">
+        <div class="info-block">
+          <div class="info-label">Location</div>
+          <div class="info-value">大阪府高槻市〇〇町X-X-X</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Access</div>
+          <div class="info-value">JR高槻駅 徒歩7分<br>阪急高槻市駅 徒歩10分</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">SNS</div>
+          <div class="info-value">
+            <a href="https://www.instagram.com/takibi__neko" target="_blank">Instagram: @korekore_takatsuki</a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal right">
+        <div class="info-label">Hours</div>
+        <table class="hours-table">
+          <tr><td style="color:var(--text-dim)">火〜金</td><td>12:00 — 19:00</td></tr>
+          <tr><td style="color:var(--text-dim)">土・日・祝</td><td>11:00 — 20:00</td></tr>
+          <tr><td style="color:var(--text-dim)">定休日</td><td class="closed">月曜日</td></tr>
+        </table>
+        <div class="note-box">
+          骨董品の出張買取・査定も承ります。<br>
+          お気軽にお電話またはInstagramのDMにてご連絡ください。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-brand-name">korekore</span>
+        <span class="footer-brand-ja">これこれ 骨董品と珈琲</span>
+        <p class="footer-tagline">古いものと、コーヒーだけがある場所<br>大阪府高槻市</p>
+      </div>
+      <div>
+        <div class="footer-nav-title">Navigation</div>
+        <ul class="footer-nav-list">
+          <li><a href="#story">Story</a></li>
+          <li><a href="#products">Collections</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#access">Access</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-contact-title">Contact</div>
+        <span class="footer-tel">072-XXX-XXXX</span>
+        <div class="footer-hours">火〜金 12:00-19:00<br>土日祝 11:00-20:00<br>月曜定休</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© これこれ 骨董品と珈琲 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank">@takibi__neko</a></p>
+    </div>
+  </div>
+</footer>
 
 <div class="demo-badge">※ Demo Page</div>
 
-<footer>
-  <p>© これこれ 骨董品と珈琲 | Powered by <a href="https://www.instagram.com/takibi__neko" style="color:var(--gold);text-decoration:none;">@takibi__neko</a></p>
-</footer>
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.background = window.scrollY > 80
+    ? 'rgba(18,16,14,0.97)'
+    : 'rgba(18,16,14,0.88)';
+});
+</script>
 </body>
 </html>
