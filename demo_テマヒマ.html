@@ -3,742 +3,515 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEMAHIMA — セレクトショップ</title>
+<title>TEMAHIMA | 高槻のセレクトショップ</title>
+<meta name="description" content="TEMAHIMA — 大阪府高槻市。手間ひまかけて選んだ、暮らしの道具と雑貨。">
+<meta property="og:title" content="TEMAHIMA | 高槻のセレクトショップ">
+<meta property="og:description" content="手間ひまかけて選んだ、暮らしの道具と雑貨。">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,200;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --black: #0a0a0a;
-    --white: #fafafa;
-    --off-white: #f5f4f0;
-    --mid: #888;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--black);
-    overflow-x: hidden;
-  }
-
-  /* ========== HERO ========== */
-  .hero {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    height: 100vh;
-    min-height: 600px;
-    position: relative;
-  }
-
-  .hero-left {
-    background: #fff;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 60px 64px;
-    overflow: hidden;
-  }
-
-  .hero-bg-letter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20vw;
-    font-family: 'DM Serif Display', serif;
-    color: #f0f0f0;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(24px);
-    animation: heroFadeIn 1s ease 0.3s forwards;
-  }
-
-  @keyframes heroFadeIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-label {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--mid);
-    font-weight: 300;
-    margin-bottom: 32px;
-  }
-
-  .hero-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--black);
-    margin-bottom: 8px;
-  }
-
-  .hero-tagline {
-    font-size: 13px;
-    color: var(--mid);
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    margin-bottom: 48px;
-  }
-
-  .hero-rating {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #ddd;
-    padding: 10px 18px;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-  }
-
-  .stars { color: #c9a84c; letter-spacing: 1px; }
-
-  .hero-right {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-right img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 8s ease;
-  }
-
-  .hero-right:hover img { transform: scale(1.03); }
-
-  .hero-scroll-hint {
-    position: absolute;
-    bottom: 32px;
-    left: 64px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--mid);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 2;
-    opacity: 0;
-    animation: heroFadeIn 1s ease 1s forwards;
-  }
-
-  .hero-scroll-hint::before {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 1px;
-    background: #ccc;
-  }
-
-  /* ========== MARQUEE ========== */
-  .marquee-wrap {
-    background: var(--black);
-    color: #fff;
-    overflow: hidden;
-    padding: 18px 0;
-    border-top: 1px solid #222;
-    border-bottom: 1px solid #222;
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 0;
-    animation: marquee 30s linear infinite;
-    white-space: nowrap;
-  }
-
-  .marquee-track span {
-    font-size: 12px;
-    font-weight: 200;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 0 32px;
-    flex-shrink: 0;
-  }
-
-  @keyframes marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* ========== CONTENT SECTIONS ========== */
-  .content-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 520px;
-    overflow: hidden;
-  }
-
-  .content-section.reverse { direction: rtl; }
-  .content-section.reverse > * { direction: ltr; }
-
-  .cs-image {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .cs-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.8s ease;
-  }
-
-  .cs-image:hover img { transform: scale(1.04); }
-
-  .cs-text {
-    background: var(--off-white);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 72px;
-  }
-
-  .cs-text.dark {
-    background: var(--black);
-    color: #fff;
-  }
-
-  .cs-text.white {
-    background: #fff;
-  }
-
-  .cs-number {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--mid);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    font-weight: 300;
-  }
-
-  .cs-text.dark .cs-number { color: #666; }
-
-  .cs-heading {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-    line-height: 1.2;
-    margin-bottom: 24px;
-    letter-spacing: -0.01em;
-  }
-
-  .cs-body {
-    font-size: 15px;
-    line-height: 1.9;
-    color: #555;
-    font-weight: 300;
-    max-width: 400px;
-  }
-
-  .cs-text.dark .cs-body { color: #aaa; }
-
-  .cs-detail {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .cs-detail-item {
-    font-size: 13px;
-    font-weight: 300;
-    letter-spacing: 0.03em;
-    color: #444;
-    display: flex;
-    gap: 12px;
-    align-items: baseline;
-  }
-
-  .cs-detail-item .label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #aaa;
-    min-width: 60px;
-    flex-shrink: 0;
-  }
-
-  .cs-text.dark .cs-detail-item { color: #ccc; }
-
-  .cs-divider {
-    width: 32px;
-    height: 1px;
-    background: #ccc;
-    margin-bottom: 32px;
-  }
-
-  .cs-text.dark .cs-divider { background: #444; }
-
-  /* Slide-in animation */
-  .slide-in {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .slide-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .slide-in-left {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .slide-in-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .slide-in-right {
-    opacity: 0;
-    transform: translateX(40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .slide-in-right.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* ========== GALLERY ========== */
-  .gallery-section {
-    background: #f8f7f3;
-    padding: 100px 60px;
-  }
-
-  .gallery-header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-
-  .gallery-header .section-label {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--mid);
-    font-weight: 300;
-    display: block;
-    margin-bottom: 16px;
-  }
-
-  .gallery-header h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-
-  .masonry-grid {
-    columns: 2;
-    column-gap: 16px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 16px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .masonry-item img {
-    width: 100%;
-    display: block;
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
-  }
-
-  .masonry-item:hover img {
-    transform: scale(1.02);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  }
-
-  /* ========== CONTACT ========== */
-  .contact-section {
-    background: var(--black);
-    color: #fff;
-    padding: 120px 60px;
-    text-align: center;
-  }
-
-  .contact-label {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #555;
-    font-weight: 300;
-    margin-bottom: 24px;
-    display: block;
-  }
-
-  .contact-heading {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  .contact-sub {
-    font-size: 15px;
-    color: #666;
-    font-weight: 300;
-    margin-bottom: 64px;
-    letter-spacing: 0.05em;
-  }
-
-  .contact-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 36px;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .btn-white {
-    background: #fff;
-    color: var(--black);
-  }
-
-  .btn-white:hover { background: var(--off-white); }
-
-  .btn-outline {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #444;
-  }
-
-  .btn-outline:hover {
-    border-color: #fff;
-    background: rgba(255,255,255,0.05);
-  }
-
-  .btn-map {
-    background: transparent;
-    color: #aaa;
-    border: 1px solid #333;
-    font-size: 12px;
-  }
-
-  .btn-map:hover {
-    border-color: #666;
-    color: #fff;
-  }
-
-  .contact-map-row { margin-top: 32px; }
-
-  /* ========== FOOTER ========== */
-  footer {
-    background: #fff;
-    color: var(--black);
-    border-top: 1px solid #eee;
-    padding: 48px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .footer-brand {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.4rem;
-    letter-spacing: -0.01em;
-  }
-
-  .footer-copy {
-    font-size: 12px;
-    color: #aaa;
-    font-weight: 300;
-    letter-spacing: 0.03em;
-    text-align: right;
-  }
-
-  .footer-copy a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid #ddd;
-    transition: border-color 0.2s;
-  }
-
-  .footer-copy a:hover { border-color: #aaa; }
-
-  /* ========== DEMO BADGE ========== */
-  .demo-badge {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: rgba(10,10,10,0.85);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    padding: 8px 14px;
-    z-index: 9999;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
-    pointer-events: none;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  /* ========== RESPONSIVE ========== */
-  @media (max-width: 900px) {
-    .hero {
-      grid-template-columns: 1fr;
-      grid-template-rows: 55vh 45vh;
-      height: auto;
-    }
-
-    .hero-left { padding: 48px 32px; }
-    .hero-bg-letter { font-size: 40vw; }
-    .hero-scroll-hint { display: none; }
-
-    .content-section {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-
-    .content-section.reverse { direction: ltr; }
-
-    .cs-image { height: 300px; }
-    .cs-text { padding: 48px 32px; }
-
-    .masonry-grid { columns: 1; }
-
-    .gallery-section { padding: 60px 24px; }
-    .contact-section { padding: 80px 32px; }
-
-    footer {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 40px 32px;
-    }
-
-    .footer-copy { text-align: left; }
-  }
+:root {
+  --bg:      #090b0d;
+  --surface: #111316;
+  --accent:  #a8a89e;
+  --text:    #e8e2d9;
+  --dim:     #9a8e82;
+  --border:  rgba(255,255,255,0.08);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
+  line-height: 1.9;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Reveal ── */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: var(--d, 0s);
+}
+.rv.visible { opacity: 1; transform: none; }
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.5s, box-shadow 0.5s;
+}
+nav.solid {
+  background: rgba(9,11,13,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-logo {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.nav-links a:hover { color: var(--text); }
+@media (max-width: 600px) { .nav-links { display: none; } }
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(3rem, 8vh, 6rem);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+}
+.hero-bg img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.50) sepia(0.1);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+.hero-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  font-weight: 400;
+  line-height: 1.0;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+.hero-sub {
+  font-size: clamp(0.88rem, 1.4vw, 1rem);
+  color: var(--dim);
+  letter-spacing: 0.08em;
+}
+
+/* ── Section base ── */
+.sec {
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 6vw, 5rem);
+}
+.sec-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+/* ── About ── */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.about-ph {
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4/5;
+}
+.about-ph img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.58) sepia(0.08);
+  transition: transform 1.4s ease;
+}
+.about-ph:hover img { transform: scale(1.04); }
+.about-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+.about-body {
+  font-size: 0.95rem;
+  color: var(--dim);
+  line-height: 2;
+}
+@media (max-width: 720px) {
+  .about { grid-template-columns: 1fr; }
+}
+
+/* ── Items ── */
+.items { background: var(--surface); }
+.items-inner { max-width: 900px; margin: 0 auto; }
+.items-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  margin-bottom: 3rem;
+  color: var(--text);
+}
+.items-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.item {
+  padding: 2rem 2.5rem;
+  background: var(--surface);
+}
+.item-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.item-desc {
+  font-size: 0.82rem;
+  color: var(--dim);
+  line-height: 1.8;
+}
+@media (max-width: 600px) {
+  .items-list { grid-template-columns: 1fr; }
+  .item { padding: 1.5rem 0; }
+}
+
+/* ── Concept ── */
+.concept {
+  position: relative;
+  height: clamp(360px, 55vw, 620px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+.concept-bg {
+  position: absolute; inset: 0;
+}
+.concept-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.38) sepia(0.12);
+}
+.concept-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+}
+.concept-quote {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+.concept-sub {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Access ── */
+.access-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.access-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  color: var(--text);
+}
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 4rem;
+  margin-bottom: 2.5rem;
+}
+.access-item dt {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.access-item dd {
+  font-size: 0.95rem;
+  color: var(--dim);
+  line-height: 1.8;
+}
+.map-wrap {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+.map-wrap iframe {
+  width: 100%; height: 100%;
+  border: none;
+  filter: invert(0.9) hue-rotate(185deg);
+}
+@media (max-width: 600px) {
+  .access-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* ── CTA ── */
+.cta {
+  text-align: center;
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 6vw, 5rem);
+}
+.cta-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+.cta-sub {
+  font-size: 0.88rem;
+  color: var(--dim);
+  margin-bottom: 2.5rem;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: background 0.4s, color 0.4s;
+}
+.cta-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem clamp(1.5rem, 6vw, 5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.foot-name {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.foot-copy {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+}
 </style>
 </head>
 <body>
 
-<!-- ========== HERO ========== -->
+<nav id="nav">
+  <span class="nav-logo">Temahima</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#items">Items</a></li>
+    <li><a href="#access">Access</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-bg-letter">T</div>
-    <div class="hero-content">
-      <p class="hero-label">Select Shop · Takatsuki</p>
-      <h1 class="hero-name">TEMA<br>HIMA</h1>
-      <p class="hero-tagline">手間と暇をかけて選んだもの</p>
-      <div class="hero-rating">
-        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
-        <span>4.2</span>
-        <span style="color:#ccc;">&middot;</span>
-        <span style="color:#888;">102 reviews</span>
-      </div>
-    </div>
-    <div class="hero-scroll-hint">Scroll</div>
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=85&auto=format&fit=crop" alt="" loading="eager" fetchpriority="high">
   </div>
-  <div class="hero-right">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLFMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA">
+  <div class="hero-content">
+    <span class="hero-label">— Select Shop, Takatsuki</span>
+    <h1 class="hero-title">TEMA<br>HIMA</h1>
+    <p class="hero-sub">手間ひまかけて選んだ、暮らしの道具と雑貨。</p>
   </div>
 </section>
 
-<!-- ========== MARQUEE ========== -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span>TEMAHIMA</span><span>&middot;</span>
-    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
-    <span>11:00&ndash;18:00</span><span>&middot;</span>
-    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
-    <span>TEL 072-655-3259</span><span>&middot;</span>
-    <span>TEMAHIMA</span><span>&middot;</span>
-    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
-    <span>11:00&ndash;18:00</span><span>&middot;</span>
-    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
-    <span>TEL 072-655-3259</span><span>&middot;</span>
-    <span>TEMAHIMA</span><span>&middot;</span>
-    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
-    <span>11:00&ndash;18:00</span><span>&middot;</span>
-    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
-    <span>TEL 072-655-3259</span><span>&middot;</span>
-    <span>TEMAHIMA</span><span>&middot;</span>
-    <span>&#39640;&#27792;&#24066;&#33446;&#24029;&#30058;</span><span>&middot;</span>
-    <span>11:00&ndash;18:00</span><span>&middot;</span>
-    <span>&#28779;&#27700;&#23450;&#20241;</span><span>&middot;</span>
-    <span>TEL 072-655-3259</span><span>&middot;</span>
-  </div>
-</div>
-
-<!-- ========== SECTION 1: Review ========== -->
-<div class="content-section">
-  <div class="cs-image slide-in-left">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd_va3BazSbBrn0Jib7PurcqPCZEDURMBD_7jUApEqUHFT9_JCuBowvbxT6KBhgAZCiXoX1LneBZ6Oo2ahHzh2KLg1KrSQY3xZGi8u-SbfT_n_Gkdw4Hhw5pUe8-3hPa8VtDSdVCGAkprX9sgmLNeibiCJEHp_UHF8f6L18Ji0DUnRhMXgCxqEbbjM6nRfj4-SV6ehLyR5Hs5xC5Mt94eed9Uvxs8KQB16DupjqUMC-lNf3qNc6hfLjV3J8zjhZp5X98OecOT9GYxmp_1qFpH5xJ-JgQ-qxxSinVx_2RSI4vo7bl6OBL4yzUHZJzDjLVNj4lj-ye6nZEcby1DjTk6G2FXAfjF-46nSVgDYkzQU815jLqFJVWoSd95jYmRk6i0wVX8Hlp_RkGGSsWgq-Mg66f3xJTf8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内">
-  </div>
-  <div class="cs-text slide-in-right">
-    <p class="cs-number">01 &middot; Reviews</p>
-    <div class="cs-divider"></div>
-    <h2 class="cs-heading">102件の<br>お客様の声</h2>
-    <p class="cs-body">Googleマップにて、102件の口コミで★4.2の高評価をいただいております。手間と暇をかけて選んだセレクトに、多くのお客様からご支持をいただいています。</p>
-    <div class="cs-detail">
-      <div class="cs-detail-item">
-        <span class="label">Rating</span>
-        <span>&#9733; 4.2 / 5.0</span>
-      </div>
-      <div class="cs-detail-item">
-        <span class="label">Reviews</span>
-        <span>102件</span>
-      </div>
+<!-- About -->
+<section class="sec" id="about">
+  <div class="about">
+    <div class="about-ph rv">
+      <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=900&q=80&auto=format&fit=crop" alt="店内の様子" loading="lazy">
     </div>
-  </div>
-</div>
-
-<!-- ========== SECTION 2: Address ========== -->
-<div class="content-section reverse">
-  <div class="cs-text dark slide-in-left">
-    <p class="cs-number">02 &middot; Location</p>
-    <div class="cs-divider"></div>
-    <h2 class="cs-heading">高槻市<br>芥川町</h2>
-    <div class="cs-detail">
-      <div class="cs-detail-item">
-        <span class="label">住所</span>
-        <span>大阪府高槻市芥川町３丁目１０−１３</span>
-      </div>
-      <div class="cs-detail-item">
-        <span class="label">TEL</span>
-        <span>072-655-3259</span>
-      </div>
-      <div class="cs-detail-item">
-        <span class="label">Mail</span>
-        <span>temahimaselect@gmail.com</span>
-      </div>
-    </div>
-  </div>
-  <div class="cs-image slide-in-right">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc7Amm4xeCL4QpUkhfuPRSOv5FLx17XLNaPKQF5GVpjiXHKWenNfhMa8xnWvShg9EUEcNtZQdOJHI_saR4TtkKug0kn_-pGAJECacL7Gy-W1KDlnLF_Zuk25l_zdD8jVFxW163os157vN6VxNXZNBf_A3q4rQ0YQac01cpRpT4z7sleVQfDM0MGj8GqcwzH1kl7KISq1D0Fkj12G34uLJtM_lewjGvDwU6hCm5EDoTWS4VzNsdJv9Joekfn4tI4fEF8QPv48lwqU9tIx_7-0bsy2GqnUO8YCJt7QJeviHs_DfizCKcg--9axo1yPFpavZl2p1DXOhbQ0fJg5UpQtMhFUf7xgv-7ZQ2NPEnc3nsuCElDoqFiheQv81mm1f-uhpleXBOcuDzGpicDusb5nITyPQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="外観">
-  </div>
-</div>
-
-<!-- ========== SECTION 3: Hours ========== -->
-<div class="content-section">
-  <div class="cs-image slide-in-left">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe0oi2u357VaKgxjZzMpnkpYEZM1KMnEX0h95w06DIfF0sU7A_ucJEUshd6OKWZSceur7SHpv-O21uQs9qKd9KgOM8abP03-sgLuxUgrHei-bHwlzyZYju3kHZtWl0qB5YcW1qohi9_ZbvI14PCXKvwwC9CfJn0TLlQzIUYgG3xvw63xCgTezx-2NhGoRkd2LMYbi-xh06rTQPifGoz-MK_zW-v44x6TDgAC8Qkvqg0wlZYnEGvMceuiLcCV3C-oCSgeiHFAk4-5KuB_nNSfOSlrm5sG2ZvosQgYa3Wa9hCI8zY7QWLEW7q-gUDh8-qWXLpaNgJhVSBd4IJFHsEuKamypspz1xc3mqoD6scfFUSiatLPb_ZDllo38WIYrZqlSYPeyyCGlB9ML_OiBQ7VL2EfQ7f&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="商品">
-  </div>
-  <div class="cs-text white slide-in-right">
-    <p class="cs-number">03 &middot; Hours</p>
-    <div class="cs-divider"></div>
-    <h2 class="cs-heading">営業時間</h2>
-    <div class="cs-detail">
-      <div class="cs-detail-item">
-        <span class="label">木〜月</span>
-        <span>11:00 &mdash; 18:00</span>
-      </div>
-      <div class="cs-detail-item" style="margin-top:8px;">
-        <span class="label">定休日</span>
-        <span style="color:#c0392b;">火曜日・水曜日</span>
-      </div>
-    </div>
-    <p class="cs-body" style="margin-top:32px;">お時間のある日に、ゆっくりとお越しください。<br>スタッフ一同お待ちしております。</p>
-  </div>
-</div>
-
-<!-- ========== GALLERY ========== -->
-<section class="gallery-section">
-  <div class="gallery-header slide-in">
-    <span class="section-label">Photo Gallery</span>
-    <h2>Shop Photos</h2>
-  </div>
-  <div class="masonry-grid slide-in">
-    <div class="masonry-item">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdP4Y8JxEMmTWuv2zmq6fFKD1zvH3FpXucT_-IbEURHIThrbUOyMaPWs7o51IjAczLOcyttauPwXF31hpfM017IAkd047GPfc6i21zfSgn3sUxi5hPzlWTWm5QUbA2QrWGdQHQwXGQ0hG6vuVNqRVyWp5-zRMQ4kwtZqA2AJhbUPAn-A60i91lWtlGMBaEF_rBDwZYmPZV-6TvoDRB_xzk1FmHA32Bt8lv5c1_5GVrobH0-yhK_JwzEeM1ZnX5yev1lCEka8MjmRLFqe72Dakmn6N7Jf8GxjAMXEhvoDSjdkgYzY15ZbqHwlYsb83B7NP-9SYLFMkYSnX7P_53097i-HSItVQ_7gEeKOQ1e_p2e8R8wk7P7XfXg0En3o1aZN2gpHBgtXHIRrlrcspBMqbNiF1g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 1">
-    </div>
-    <div class="masonry-item">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd_va3BazSbBrn0Jib7PurcqPCZEDURMBD_7jUApEqUHFT9_JCuBowvbxT6KBhgAZCiXoX1LneBZ6Oo2ahHzh2KLg1KrSQY3xZGi8u-SbfT_n_Gkdw4Hhw5pUe8-3hPa8VtDSdVCGAkprX9sgmLNeibiCJEHp_UHF8f6L18Ji0DUnRhMXgCxqEbbjM6nRfj4-SV6ehLyR5Hs5xC5Mt94eed9Uvxs8KQB16DupjqUMC-lNf3qNc6hfLjV3J8zjhZp5X98OecOT9GYxmp_1qFpH5xJ-JgQ-qxxSinVx_2RSI4vo7bl6OBL4yzUHZJzDjLVNj4lj-ye6nZEcby1DjTk6G2FXAfjF-46nSVgDYkzQU815jLqFJVWoSd95jYmRk6i0wVX8Hlp_RkGGSsWgq-Mg66f3xJTf8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 2">
-    </div>
-    <div class="masonry-item">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc7Amm4xeCL4QpUkhfuPRSOv5FLx17XLNaPKQF5GVpjiXHKWenNfhMa8xnWvShg9EUEcNtZQdOJHI_saR4TtkKug0kn_-pGAJECacL7Gy-W1KDlnLF_Zuk25l_zdD8jVFxW163os157vN6VxNXZNBf_A3q4rQ0YQac01cpRpT4z7sleVQfDM0MGj8GqcwzH1kl7KISq1D0Fkj12G34uLJtM_lewjGvDwU6hCm5EDoTWS4VzNsdJv9Joekfn4tI4fEF8QPv48lwqU9tIx_7-0bsy2GqnUO8YCJt7QJeviHs_DfizCKcg--9axo1yPFpavZl2p1DXOhbQ0fJg5UpQtMhFUf7xgv-7ZQ2NPEnc3nsuCElDoqFiheQv81mm1f-uhpleXBOcuDzGpicDusb5nITyPQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 3">
-    </div>
-    <div class="masonry-item">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe0oi2u357VaKgxjZzMpnkpYEZM1KMnEX0h95w06DIfF0sU7A_ucJEUshd6OKWZSceur7SHpv-O21uQs9qKd9KgOM8abP03-sgLuxUgrHei-bHwlzyZYju3kHZtWl0qB5YcW1qohi9_ZbvI14PCXKvwwC9CfJn0TLlQzIUYgG3xvw63xCgTezx-2NhGoRkd2LMYbi-xh06rTQPifGoz-MK_zW-v44x6TDgAC8Qkvqg0wlZYnEGvMceuiLcCV3C-oCSgeiHFAk4-5KuB_nNSfOSlrm5sG2ZvosQgYa3Wa9hCI8zY7QWLEW7q-gUDh8-qWXLpaNgJhVSBd4IJFHsEuKamypspz1xc3mqoD6scfFUSiatLPb_ZDllo38WIYrZqlSYPeyyCGlB9ML_OiBQ7VL2EfQ7f&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 4">
-    </div>
-    <div class="masonry-item">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfsRRRRC-bkXvKYAhgtdznxvcOrvY0CE6885p2QwiNRD4EuDaUj4iVLbebvSIo0fmzUzBegMvJ_tZfXSiDm468C1DUI2BOT4SARQyluIoXaAbZrT5WujRMvGjsU_v07ihY9J6ziBiH4GEeCBERkz1nEE9mdkh5-7v2WIaWf1fVwtlEtI89ruI4xAUaIcoWhYb2HINuEy8aODKYx4k1VhVTQ4lAxMAMeG8SL2xMeRmrDylmySrSpOO_9U55swJ-Ni8RYqMsHVBm4NqN8QMDYKnwzkVtjuhhGFxHL-8oWiLiFjPQb7m8AvJwxBLYw7141awYgcLivayMpCpQcVWNWntqjLj6sDKEMff5VT_HOCnBkWx6G-bUJXhe5M3pPpfNA2V-2N8dnj5-gGyKBi_ibxMo79Z8&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="TEMAHIMA 5">
+    <div>
+      <span class="sec-label rv">— About</span>
+      <h2 class="about-title rv" style="--d:.08s">「いいもの」は、<br>時間をかけて選ぶ。</h2>
+      <p class="about-body rv" style="--d:.14s">
+        テマヒマは、高槻にある小さなセレクトショップです。<br>
+        国内外の作家や工房から、暮らしの中で長く使えるものを丁寧に選びました。<br><br>
+        器、布もの、文房具、植物。<br>
+        毎日の生活が少し豊かになるような品を揃えてお待ちしています。
+      </p>
     </div>
   </div>
 </section>
 
-<!-- ========== CONTACT ========== -->
-<section class="contact-section">
-  <span class="contact-label">Contact</span>
-  <h2 class="contact-heading slide-in">お気軽に<br>ご連絡ください</h2>
-  <p class="contact-sub slide-in">どんなご質問でもお受けしています</p>
-  <div class="contact-buttons slide-in">
-    <a href="mailto:temahimaselect@gmail.com" class="btn btn-white">Mail Us</a>
-    <a href="https://www.instagram.com/temahima.jp" target="_blank" rel="noopener" class="btn btn-outline">Instagram</a>
-  </div>
-  <div class="contact-map-row slide-in">
-    <a href="https://maps.google.com/?cid=8966259614246090507" target="_blank" rel="noopener" class="btn btn-map">Google マップで見る &rarr;</a>
+<!-- Items -->
+<section class="sec items" id="items">
+  <div class="items-inner">
+    <span class="sec-label rv">— Items</span>
+    <h2 class="items-title rv" style="--d:.06s">取り扱い品目</h2>
+    <div class="items-list">
+      <div class="item rv">
+        <div class="item-name">器・陶芸</div>
+        <div class="item-desc">国内作家の手仕事による一点もの</div>
+      </div>
+      <div class="item rv" style="--d:.05s">
+        <div class="item-name">テキスタイル</div>
+        <div class="item-desc">手織り・草木染めの布もの</div>
+      </div>
+      <div class="item rv" style="--d:.08s">
+        <div class="item-name">文房具・紙もの</div>
+        <div class="item-desc">書くことが楽しくなるセレクト</div>
+      </div>
+      <div class="item rv" style="--d:.12s">
+        <div class="item-name">植物・フラワー</div>
+        <div class="item-desc">季節の植物と器のペアリング</div>
+      </div>
+      <div class="item rv" style="--d:.14s">
+        <div class="item-name">食品・調味料</div>
+        <div class="item-desc">作り手の見えるこだわりの品</div>
+      </div>
+      <div class="item rv" style="--d:.16s">
+        <div class="item-name">ギフト包装</div>
+        <div class="item-desc">贈り物のラッピング承ります</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- Concept -->
+<section class="concept">
+  <div class="concept-bg">
+    <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?w=1600&q=80&auto=format&fit=crop" alt="" loading="lazy">
+  </div>
+  <div class="concept-text">
+    <p class="concept-quote rv">"ていねいに作られたものを、<br>ていねいに届けたい。"</p>
+    <span class="concept-sub rv" style="--d:.1s">— Temahima</span>
+  </div>
+</section>
+
+<!-- Access -->
+<section class="sec" id="access">
+  <div class="access-inner">
+    <span class="sec-label rv">— Access</span>
+    <h2 class="access-title rv" style="--d:.06s">アクセス</h2>
+    <dl class="access-grid">
+      <div class="access-item rv">
+        <dt>Address</dt>
+        <dd>大阪府高槻市<br>（詳細はInstagramをご確認ください）</dd>
+      </div>
+      <div class="access-item rv" style="--d:.05s">
+        <dt>Hours</dt>
+        <dd>木〜日 11:00 – 18:00<br>月・火・水 定休日</dd>
+      </div>
+      <div class="access-item rv" style="--d:.08s">
+        <dt>Instagram</dt>
+        <dd>@temahima.jp</dd>
+      </div>
+      <div class="access-item rv" style="--d:.1s">
+        <dt>Payment</dt>
+        <dd>現金・各種カード・PayPay</dd>
+      </div>
+    </dl>
+    <div class="map-wrap rv" style="--d:.12s">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52464.1!2d135.6!3d34.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000f7d55e7a7777%3A0x7777777777777777!2z44OG44Oe44Oa44Oe!5e0!3m2!1sja!2sjp!4v1699999999999"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="TEMAHIMA 地図">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <span class="sec-label rv" style="display:block;text-align:center;margin-bottom:1.5rem;">— Contact</span>
+  <h2 class="cta-title rv" style="--d:.06s">ご来店をお待ちしています。</h2>
+  <p class="cta-sub rv" style="--d:.1s">ご質問・お取り置きはInstagramのDMからお気軽にどうぞ。</p>
+  <a class="cta-btn rv" style="--d:.14s" href="https://www.instagram.com/temahima.jp" target="_blank" rel="noopener">Instagram でDMを送る</a>
+</section>
+
 <footer>
-  <div class="footer-brand">TEMAHIMA</div>
-  <div class="footer-copy">
-    &copy; テマヒマ | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank" rel="noopener">@takibi__neko</a>
-  </div>
+  <span class="foot-name">Temahima</span>
+  <span class="foot-copy">© 2026 Temahima. All rights reserved.</span>
 </footer>
 
-<div class="demo-badge">※ Demo Page</div>
-
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
+(function(){
+  // Nav scroll
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){ nav.classList.toggle('solid', window.scrollY > 40); }, {passive:true});
+
+  // Reveal on scroll
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
         entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-
-  document.querySelectorAll('.slide-in, .slide-in-left, .slide-in-right').forEach(el => {
-    observer.observe(el);
-  });
+  }, {threshold: 0.12});
+  document.querySelectorAll('.rv').forEach(function(el){ observer.observe(el); });
+})();
 </script>
 </body>
 </html>
