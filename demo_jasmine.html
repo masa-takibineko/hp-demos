@@ -3,350 +3,387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ジャスミン｜松本市のアジアンリラクゼーションサロン</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>Jasmine | 松本市のアジアンリラクゼーションサロン</title>
+<meta name="description" content="アジアの伝統的な癒しの技術で、心身のバランスを整える。長野県松本市大手のリラクゼーションサロン。">
+<meta property="og:title" content="Jasmine | 松本市のアジアンリラクゼーションサロン">
+<meta property="og:description" content="アジアの伝統的な癒しの技術で、心身のバランスを整える。長野県松本市大手。">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --deep-purple: #1a0a2e;
-  --mid-purple: #2d1554;
-  --soft-purple: #4a2080;
-  --cream: #f5eed8;
-  --text-light: #f0e6cc;
+  --bg:       #090b0d;
+  --surface:  #111316;
+  --accent:   #c4a0a0;
+  --text:     #e8e2d9;
+  --text-dim: #9a8e82;
+  --border:   rgba(255,255,255,0.08);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
-  background: var(--deep-purple);
-  color: var(--text-light);
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
   overflow-x: hidden;
 }
+img { display: block; width: 100%; }
+a { color: inherit; text-decoration: none; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; width: 100%; z-index: 100;
-  padding: 1.2rem 2rem;
+  padding: 1.4rem clamp(1.5rem, 6vw, 5rem);
   display: flex; justify-content: space-between; align-items: center;
-  background: linear-gradient(to bottom, rgba(26,10,46,0.95), transparent);
+  transition: background 0.4s;
 }
-.logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem; font-style: italic;
-  color: var(--gold-light);
-  letter-spacing: 0.1em;
+nav.scrolled { background: rgba(9,11,13,0.95); backdrop-filter: blur(8px); }
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--text);
 }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
 .nav-links a {
-  color: var(--cream); text-decoration: none;
-  font-size: 0.8rem; letter-spacing: 0.15em;
-  opacity: 0.8; transition: opacity 0.3s;
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.3s;
 }
-.nav-links a:hover { opacity: 1; color: var(--gold-light); }
+.nav-links a:hover { color: var(--accent); }
 
 /* ── HERO ── */
 .hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  text-align: center;
   position: relative;
+  height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(3rem, 8vh, 6rem);
   overflow: hidden;
-  padding: 2rem;
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(74,32,128,0.5) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(201,168,76,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 60%);
 }
-.hero-ornament {
-  position: absolute;
-  width: 600px; height: 600px;
-  border: 1px solid rgba(201,168,76,0.15);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: rotate 30s linear infinite;
+.hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.52) sepia(0.18);
 }
-.hero-ornament::before {
-  content: '';
-  position: absolute; inset: 30px;
-  border: 1px solid rgba(201,168,76,0.1);
-  border-radius: 50%;
-}
-@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-.hero-tag {
-  font-size: 0.7rem; letter-spacing: 0.3em;
-  color: var(--gold);
+.hero-content { position: relative; z-index: 1; }
+.hero-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0; animation: fadeUp 1s 0.3s forwards;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: heroFade 0.9s 0.2s ease forwards;
 }
-.hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 300; font-style: italic;
-  color: var(--cream);
-  line-height: 1;
-  margin-bottom: 0.2em;
-  opacity: 0; animation: fadeUp 1s 0.5s forwards;
+.hero-title {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(3.8rem, 11vw, 7.5rem);
+  font-weight: 400;
+  line-height: 1.0;
+  color: var(--text);
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: heroFade 0.9s 0.4s ease forwards;
 }
 .hero-sub {
-  font-size: 0.85rem; letter-spacing: 0.2em;
-  color: var(--gold-light);
-  margin-bottom: 2.5rem;
-  opacity: 0; animation: fadeUp 1s 0.7s forwards;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: heroFade 0.9s 0.6s ease forwards;
 }
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 0.8rem;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--deep-purple);
-  text-decoration: none;
-  padding: 1rem 2.5rem;
-  font-size: 0.85rem; letter-spacing: 0.2em;
-  font-weight: 700;
-  transition: transform 0.3s, box-shadow 0.3s;
-  opacity: 0; animation: fadeUp 1s 0.9s forwards;
-}
-.hero-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(201,168,76,0.4);
-}
-.hero-scroll {
-  position: absolute; bottom: 2rem;
-  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold);
-  opacity: 0; animation: fadeUp 1s 1.2s forwards;
-}
-.scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  animation: scrollLine 2s ease-in-out infinite;
-}
-@keyframes scrollLine {
-  0%, 100% { transform: scaleY(1); opacity: 1; }
-  50% { transform: scaleY(0.5); opacity: 0.5; }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes heroFade {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RATING STRIP ── */
-.rating-strip {
-  background: var(--mid-purple);
-  padding: 1.5rem;
-  display: flex; justify-content: center; gap: 3rem;
-  flex-wrap: wrap;
-}
-.rating-item { text-align: center; }
-.rating-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.2rem; color: var(--gold);
-}
-.rating-label { font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.7; }
-
 /* ── SECTION BASE ── */
-section { padding: 6rem 2rem; }
-.section-tag {
-  font-size: 0.65rem; letter-spacing: 0.4em;
-  color: var(--gold); text-transform: uppercase;
-  margin-bottom: 1rem;
+.section {
+  padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1.2rem;
 }
 .section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 300; font-style: italic;
-  color: var(--cream);
-  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 2.5rem;
 }
-.gold-line {
-  width: 60px; height: 1px;
-  background: var(--gold);
-  margin-bottom: 2rem;
+.divider {
+  width: 40px; height: 1px;
+  background: var(--accent);
+  margin-bottom: 2.5rem;
+  opacity: 0.6;
 }
 
-/* ── CONCEPT ── */
-.concept { max-width: 900px; margin: 0 auto; }
-.concept-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: center;
-  margin-top: 3rem;
+/* ── STORY ── */
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
 }
-.concept-text p {
-  font-size: 0.95rem; line-height: 2;
-  color: rgba(240,230,204,0.85);
-  margin-bottom: 1rem;
+.story-img {
+  aspect-ratio: 3/4;
+  overflow: hidden;
 }
-.concept-visual {
-  position: relative; height: 350px;
+.story-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) sepia(0.1);
+  transition: transform 0.8s ease;
 }
-.concept-box {
-  position: absolute;
-  background: var(--mid-purple);
-  border: 1px solid rgba(201,168,76,0.3);
-}
-.concept-box:nth-child(1) { inset: 0 30px 30px 0; }
-.concept-box:nth-child(2) {
-  inset: 30px 0 0 30px;
-  background: linear-gradient(135deg, var(--soft-purple), var(--mid-purple));
-  display: flex; align-items: center; justify-content: center;
-}
-.concept-icon {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 5rem; color: var(--gold);
-  opacity: 0.4;
+.story-img:hover img { transform: scale(1.03); }
+.story-body p {
+  font-size: clamp(0.88rem, 1.4vw, 0.96rem);
+  line-height: 2.1;
+  color: var(--text-dim);
+  margin-bottom: 1.4rem;
 }
 
 /* ── MENU ── */
-.menu { background: var(--mid-purple); }
-.menu-inner { max-width: 900px; margin: 0 auto; }
-.menu-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem; margin-top: 3rem;
+.menu-wrap {
+  background: var(--surface);
+  padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem);
 }
-.menu-card {
-  border: 1px solid rgba(201,168,76,0.2);
-  padding: 2rem;
-  position: relative;
-  transition: border-color 0.3s, transform 0.3s;
+.menu-inner { max-width: 1100px; margin: 0 auto; }
+.menu-list { margin-top: 1rem; }
+.menu-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
   cursor: default;
+  transition: border-color 0.3s;
 }
-.menu-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-4px);
-}
-.menu-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  width: 3px; height: 100%;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.menu-card:hover::before { opacity: 1; }
+.menu-item:first-child { border-top: 1px solid var(--border); }
+.menu-item:hover { border-color: rgba(196,160,160,0.3); }
 .menu-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem; font-style: italic;
-  color: var(--gold-light);
-  margin-bottom: 0.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 0.4rem;
 }
 .menu-duration {
-  font-size: 0.7rem; letter-spacing: 0.2em;
-  color: var(--gold); opacity: 0.7;
-  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
 }
 .menu-desc {
-  font-size: 0.82rem; line-height: 1.8;
-  color: rgba(240,230,204,0.75);
-  margin-bottom: 1.5rem;
+  font-size: 0.84rem;
+  line-height: 1.9;
+  color: var(--text-dim);
+  max-width: 55ch;
 }
 .menu-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem; color: var(--cream);
-}
-.menu-price span { font-size: 0.8rem; opacity: 0.6; }
-
-/* ── ACCESS ── */
-.access { max-width: 900px; margin: 0 auto; }
-.access-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 3rem; margin-top: 3rem; align-items: start;
-}
-.info-row {
-  display: flex; gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-}
-.info-label {
-  font-size: 0.7rem; letter-spacing: 0.2em;
-  color: var(--gold); min-width: 5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  color: var(--text);
+  white-space: nowrap;
   padding-top: 0.2rem;
 }
-.info-val { font-size: 0.9rem; line-height: 1.7; opacity: 0.85; }
-.map-placeholder {
-  background: var(--mid-purple);
-  border: 1px solid rgba(201,168,76,0.2);
-  height: 250px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; letter-spacing: 0.2em;
-  color: var(--gold); opacity: 0.6;
+.menu-price sup {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.72rem;
+  vertical-align: super;
 }
 
-/* ── CTA SECTION ── */
-.cta-section {
-  background: linear-gradient(135deg, var(--soft-purple), var(--mid-purple));
-  text-align: center;
-  padding: 5rem 2rem;
+/* ── CONCEPT ── */
+.concept-wrap {
   position: relative;
+  height: clamp(360px, 55vw, 560px);
   overflow: hidden;
 }
-.cta-section::before {
-  content: 'JASMINE';
+.concept-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.42) sepia(0.2);
+}
+.concept-quote {
   position: absolute;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15rem; font-style: italic;
-  color: rgba(201,168,76,0.04);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  pointer-events: none;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 5rem);
+  text-align: center;
 }
-.cta-section .section-title { margin-bottom: 0.5rem; }
-.cta-section p {
-  font-size: 0.85rem; opacity: 0.7;
-  margin-bottom: 2.5rem; letter-spacing: 0.1em;
+.concept-quote blockquote {
+  font-family: 'Playfair Display', 'Noto Serif JP', serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 700px;
+  margin-bottom: 1.5rem;
 }
-.tel-link {
+.concept-quote cite {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ── ACCESS ── */
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+.info-row {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.info-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  min-width: 5rem;
+  padding-top: 0.15rem;
+  flex-shrink: 0;
+}
+.info-val {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+.info-val a { color: var(--text); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
+.info-val a:hover { border-color: var(--accent); }
+.map-frame {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: 0;
+  filter: grayscale(0.4) brightness(0.9);
+}
+
+/* ── CTA ── */
+.cta-wrap {
+  padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.cta-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 1.5rem;
+}
+.cta-tel {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.04em;
   display: inline-block;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem; color: var(--gold-light);
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-  transition: color 0.3s;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
 }
-.tel-link:hover { color: var(--cream); }
-.tel-note { font-size: 0.72rem; letter-spacing: 0.2em; opacity: 0.6; }
+.cta-tel:hover { color: var(--accent); border-color: var(--accent); }
+.cta-hours {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
 
 /* ── FOOTER ── */
 footer {
-  background: #0f0620;
-  padding: 2rem;
-  text-align: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  opacity: 0.5;
+  padding: 2rem clamp(1.5rem, 6vw, 5rem);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-  .concept-grid, .access-grid { grid-template-columns: 1fr; }
-  .concept-visual { height: 200px; }
-  .rating-strip { gap: 1.5rem; }
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+.footer-copy {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  opacity: 0.5;
 }
 
 /* ── SCROLL REVEAL ── */
 .reveal {
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.8s, transform 0.8s;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .story-grid { grid-template-columns: 1fr; }
+  .story-img { aspect-ratio: 4/3; }
+  .menu-item { grid-template-columns: 1fr; }
+  .menu-price { margin-top: 0.5rem; }
+  .access-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(3rem, 15vw, 4.5rem); }
+}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">Jasmine</div>
+<nav id="nav">
+  <div class="nav-logo">Jasmine</div>
   <ul class="nav-links">
-    <li><a href="#concept">コンセプト</a></li>
+    <li><a href="#story">コンセプト</a></li>
     <li><a href="#menu">メニュー</a></li>
     <li><a href="#access">アクセス</a></li>
     <li><a href="#reserve">ご予約</a></li>
@@ -355,120 +392,122 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-ornament"></div>
-  <p class="hero-tag">Asian Relaxation Salon — Matsumoto</p>
-  <h1>Jasmine</h1>
-  <p class="hero-sub">ジャスミン｜松本市大手</p>
-  <a href="tel:0263742418" class="hero-cta">
-    <span>📞</span> 今すぐ予約する
-  </a>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    SCROLL
+  <div class="hero-bg">
+    <img
+      src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1600&q=85&auto=format&fit=crop"
+      alt=""
+      loading="eager"
+    >
+  </div>
+  <div class="hero-content">
+    <span class="hero-label">— Asian Relaxation Salon, Matsumoto</span>
+    <h1 class="hero-title">Jasmine</h1>
+    <p class="hero-sub">ジャスミン｜長野県松本市大手</p>
   </div>
 </section>
 
-<!-- RATING -->
-<div class="rating-strip">
-  <div class="rating-item">
-    <div class="rating-num">4.8</div>
-    <div class="rating-label">Google 評価</div>
+<!-- STORY -->
+<div id="story">
+  <div class="section">
+    <div class="story-grid">
+      <div class="story-img reveal">
+        <img
+          src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&q=85&auto=format&fit=crop"
+          alt="施術シーン"
+          loading="lazy"
+        >
+      </div>
+      <div class="story-body reveal">
+        <span class="section-label">Our Philosophy</span>
+        <h2 class="section-title">日常から解き放たれる、<br>上質なひとときを。</h2>
+        <div class="divider"></div>
+        <p>アジアの伝統的な癒しの技術と、現代のリラクゼーション理論を融合させたジャスミンのトリートメント。</p>
+        <p>身体の深部から緊張をほぐし、心身のバランスを整えます。忙しい日常の中で、本当の意味での休息をご提供します。</p>
+        <p>松本市大手にて、みなさまのお越しをお待ちしております。</p>
+      </div>
+    </div>
   </div>
-  <div class="rating-item">
-    <div class="rating-num">49</div>
-    <div class="rating-label">口コミ件数</div>
-  </div>
-  <div class="rating-item">
-    <div class="rating-num">10+</div>
-    <div class="rating-label">施術メニュー</div>
-  </div>
-  <div class="rating-item">
-    <div class="rating-num">松本</div>
-    <div class="rating-label">大手エリア</div>
+</div>
+
+<!-- MENU -->
+<div class="menu-wrap" id="menu">
+  <div class="menu-inner">
+    <div class="reveal">
+      <span class="section-label">Treatment Menu</span>
+      <h2 class="section-title">メニュー・料金</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item reveal">
+        <div>
+          <div class="menu-name">Relax Course</div>
+          <div class="menu-duration">60 min</div>
+          <div class="menu-desc">全身の疲れをじっくりほぐす、スタンダードなリラクゼーションコース。初めての方にもおすすめです。</div>
+        </div>
+        <div class="menu-price"><sup>¥</sup>6,600</div>
+      </div>
+      <div class="menu-item reveal">
+        <div>
+          <div class="menu-name">Deep Healing</div>
+          <div class="menu-duration">90 min</div>
+          <div class="menu-desc">深層筋にアプローチし、慢性的な疲れやコリを集中的にケア。特別な日の前後におすすめのプレミアムコース。</div>
+        </div>
+        <div class="menu-price"><sup>¥</sup>9,900</div>
+      </div>
+      <div class="menu-item reveal">
+        <div>
+          <div class="menu-name">Head &amp; Shoulder</div>
+          <div class="menu-duration">40 min</div>
+          <div class="menu-desc">頭・首・肩に特化したスポットケア。デスクワークやスマホ疲れにお悩みの方へ。</div>
+        </div>
+        <div class="menu-price"><sup>¥</sup>4,400</div>
+      </div>
+      <div class="menu-item reveal">
+        <div>
+          <div class="menu-name">Foot Reflexology</div>
+          <div class="menu-duration">60 min</div>
+          <div class="menu-desc">足裏の反射区を丁寧に刺激し、全身の臓器・器官の機能を活性化するリフレクソロジー。</div>
+        </div>
+        <div class="menu-price"><sup>¥</sup>6,600</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- CONCEPT -->
-<section class="concept" id="concept">
-  <div class="reveal">
-    <p class="section-tag">Philosophy</p>
-    <h2 class="section-title">日常から解き放たれる、<br>上質なひとときを。</h2>
-    <div class="gold-line"></div>
+<div class="concept-wrap reveal">
+  <img
+    src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1600&q=85&auto=format&fit=crop"
+    alt=""
+    loading="lazy"
+  >
+  <div class="concept-quote">
+    <blockquote>「触れることは、言葉より深く<br>届く癒しがある。」</blockquote>
+    <cite>Jasmine — Asian Relaxation</cite>
   </div>
-  <div class="concept-grid reveal">
-    <div class="concept-text">
-      <p>アジアの伝統的な癒しの技術と、現代のリラクゼーション理論を融合させたジャスミンのトリートメント。</p>
-      <p>身体の深部から緊張をほぐし、心身のバランスを整えます。忙しい日常の中で、本当の意味での休息をご提供します。</p>
-      <p>松本市大手にて、みなさまのお越しをお待ちしております。</p>
-    </div>
-    <div class="concept-visual">
-      <div class="concept-box"></div>
-      <div class="concept-box">
-        <div class="concept-icon">✦</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MENU -->
-<section class="menu" id="menu">
-  <div class="menu-inner">
-    <div class="reveal">
-      <p class="section-tag">Treatment Menu</p>
-      <h2 class="section-title">メニュー・料金</h2>
-      <div class="gold-line"></div>
-    </div>
-    <div class="menu-grid">
-      <div class="menu-card reveal">
-        <div class="menu-name">Relax Course</div>
-        <div class="menu-duration">60 MIN</div>
-        <div class="menu-desc">全身の疲れをじっくりほぐす、スタンダードなリラクゼーションコース。初めての方にもおすすめです。</div>
-        <div class="menu-price">¥6,600<span> (税込)</span></div>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-name">Deep Healing</div>
-        <div class="menu-duration">90 MIN</div>
-        <div class="menu-desc">深層筋にアプローチし、慢性的な疲れやコリを集中的にケア。特別な日の前後におすすめのプレミアムコース。</div>
-        <div class="menu-price">¥9,900<span> (税込)</span></div>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-name">Head & Shoulder</div>
-        <div class="menu-duration">40 MIN</div>
-        <div class="menu-desc">頭・首・肩に特化したスポットケア。デスクワークやスマホ疲れにお悩みの方へ。</div>
-        <div class="menu-price">¥4,400<span> (税込)</span></div>
-      </div>
-      <div class="menu-card reveal">
-        <div class="menu-name">Foot Reflection</div>
-        <div class="menu-duration">60 MIN</div>
-        <div class="menu-desc">足裏の反射区を丁寧に刺激することで、全身の臓器・器官の機能を活性化するリフレクソロジー。</div>
-        <div class="menu-price">¥6,600<span> (税込)</span></div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- ACCESS -->
-<section id="access">
-  <div class="access">
+<div id="access">
+  <div class="section">
     <div class="reveal">
-      <p class="section-tag">Access</p>
+      <span class="section-label">Access</span>
       <h2 class="section-title">アクセス</h2>
-      <div class="gold-line"></div>
+      <div class="divider"></div>
     </div>
     <div class="access-grid reveal">
       <div class="access-info">
         <div class="info-row">
-          <div class="info-label">店 名</div>
+          <div class="info-label">店名</div>
           <div class="info-val">ジャスミン</div>
         </div>
         <div class="info-row">
-          <div class="info-label">住 所</div>
+          <div class="info-label">住所</div>
           <div class="info-val">長野県松本市大手４丁目１０−６</div>
         </div>
         <div class="info-row">
-          <div class="info-label">電 話</div>
-          <div class="info-val"><a href="tel:0263742418" style="color:var(--gold-light);text-decoration:none;">0263-74-2418</a></div>
+          <div class="info-label">電話</div>
+          <div class="info-val"><a href="tel:0263742418">0263-74-2418</a></div>
         </div>
         <div class="info-row">
           <div class="info-label">営業時間</div>
@@ -483,34 +522,50 @@ footer {
           <div class="info-val">JR松本駅より徒歩約10分</div>
         </div>
       </div>
-      <div class="map-placeholder">MAP</div>
+      <iframe
+        class="map-frame"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3222.4!2d137.9709!3d36.2381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601d1e4b8bbf0001%3A0x1!2z44K444Oj44K544Of44OzIOmbquacrOecn-enkeS4reWkqOWei-S4reS8mOWkp-S4reacqA!5e0!3m2!1sja!2sjp!4v1699999999999!5m2!1sja!2sjp"
+        title="ジャスミン アクセスマップ"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
   </div>
-</section>
+</div>
 
 <!-- CTA -->
-<section class="cta-section" id="reserve">
-  <p class="section-tag">Reservation</p>
-  <h2 class="section-title">ご予約・お問い合わせ</h2>
-  <p>お電話にて承っております。お気軽にお問い合わせください。</p>
-  <a href="tel:0263742418" class="tel-link">0263-74-2418</a>
-  <div class="tel-note">受付時間 10:00〜20:00</div>
-</section>
+<div class="cta-wrap" id="reserve">
+  <span class="cta-label reveal">Reservation</span>
+  <div class="reveal">
+    <a href="tel:0263742418" class="cta-tel">0263-74-2418</a>
+    <p class="cta-hours">受付時間 10:00 〜 20:00 ／ 不定休</p>
+  </div>
+</div>
 
 <footer>
-  © 2024 Jasmine. All rights reserved. | 長野県松本市大手４丁目１０−６
+  <div class="footer-logo">Jasmine</div>
+  <div class="footer-copy">© 2024 Jasmine. 長野県松本市大手４丁目１０−６</div>
 </footer>
 
 <script>
-const reveals = document.querySelectorAll('.reveal');
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Scroll reveal with stagger
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
