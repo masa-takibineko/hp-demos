@@ -38,14 +38,10 @@ body {
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: var(--places-bg-1);
+  background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1600&q=80&auto=format&fit=crop');
   background-size: cover;
   background-position: center;
-  transform: scale(1.07);
-  transition: transform 12s cubic-bezier(0.25,0.46,0.45,0.94);
-  will-change: transform;
 }
-.hero-bg.loaded { transform: scale(1); }
 .hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(135deg, rgba(26,15,10,0.87) 0%, rgba(26,15,10,0.52) 55%, rgba(13,8,5,0.68) 100%);
@@ -735,22 +731,6 @@ footer {
 @media (max-width: 720px) { .latte { grid-template-columns: 1fr; text-align: center; } .latte-cup { width: min(72%,280px); } }
 
 </style>
-<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
-<script src="places-key.js"></script>
-<script>
-(function(){
-  var k = window.PLACES_KEY || '';
-  var bgs = ["https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8"];
-  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
-  function fill(){
-    document.querySelectorAll('img[data-psrc]').forEach(function(img){
-      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
-      else img.style.visibility = 'hidden';
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
-})();
-</script>
 </head>
 <body>
 
@@ -832,7 +812,7 @@ footer {
 <section class="photo-essay" id="about">
   <div class="essay-row">
     <div class="essay-photo" id="essayPhoto">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ" alt="ハートコーヒー 店内" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop" alt="ハートコーヒー 店内" loading="lazy">
     </div>
     <div class="essay-text" id="essayText">
       <div class="essay-eyebrow">About Us</div>
@@ -867,23 +847,23 @@ footer {
   </div>
   <div class="gallery-grid">
     <div class="g-item" data-index="0">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8" alt="Gallery 1" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80&auto=format&fit=crop" alt="Gallery 1" loading="lazy">
       <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
     </div>
     <div class="g-item" data-index="1">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ" alt="Gallery 2" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop" alt="Gallery 2" loading="lazy">
       <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
     </div>
     <div class="g-item" data-index="2">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q" alt="Gallery 3" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80&auto=format&fit=crop" alt="Gallery 3" loading="lazy">
       <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
     </div>
     <div class="g-item" data-index="3">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ" alt="Gallery 4" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80&auto=format&fit=crop" alt="Gallery 4" loading="lazy">
       <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
     </div>
     <div class="g-item" data-index="4">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ" alt="Gallery 5" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80&auto=format&fit=crop" alt="Gallery 5" loading="lazy">
       <div class="g-overlay"><span class="g-overlay-icon">+</span></div>
     </div>
   </div>
@@ -1039,11 +1019,11 @@ document.querySelectorAll('#hoursTable tbody tr').forEach(tr => {
 
 // --- Gallery lightbox ---
 const photos = [
-  ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcf1EjnBbjbCO4QrD1ZxEHbDW1DXyZyH3Km42uEYtl_QbMrfZtGMtVsRiKSfzPMcYEalESN-lTtqV0X-e1C0yEByGd_Gl7vitx0Uz8ib0q8vphbQmlhrbO8YXBgi4nI2Hjn3SHqliqYM_p6zA2JVMiohFzQGebscf7IPW31n2rvKp1EU-3JfNoCMhYHTQCTPOi3-v6tEgAruCO3T4kw9lW2mytoys97VAAsOmi5ygTpfFdr_ag8uFAEUfS6bUmr06V3fhZn0MScUO1ZPI-Y5VgIMmCGlDsohZVVgyF3YjH4tWnMKTw2ZdhUigNbJt8xgGwEpF3LxvZe-Pd_nBpTjdsPwfej14l4JdqFY3VNdUBn8eZ75WxCcrP8_J7a2k-dG_WJisU43LHt_sKO8xRxvRGLpBGbDq8' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
-  ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcfn0l71n9dNja7BhXHROabIyP63i684aUDtUJTTYW8oorLsQj7cd-cs58SnF_BqopzQRjHsbGsaEJpvRGof2VD5EESuuqYErp8xTVetq5gY-04gek5wind2Ie0y_mL5p7gth2YQ0CdBtdjUH6Ok9QF2azRt43LqvHzOxqd5hcI7mUTWBNr7VUcgiRMKXVihKBY9WAGaoUFYNwSRj6eu0dDgojiih7bULruH0--fXysWF5l7u2X1g4caMSm1Phd6iZYWSE1UNB73oD1Ioz6ARFQn5tAIbxaFvTHN_arFuJx8uuaStjDJi2d4XL5grR_spUW_qp9p_wwWsoX_xoIbq4P4UTC889NkTuCmZ3BhvNYHRwDVWTA63fsHsNWUEk7egOBNQrfeyp9rvfUHk4zK2_PHQ' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
-  ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLdpVkBAfzqSSSGcETHIe6o1PX_ASKuBCNOk7Q8UCDDPvB4vJu22XD7w5B6_ix-m5VJbSSDLndI8H6gMVD4JNqohTsMZmgJejjTcxYygefTUaEi3XFZF4fbdmQc2azpOpgy2HjSZdb55Eaaob4SP-C6PqjslXvTeoHDHQtsqC7cxbsQDi4l8HYUXR6266qUdORMWacOs8XD4yzIk9QYncoKOPgZik8Sgg-FhrJeyObvcfxXHT-EI3r0p16n6JOoBO3Xz94U-PgsXFJtfwpaT_TN6ZU5dyGHTtRLLXroGgXsn2umFR1R1r0xEpZPlnezkFMs6H7OlNZBybg0bIUwegwpWsbQbFkhjCbnexiUIW3Q5qqnAuh9UdCbDvSENHzpGMifRceD6dCz3leNWvfKLdnmag2vUij3_hHxjKTqWPXmM4Q' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
-  ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfn2eQHY7sGsS1NqO5iZdM4tkh2oYS0HZQK_lzVdcEXJ40SFqRDLeJIWkKU5HnymKMzkoredTFVYWXEKrfi3eYsKqbUM--R8RycxP3CSceExEEkt9c-dE_5lQrHrf5UyKnUbyxQa33-k0rL27YUtKcXOysbrj3csdwcqpNkFCBvLV4NabZneTxIhwWBAgH-qUGUwJ6eHu70v9G5p2NQgoExblhWtorDb8-zbwgX8uoMeG5uFgwJq4xwukYrBRexRv7T-G1XmKC3ep7A94TYHM0v1nNKhqznB18C2DmbYFl3ZHX-tTcJ6FGmlkQplVfzOiXDOBpe18G_fB-Sfgg84lsoBbjMgDotMTn7cZD744fijHJZlswxYpkBj7_TC5wXjBtqfBX8GB7MoAID4pF6EQ46GMr-EI5VCp2Du39OUC-_SQ' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
-  ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd7m0lc-AIXHFtCPwBgIYqyhXw7yXQdgn4EjMyuRmaBspiYAJaWNxDRPd76PgW1WBwJ1IIjnUmDsO3G-MBLrg5inQwVgNQgKECnY4mSfti3E2Aku7r6dw2WY_J-Qa6C1sQQgvzXb-x8QDI_fkQSNIvfl-i4yyAjJ9OUal-ENYfBY9x7zKnICMcGaSoJlBGi5S1C1ps8vS4WBNwYVwYh2cT3BKdBQl09nVADEEtm17NQ3C2FRARLfIOwvVWyOXewkyYblAbygRUCXkzAOF5cnr1fztNhF2JuF_EbV7WVgCgdiFfdcGMY6TCtbRWBcdEva-sntDAeHJonZHEKUQAyVlE4WkwqTMfMQvVxLTtQfpyPAPNJYgQPOdwRzg7nC03WvW0sXNcpZj4LjfxcaWJYTYSzUuE27fSnge4bKflanJHcJQ' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : ''))
+  ('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80&auto=format&fit=crop'),
+  ('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop'),
+  ('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80&auto=format&fit=crop'),
+  ('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80&auto=format&fit=crop'),
+  ('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80&auto=format&fit=crop')
 ];
 let lbIndex = 0;
 const lb = document.getElementById('lightbox');

@@ -535,29 +535,13 @@
 
   .hours-section { overflow-x: clip; }
 </style>
-<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
-<script src="places-key.js"></script>
-<script>
-(function(){
-  var k = window.PLACES_KEY || '';
-  var bgs = [];
-  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
-  function fill(){
-    document.querySelectorAll('img[data-psrc]').forEach(function(img){
-      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
-      else img.style.visibility = 'hidden';
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
-})();
-</script>
 </head>
 <body>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="hero-photo">
-    <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd35sCoW8Jkd0GGzQr0VkpNvTxnxzBAgQwoO8B-5bcb3tASLjt0xYiUvSVi8TGnv6s3UNx62qmujuYyEuCTpHadNGFnplXl4fUEvjWA0XDTyTBLhMS6j5h3cyF3tKH9SKhXMJlyLFCh2UyRZa5GEYVhoYNjCAcSYpwGJLIYM-lBuz_50WOK4bqdHgsnWJ7ZD_0Dg5RX2kF-ICwZu01RSATm_C4WZmChajO5w2BP8Ri-D4WVcwBdUD5EFVQj51wFP-7UxgNulnslJb0-Oy6IcxZVr7f4vhgsYYeeNKhKsbpWcHYOVTZHiQIFl_pVayUzKB_asn2B_pZvGhUR5CgMC56stXDVmuYfVjT0fbSbqVFLWDYXxMHpPY6irIflc2EsMb0PTPl5xmChMZEzJKxEuPZNFH3NrTY" alt="COFFEE 館">
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&q=80&auto=format&fit=crop" alt="COFFEE 館">
   </div>
   <div class="hero-text">
     <div class="hero-inner">
@@ -606,16 +590,16 @@
   </div>
   <div class="strip-scroll">
     <div class="strip-photo">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcDeJ3Wbwkr_OF11mdVOPFuRDFl9Iq8n5o_T6ETeYMDn3LqrEsX4YTjK1lsHiZt1z3PObW0t9EvKlBFLx-l-ZDeidhI8GVtFk0cxFpT8p0J5fQNxU0POZojMDg-KEA-Gjwc9_sKbXF43h8VFcjwkWZIO86zKJdAhGGOqN85UwuB2Or-zx4QKL2Xa5ItdC3J7PrkC5a6P1ToFXN3cXgrUycNlBptJhjPiDYk4FyBmXMfzxLqi2R75RzNX-0anRFF0nqHUIcavIk3dbRuFQ2hSOnVmCiRzyYzs4VzFYTWJRd6geSyKq_gHBLwAd07QJtY0FHGW5smx-rhZQs44ed3Kq0lUCxiHBP9DW0dtaT6OEb_Oqx7R5LPH19Xjj3aTAxd_h371Pru1V-LBwzpL0KZMXqhQtBM_tDbtfvlWH0xL9xnDg" alt="COFFEE 館">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLffNcjK5IZ1F2QCxfpCT2Prn2EdVnwXPwNO_YhtlEiIYpfu7OROtqattJwRLSFhKCTEWDIO049SzjxdbQ6uHye-t1MIE-kr80BRybBtWtFy4If1nYLf63Z9ueXdYR1FnCxrYKOYIEneW7kjBiaNw0RUeR8C-r4JBrquxsFgOQQqi74IQgo5r_309YaqEYheHsr8Satkc8rnsYFESVgvCVa0hJcT6G8KIvkQIVJFUFGlNs4DVzHIDAzxBgN0NuFbfk7LUdS0pe2yCGNueFAY20kIDZ3_A-zeQOHKkxpvuDmXWl77kYGY_-yCuJvLNMTA9l8v4-uxWpHMiA87-Y06wQ5P3grRHtIq4H523BMQG23ObRWiFHxTErmhTILtvnnzOH6a8fkOlgeZHmAMVLLpwH_qWEvaT93bjXogpeO8y6Vrlg" alt="COFFEE 館">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80&auto=format&fit=crop" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfpFfHYo79dg0omhCZR47WvARZmS0Pk4SCS6wjaPZxHQay_qClEy4ffW7enc89AHxVW1cu36M5uze1guYEmCZZE09Y6vfoizmlPUYDfyJelyP4Zxuki2lhBSz-6rM2pOLNkivoitaNJoTPsRCRU9VgRCKOD_fHfqWtvuu-FXiPYbdiFKOt5gvpwtsOM86GYO0_1ovI-_phfzARvn8_VYe_T-Uj9EXEkS3PJr7QMvGCBYo5d1zBFvFtmg8xxTUzZ6QF-MK0zWhSEoO7gN1ThU7nQMygcNiHTwOJZKbH2yjP61ha8UUv7GDJcvmqeoIzWHOwAcE6ElurGCJr6ArCvQuF3tpVH4-zM58zT2HCmLOK_pproASa7dxC9a9Z035KUuTLnns-Pk5RNqzkFUP8qEWsBwbsmzlPIC3Lujm_e2Mxv6w" alt="COFFEE 館">
+      <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80&auto=format&fit=crop" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfjHGytHhSes-FVweOweB6j5da7JYpa2tpwJjxdHqujOegC1n0mHCx3rZJ3w1AXcJl9NftT-_Hn0z3i-pC-hePqjOjhPio6upM8tUNsw5WjnrZzTXSAgkVND-0ui83HZiO9F3OT9xMwJKp_jlpV2ezAwtR6T0ItNhoYxv5xcitZrsviqEsXiDGSSFyF6FPq4CZX9tgtPo0AKYF7Om9glxqmjfZwWtBz3-FTqgCkeb-e_vJbpYTpk72xLUa8hZETwwvYv0C6CmSI-C9MbpCJDMe_dT8L7Ij8-_k5RrdBN6Z78dZJHFbAxoHdbRzOEbAUiDg33u7KACbOPN28wT-g0xdzHN-sYbQdHeWqFM_qEk8fYSHmnXYvr9-G1Z9Bkib2dcvfTMRJow1r_BwQX2_afzCEy8k-C081SUOP9IiMsrzzSQ" alt="COFFEE 館">
+      <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80&auto=format&fit=crop" alt="COFFEE 館">
     </div>
   </div>
 </section>
