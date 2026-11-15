@@ -491,14 +491,73 @@
     .hero-text { padding: 1.5rem 1rem 2rem; }
     .strip-photo { height: 50vw; }
   }
+
+  /* ===== 遊び：コーヒーチケット ===== */
+  .tickets { overflow: hidden; padding: 2.6rem 0; background: var(--bg2); }
+  .tickets-row { display: flex; width: max-content; transform: rotate(-1.5deg); margin-left: -40px; }
+  .tk {
+    flex: none; width: 150px; height: 72px; margin-right: 3px; color: #3a0a14;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.25;
+    background:
+      radial-gradient(circle at 0 50%, var(--bg2) 7px, transparent 7.5px),
+      radial-gradient(circle at 100% 50%, var(--bg2) 7px, transparent 7.5px),
+      #e9dcc0;
+    border-left: 1px dashed rgba(58,10,20,0.45);
+  }
+  .tk b { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 0.82rem; letter-spacing: 0.34em; padding-left: 0.34em; }
+  .tk i { font-style: normal; font-size: 1.25rem; font-weight: 600; letter-spacing: 0.1em; }
+  .tk small { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.2em; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .tickets-row { animation: tk-slide linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+    }
+  }
+  @keyframes tk-slide { from { translate: 0 0; } to { translate: -180px 0; } }
+
+  /* ===== 遊び：営業時間を喫茶店の伝票に ===== */
+  .hours-inner.slip {
+    position: relative; background: #efe4cc; color: #2c1a12; max-width: 460px; margin-left: auto; margin-right: auto;
+    padding: 3.4rem 2rem 2.2rem; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8); rotate: -1deg;
+  }
+  .slip::before { content: ''; position: absolute; left: 50%; top: 1rem; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--bg); }
+  .slip-no { position: absolute; left: 1.4rem; top: 1.1rem; font-size: 0.75rem; letter-spacing: 0.12em; color: #6b5444; }
+  .slip .section-label { color: #7a1d2b; }
+  .slip .section-title { color: #2c1a12; }
+  .slip .hours-table td, .slip .hours-table thead td, .slip .hours-table tbody td:first-child, .slip .hours-table tbody td:last-child { color: #2c1a12; }
+  .slip .hours-table thead tr, .slip .hours-table tbody tr { border-bottom: 1px dashed rgba(44,26,18,0.35); }
+  .slip .hours-table tbody tr.today td { font-weight: 700; background: rgba(155,35,53,0.1); }
+  .slip .open-status {
+    position: absolute; right: 1rem; top: 2.6rem; margin: 0; rotate: -9deg; animation: none; background: none;
+    border: 2px solid #9b2335; color: #9b2335; border-radius: 6px; padding: 0.25em 0.8em; font-size: 0.8rem; letter-spacing: 0.1em;
+  }
+  .slip .open-status.closed { border-color: #6b5444; color: #6b5444; }
+  @media (max-width: 480px) { .slip .open-status { position: static; display: inline-block; margin-bottom: 1rem; } }
+
+  .hours-section { overflow-x: clip; }
 </style>
+<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
+<script src="places-key.js"></script>
+<script>
+(function(){
+  var k = window.PLACES_KEY || '';
+  var bgs = [];
+  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
+  function fill(){
+    document.querySelectorAll('img[data-psrc]').forEach(function(img){
+      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
+      else img.style.visibility = 'hidden';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+})();
+</script>
 </head>
 <body>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="hero-photo">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd35sCoW8Jkd0GGzQr0VkpNvTxnxzBAgQwoO8B-5bcb3tASLjt0xYiUvSVi8TGnv6s3UNx62qmujuYyEuCTpHadNGFnplXl4fUEvjWA0XDTyTBLhMS6j5h3cyF3tKH9SKhXMJlyLFCh2UyRZa5GEYVhoYNjCAcSYpwGJLIYM-lBuz_50WOK4bqdHgsnWJ7ZD_0Dg5RX2kF-ICwZu01RSATm_C4WZmChajO5w2BP8Ri-D4WVcwBdUD5EFVQj51wFP-7UxgNulnslJb0-Oy6IcxZVr7f4vhgsYYeeNKhKsbpWcHYOVTZHiQIFl_pVayUzKB_asn2B_pZvGhUR5CgMC56stXDVmuYfVjT0fbSbqVFLWDYXxMHpPY6irIflc2EsMb0PTPl5xmChMZEzJKxEuPZNFH3NrTY&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
+    <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLd35sCoW8Jkd0GGzQr0VkpNvTxnxzBAgQwoO8B-5bcb3tASLjt0xYiUvSVi8TGnv6s3UNx62qmujuYyEuCTpHadNGFnplXl4fUEvjWA0XDTyTBLhMS6j5h3cyF3tKH9SKhXMJlyLFCh2UyRZa5GEYVhoYNjCAcSYpwGJLIYM-lBuz_50WOK4bqdHgsnWJ7ZD_0Dg5RX2kF-ICwZu01RSATm_C4WZmChajO5w2BP8Ri-D4WVcwBdUD5EFVQj51wFP-7UxgNulnslJb0-Oy6IcxZVr7f4vhgsYYeeNKhKsbpWcHYOVTZHiQIFl_pVayUzKB_asn2B_pZvGhUR5CgMC56stXDVmuYfVjT0fbSbqVFLWDYXxMHpPY6irIflc2EsMb0PTPl5xmChMZEzJKxEuPZNFH3NrTY" alt="COFFEE 館">
   </div>
   <div class="hero-text">
     <div class="hero-inner">
@@ -536,6 +595,9 @@
   </div>
 </div>
 
+<!-- ===== 遊び：コーヒーチケットの帯 ===== -->
+<div class="tickets" aria-hidden="true"><div class="tickets-row"><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span><span class="tk"><b>COFFEE</b><i>館</i><small>OPEN 6:30</small></span></div></div>
+
 <!-- ===== S3: PHOTO STRIP ===== -->
 <section class="strip-section">
   <div class="strip-header fade-in">
@@ -544,23 +606,24 @@
   </div>
   <div class="strip-scroll">
     <div class="strip-photo">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcDeJ3Wbwkr_OF11mdVOPFuRDFl9Iq8n5o_T6ETeYMDn3LqrEsX4YTjK1lsHiZt1z3PObW0t9EvKlBFLx-l-ZDeidhI8GVtFk0cxFpT8p0J5fQNxU0POZojMDg-KEA-Gjwc9_sKbXF43h8VFcjwkWZIO86zKJdAhGGOqN85UwuB2Or-zx4QKL2Xa5ItdC3J7PrkC5a6P1ToFXN3cXgrUycNlBptJhjPiDYk4FyBmXMfzxLqi2R75RzNX-0anRFF0nqHUIcavIk3dbRuFQ2hSOnVmCiRzyYzs4VzFYTWJRd6geSyKq_gHBLwAd07QJtY0FHGW5smx-rhZQs44ed3Kq0lUCxiHBP9DW0dtaT6OEb_Oqx7R5LPH19Xjj3aTAxd_h371Pru1V-LBwzpL0KZMXqhQtBM_tDbtfvlWH0xL9xnDg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcDeJ3Wbwkr_OF11mdVOPFuRDFl9Iq8n5o_T6ETeYMDn3LqrEsX4YTjK1lsHiZt1z3PObW0t9EvKlBFLx-l-ZDeidhI8GVtFk0cxFpT8p0J5fQNxU0POZojMDg-KEA-Gjwc9_sKbXF43h8VFcjwkWZIO86zKJdAhGGOqN85UwuB2Or-zx4QKL2Xa5ItdC3J7PrkC5a6P1ToFXN3cXgrUycNlBptJhjPiDYk4FyBmXMfzxLqi2R75RzNX-0anRFF0nqHUIcavIk3dbRuFQ2hSOnVmCiRzyYzs4VzFYTWJRd6geSyKq_gHBLwAd07QJtY0FHGW5smx-rhZQs44ed3Kq0lUCxiHBP9DW0dtaT6OEb_Oqx7R5LPH19Xjj3aTAxd_h371Pru1V-LBwzpL0KZMXqhQtBM_tDbtfvlWH0xL9xnDg" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLffNcjK5IZ1F2QCxfpCT2Prn2EdVnwXPwNO_YhtlEiIYpfu7OROtqattJwRLSFhKCTEWDIO049SzjxdbQ6uHye-t1MIE-kr80BRybBtWtFy4If1nYLf63Z9ueXdYR1FnCxrYKOYIEneW7kjBiaNw0RUeR8C-r4JBrquxsFgOQQqi74IQgo5r_309YaqEYheHsr8Satkc8rnsYFESVgvCVa0hJcT6G8KIvkQIVJFUFGlNs4DVzHIDAzxBgN0NuFbfk7LUdS0pe2yCGNueFAY20kIDZ3_A-zeQOHKkxpvuDmXWl77kYGY_-yCuJvLNMTA9l8v4-uxWpHMiA87-Y06wQ5P3grRHtIq4H523BMQG23ObRWiFHxTErmhTILtvnnzOH6a8fkOlgeZHmAMVLLpwH_qWEvaT93bjXogpeO8y6Vrlg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLffNcjK5IZ1F2QCxfpCT2Prn2EdVnwXPwNO_YhtlEiIYpfu7OROtqattJwRLSFhKCTEWDIO049SzjxdbQ6uHye-t1MIE-kr80BRybBtWtFy4If1nYLf63Z9ueXdYR1FnCxrYKOYIEneW7kjBiaNw0RUeR8C-r4JBrquxsFgOQQqi74IQgo5r_309YaqEYheHsr8Satkc8rnsYFESVgvCVa0hJcT6G8KIvkQIVJFUFGlNs4DVzHIDAzxBgN0NuFbfk7LUdS0pe2yCGNueFAY20kIDZ3_A-zeQOHKkxpvuDmXWl77kYGY_-yCuJvLNMTA9l8v4-uxWpHMiA87-Y06wQ5P3grRHtIq4H523BMQG23ObRWiFHxTErmhTILtvnnzOH6a8fkOlgeZHmAMVLLpwH_qWEvaT93bjXogpeO8y6Vrlg" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfpFfHYo79dg0omhCZR47WvARZmS0Pk4SCS6wjaPZxHQay_qClEy4ffW7enc89AHxVW1cu36M5uze1guYEmCZZE09Y6vfoizmlPUYDfyJelyP4Zxuki2lhBSz-6rM2pOLNkivoitaNJoTPsRCRU9VgRCKOD_fHfqWtvuu-FXiPYbdiFKOt5gvpwtsOM86GYO0_1ovI-_phfzARvn8_VYe_T-Uj9EXEkS3PJr7QMvGCBYo5d1zBFvFtmg8xxTUzZ6QF-MK0zWhSEoO7gN1ThU7nQMygcNiHTwOJZKbH2yjP61ha8UUv7GDJcvmqeoIzWHOwAcE6ElurGCJr6ArCvQuF3tpVH4-zM58zT2HCmLOK_pproASa7dxC9a9Z035KUuTLnns-Pk5RNqzkFUP8qEWsBwbsmzlPIC3Lujm_e2Mxv6w&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfpFfHYo79dg0omhCZR47WvARZmS0Pk4SCS6wjaPZxHQay_qClEy4ffW7enc89AHxVW1cu36M5uze1guYEmCZZE09Y6vfoizmlPUYDfyJelyP4Zxuki2lhBSz-6rM2pOLNkivoitaNJoTPsRCRU9VgRCKOD_fHfqWtvuu-FXiPYbdiFKOt5gvpwtsOM86GYO0_1ovI-_phfzARvn8_VYe_T-Uj9EXEkS3PJr7QMvGCBYo5d1zBFvFtmg8xxTUzZ6QF-MK0zWhSEoO7gN1ThU7nQMygcNiHTwOJZKbH2yjP61ha8UUv7GDJcvmqeoIzWHOwAcE6ElurGCJr6ArCvQuF3tpVH4-zM58zT2HCmLOK_pproASa7dxC9a9Z035KUuTLnns-Pk5RNqzkFUP8qEWsBwbsmzlPIC3Lujm_e2Mxv6w" alt="COFFEE 館">
     </div>
     <div class="strip-photo">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfjHGytHhSes-FVweOweB6j5da7JYpa2tpwJjxdHqujOegC1n0mHCx3rZJ3w1AXcJl9NftT-_Hn0z3i-pC-hePqjOjhPio6upM8tUNsw5WjnrZzTXSAgkVND-0ui83HZiO9F3OT9xMwJKp_jlpV2ezAwtR6T0ItNhoYxv5xcitZrsviqEsXiDGSSFyF6FPq4CZX9tgtPo0AKYF7Om9glxqmjfZwWtBz3-FTqgCkeb-e_vJbpYTpk72xLUa8hZETwwvYv0C6CmSI-C9MbpCJDMe_dT8L7Ij8-_k5RrdBN6Z78dZJHFbAxoHdbRzOEbAUiDg33u7KACbOPN28wT-g0xdzHN-sYbQdHeWqFM_qEk8fYSHmnXYvr9-G1Z9Bkib2dcvfTMRJow1r_BwQX2_afzCEy8k-C081SUOP9IiMsrzzSQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="COFFEE 館">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfjHGytHhSes-FVweOweB6j5da7JYpa2tpwJjxdHqujOegC1n0mHCx3rZJ3w1AXcJl9NftT-_Hn0z3i-pC-hePqjOjhPio6upM8tUNsw5WjnrZzTXSAgkVND-0ui83HZiO9F3OT9xMwJKp_jlpV2ezAwtR6T0ItNhoYxv5xcitZrsviqEsXiDGSSFyF6FPq4CZX9tgtPo0AKYF7Om9glxqmjfZwWtBz3-FTqgCkeb-e_vJbpYTpk72xLUa8hZETwwvYv0C6CmSI-C9MbpCJDMe_dT8L7Ij8-_k5RrdBN6Z78dZJHFbAxoHdbRzOEbAUiDg33u7KACbOPN28wT-g0xdzHN-sYbQdHeWqFM_qEk8fYSHmnXYvr9-G1Z9Bkib2dcvfTMRJow1r_BwQX2_afzCEy8k-C081SUOP9IiMsrzzSQ" alt="COFFEE 館">
     </div>
   </div>
 </section>
 
 <!-- ===== S4: HOURS ===== -->
 <section class="hours-section">
-  <div class="hours-inner fade-in">
+  <div class="hours-inner slip fade-in">
+    <p class="slip-no" aria-hidden="true">伝票 No. 0630</p>
     <p class="section-label">Hours</p>
     <h2 class="section-title">営業時間</h2>
     <div id="openStatus" class="open-status">確認中...</div>
@@ -680,6 +743,14 @@ function updateStatus() {
 }
 updateStatus();
 setInterval(updateStatus, 60000);
+</script>
+<script>
+// 伝票：今日の曜日の行に印
+(function(){
+  var rows = document.querySelectorAll('.slip .hours-table tbody tr');
+  var i = (new Date().getDay() + 6) % 7;
+  if (rows[i]) rows[i].classList.add('today');
+})();
 </script>
 </body>
 </html>

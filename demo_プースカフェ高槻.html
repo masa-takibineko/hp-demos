@@ -32,7 +32,7 @@
   .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfRba02i-Ba8u8DdTT6wSOlXHSHSwouEY6qQ-HB1e2wAE9P_Tru94ndWKvy0jcUYg0JSEAzQtbM810I8PAg90Z3w8t8iBMNjkEDCD0hxcA2Y_d9svSfiqwJxnw3ZhwwGKqnsfQkjWUhQdBqI76juhICWKPZ0NjUMjsKOLAEzKPhNIld5QHUmchNbCvu49xtJDFn2IUyoGoDWD6tJ_9vxLvs0vmhI1lAY11szAGX7L5x7Pc6V1JPQxFQa4Ee3VzP9l6FZWemFrSJdGsFw871_FKD5n-6SYsLdUB7j9RbJp6hewmqUUQRGLfS92NAqsds293IFDb3M0aVTXRvdhhAXq6BsmG_y8jrviAdyWjhEQt41JscSSBIPmWlSIJdD3PJphNv2WZtyUrV9ZU_Kr9GmBKUnBNJ55E&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-image: var(--places-bg-1);
     background-size: cover;
     background-position: center;
   }
@@ -456,6 +456,22 @@
     .hero-center h1 { font-size: 5.5vw; }
   }
 </style>
+<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
+<script src="places-key.js"></script>
+<script>
+(function(){
+  var k = window.PLACES_KEY || '';
+  var bgs = ["https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfRba02i-Ba8u8DdTT6wSOlXHSHSwouEY6qQ-HB1e2wAE9P_Tru94ndWKvy0jcUYg0JSEAzQtbM810I8PAg90Z3w8t8iBMNjkEDCD0hxcA2Y_d9svSfiqwJxnw3ZhwwGKqnsfQkjWUhQdBqI76juhICWKPZ0NjUMjsKOLAEzKPhNIld5QHUmchNbCvu49xtJDFn2IUyoGoDWD6tJ_9vxLvs0vmhI1lAY11szAGX7L5x7Pc6V1JPQxFQa4Ee3VzP9l6FZWemFrSJdGsFw871_FKD5n-6SYsLdUB7j9RbJp6hewmqUUQRGLfS92NAqsds293IFDb3M0aVTXRvdhhAXq6BsmG_y8jrviAdyWjhEQt41JscSSBIPmWlSIJdD3PJphNv2WZtyUrV9ZU_Kr9GmBKUnBNJ55E"];
+  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
+  function fill(){
+    document.querySelectorAll('img[data-psrc]').forEach(function(img){
+      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
+      else img.style.visibility = 'hidden';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+})();
+</script>
 </head>
 <body>
 
@@ -510,16 +526,16 @@
     </div>
     <div class="photo-grid fade-in">
       <div class="photo-item">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf98brUorxVWO0v0a5QVMedL3ok2NhjH0Cplx7QpnvCOtDyTrxwwR9gWhoRUx54Ub1CXIyibuV3cRP3TU0JEJnPWw_Ev4i2U2IJpZ6qslHpd-az4fSRQNYOvyj3_HX_6Ac9HMUhkBYt0GiJbEkpyGgUj7nNTyiJP5NJC6OX3O5RnquE75WCyn1wjhRXsUOAb70FEf7oJwIA3KySXMEBsZhnMTCV1QCFLQGVfZgcoL7xlkY4xN2xA-_ALSJuT7BXLkuthHnHb5zmMiDf_wgo3moSjLf8a66Vp03nbWySgKTzpJ5_NQkUXff7k8as3uWdRsG2bXFq8_aGINcQoBN4DT797vEQfz3YbQZM_DSJJc70NH2N0_3upPcF-3hqIC8gojZeSmqUcoM6s-zVs3rrhHB_z60LPrE&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf98brUorxVWO0v0a5QVMedL3ok2NhjH0Cplx7QpnvCOtDyTrxwwR9gWhoRUx54Ub1CXIyibuV3cRP3TU0JEJnPWw_Ev4i2U2IJpZ6qslHpd-az4fSRQNYOvyj3_HX_6Ac9HMUhkBYt0GiJbEkpyGgUj7nNTyiJP5NJC6OX3O5RnquE75WCyn1wjhRXsUOAb70FEf7oJwIA3KySXMEBsZhnMTCV1QCFLQGVfZgcoL7xlkY4xN2xA-_ALSJuT7BXLkuthHnHb5zmMiDf_wgo3moSjLf8a66Vp03nbWySgKTzpJ5_NQkUXff7k8as3uWdRsG2bXFq8_aGINcQoBN4DT797vEQfz3YbQZM_DSJJc70NH2N0_3upPcF-3hqIC8gojZeSmqUcoM6s-zVs3rrhHB_z60LPrE" alt="プースカフェ">
       </div>
       <div class="photo-item">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc6eH8f3Ke5vjiEh1er7cWcSueQipEnZbyKWk5zOPkut6Jtyeysowai2m9ngcq4dWqljYaR7AkteljTHZXe8M6ElNqzneHiD1Y19COg1muK3tH7sxunT06zWv7W7X1GYVv4cpkgefsEiLHMMrqowqgBreOGPdJTniGOJEo6rzummStbzn70fivNRwZ9eVrzdmJ72VSBznOocwSjrSSzZNO3XP2MmIqrrPhhYxx41Auvoping6IZomwuJpygDOS82d0LFVkbX5_AJPGgBYCiwZh0zm9tabpid4yN7Bm_80oBDvO1wImdDm9QV78BloeLKFajkN2q9mR1YllG4bgixXiTUjuucYtLsGnBMu-pR7jd98rer-oddm6mvORa_sBUG9XpC0Ao-Y2hn5pMvLHLeOmJ6g9rELg&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc6eH8f3Ke5vjiEh1er7cWcSueQipEnZbyKWk5zOPkut6Jtyeysowai2m9ngcq4dWqljYaR7AkteljTHZXe8M6ElNqzneHiD1Y19COg1muK3tH7sxunT06zWv7W7X1GYVv4cpkgefsEiLHMMrqowqgBreOGPdJTniGOJEo6rzummStbzn70fivNRwZ9eVrzdmJ72VSBznOocwSjrSSzZNO3XP2MmIqrrPhhYxx41Auvoping6IZomwuJpygDOS82d0LFVkbX5_AJPGgBYCiwZh0zm9tabpid4yN7Bm_80oBDvO1wImdDm9QV78BloeLKFajkN2q9mR1YllG4bgixXiTUjuucYtLsGnBMu-pR7jd98rer-oddm6mvORa_sBUG9XpC0Ao-Y2hn5pMvLHLeOmJ6g9rELg" alt="プースカフェ">
       </div>
       <div class="photo-item">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbjgZl7Cgy98dcNctGXaGM_ekJgE5X4FrM0z-wsLxkj5IvjChX1DIZ2L8qThSpZAzbOS_CBAhT0PxHjBi94mxVHplPJk0-QfI5YnmQl9T3aAcxWFcnLgJRSK_GyBJ-bZJMT0PE0dh7WtfswjF3Q-o1nORCYSpwstb2XgsabEBjRUgnTVs_8yqpgC-R5wcXoYe8czhQTMcNdWCQhC4zLKtDvHrWvJPBFTkfAOGrsjQOFtdmjF4AH5-P-UZ-oYrqKLuxV89yx7SfWytyT0TkEOTXTpwCu4gUmxyFVinp2EX4Jf5VU91lAfRXG6MtT_IkHgIesWIKc00OtWo-eCaooR5_7LXqAwzzzYoJ-efkR4JvRj-Sd87pVPshNWfLLwZpEtghqmRW3anArHRnwtAdAvwXvLyn&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbjgZl7Cgy98dcNctGXaGM_ekJgE5X4FrM0z-wsLxkj5IvjChX1DIZ2L8qThSpZAzbOS_CBAhT0PxHjBi94mxVHplPJk0-QfI5YnmQl9T3aAcxWFcnLgJRSK_GyBJ-bZJMT0PE0dh7WtfswjF3Q-o1nORCYSpwstb2XgsabEBjRUgnTVs_8yqpgC-R5wcXoYe8czhQTMcNdWCQhC4zLKtDvHrWvJPBFTkfAOGrsjQOFtdmjF4AH5-P-UZ-oYrqKLuxV89yx7SfWytyT0TkEOTXTpwCu4gUmxyFVinp2EX4Jf5VU91lAfRXG6MtT_IkHgIesWIKc00OtWo-eCaooR5_7LXqAwzzzYoJ-efkR4JvRj-Sd87pVPshNWfLLwZpEtghqmRW3anArHRnwtAdAvwXvLyn" alt="プースカフェ">
       </div>
       <div class="photo-item">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1ySFspAFL5am4MLz1oS8i1v7khaDEivaHcNvbMn2YyeLtOvKNZnuEpupw6ewv-2N3oWm56wdSdh-gPtN4iKqVvlwnunrbdACqICJwTCQf5n-8rHpMYpTNpjwnBBVdBU_XIYzyJ8x37i3V5bR-ETF5Q0jd6fUucnmn8SDOaK0E9lSSpfRgEtiERLrmfjRbecJwyeswGxkVmdBDAiyyiL_ZQWIZkpExACllEDRP0NMY0gnZkRb281yapOTXhixrTOciHcv6OrALWOTFgkMywQbso7K0Bpcu_nZmJ6c6WRfJpJH7blVOZK1GMEJWXR5g_vZDd0phbe4EPiLivdLd0YNdhqhWQYg9nq755HyLitHkykEHZG4nXSK11oeMnuNC0dlABAV4urGFgk4AhRH2Ry0AwCLm00g&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="プースカフェ">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1ySFspAFL5am4MLz1oS8i1v7khaDEivaHcNvbMn2YyeLtOvKNZnuEpupw6ewv-2N3oWm56wdSdh-gPtN4iKqVvlwnunrbdACqICJwTCQf5n-8rHpMYpTNpjwnBBVdBU_XIYzyJ8x37i3V5bR-ETF5Q0jd6fUucnmn8SDOaK0E9lSSpfRgEtiERLrmfjRbecJwyeswGxkVmdBDAiyyiL_ZQWIZkpExACllEDRP0NMY0gnZkRb281yapOTXhixrTOciHcv6OrALWOTFgkMywQbso7K0Bpcu_nZmJ6c6WRfJpJH7blVOZK1GMEJWXR5g_vZDd0phbe4EPiLivdLd0YNdhqhWQYg9nq755HyLitHkykEHZG4nXSK11oeMnuNC0dlABAV4urGFgk4AhRH2Ry0AwCLm00g" alt="プースカフェ">
       </div>
     </div>
   </div>

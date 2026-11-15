@@ -204,6 +204,34 @@ footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); paddi
   .hero-btns { flex-direction:column; align-items:center; }
   .gallery-header { flex-direction:column; gap:1rem; align-items:flex-start; }
 }
+
+/* ===== 遊び：蔵出しの札 ===== */
+.gallery-item { overflow: visible; }
+.gallery-item .gallery-img, .gallery-item .gallery-hover { clip-path: inset(0); }
+.fuda {
+  position: absolute; left: 18px; top: -10px; z-index: 3; width: 38px; padding: 20px 0 10px; text-align: center;
+  background: radial-gradient(circle at 50% 9px, #12100e 3px, transparent 3.5px), #e9dcc0; color: #2a2018;
+  clip-path: polygon(22% 0, 78% 0, 100% 12%, 100% 100%, 0 100%, 0 12%);
+  transform-origin: 50% 0; rotate: -4deg; transition: rotate .7s cubic-bezier(.3,1.6,.5,1);
+  filter: drop-shadow(0 6px 8px rgba(0,0,0,.5));
+}
+.fuda i { display: block; font-style: normal; writing-mode: vertical-rl; margin: 0 auto; font-family: 'Noto Serif JP', serif; font-size: 0.75rem; letter-spacing: 0.2em; }
+.fuda b { display: block; margin-top: 6px; font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 1rem; color: #a3301f; }
+.gallery-item:hover .fuda { rotate: 7deg; }
+.gallery-item:nth-child(even) .fuda { rotate: 3deg; left: auto; right: 18px; }
+.gallery-item:nth-child(even):hover .fuda { rotate: -6deg; }
+
+/* ===== 遊び：落款 ===== */
+.products-header { position: relative; }
+.rakkan {
+  display: inline-grid; grid-template-columns: 1fr 1fr; direction: rtl; width: 58px; height: 58px; margin-top: 1.4rem; rotate: 4deg;
+  border: 2.5px solid #c8442e; border-radius: 5px; color: #c8442e; place-items: center; padding: 3px;
+  font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 1rem; line-height: 1;
+}
+.rakkan i { font-style: normal; }
+
+.gallery, .products { overflow-x: clip; }
+.hero { overflow: clip; }
 </style>
 </head>
 <body>
@@ -225,7 +253,7 @@ footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); paddi
 
 <!-- HERO -->
 <section class="hero">
-  <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=1920&q=80" alt="アンティーク" class="hero-bg" loading="eager">
+  <img src="https://images.unsplash.com/photo-1775293144429-2553147092b0?w=1920&q=80" alt="アンティーク" class="hero-bg" loading="eager">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <span class="hero-tag">Est. in Takatsuki, Osaka</span>
@@ -250,7 +278,7 @@ footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); paddi
 <section class="story" id="story">
   <div class="story-inner">
     <div class="story-img-wrap reveal left">
-      <img src="https://images.unsplash.com/photo-1512207736890-6ffed8a84e8d?w=800&q=80" alt="古いカメラや雑貨" class="story-img-bg" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1771830937951-d25d1fdd7335?w=800&q=80" alt="古いカメラや雑貨" class="story-img-bg" loading="lazy">
       <div class="story-img-frame"></div>
       <div class="story-year">1962</div>
     </div>
@@ -279,10 +307,11 @@ footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); paddi
     <div class="products-header reveal">
       <span class="products-label">What We Offer</span>
       <h2 class="products-title">骨董と珈琲、<br>二つの世界</h2>
+      <span class="rakkan" aria-hidden="true"><i>こ</i><i>こ</i><i>れ</i><i>れ</i></span>
     </div>
     <div class="products-cols">
       <div class="product-col reveal left">
-        <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=800&q=80" alt="骨董品" class="product-col-img" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1775293144429-2553147092b0?w=800&q=80" alt="骨董品" class="product-col-img" loading="lazy">
         <div class="product-col-content">
           <div class="product-col-num">I</div>
           <div class="product-col-label">Antiques</div>
@@ -320,26 +349,32 @@ footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); paddi
     </div>
     <div class="gallery-grid reveal d1">
       <div class="gallery-item g1">
-        <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=800&q=80" alt="" class="gallery-img" loading="lazy">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>壱</b></span>
+        <img src="https://images.unsplash.com/photo-1775293144429-2553147092b0?w=800&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Antiques</span></div>
       </div>
       <div class="gallery-item g2">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>弐</b></span>
         <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Coffee</span></div>
       </div>
       <div class="gallery-item g3">
-        <img src="https://images.unsplash.com/photo-1512207736890-6ffed8a84e8d?w=800&q=80" alt="" class="gallery-img" loading="lazy">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>参</b></span>
+        <img src="https://images.unsplash.com/photo-1771830937951-d25d1fdd7335?w=800&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Collectibles</span></div>
       </div>
       <div class="gallery-item g4">
-        <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=80" alt="" class="gallery-img" loading="lazy">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>四</b></span>
+        <img src="https://images.unsplash.com/photo-1792173993867-c706087377d1?w=400&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Items</span></div>
       </div>
       <div class="gallery-item g5">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>五</b></span>
         <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=400&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Space</span></div>
       </div>
       <div class="gallery-item g6">
+        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>六</b></span>
         <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&q=80" alt="" class="gallery-img" loading="lazy">
         <div class="gallery-hover"><span>Details</span></div>
       </div>

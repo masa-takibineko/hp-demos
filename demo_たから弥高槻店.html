@@ -756,13 +756,29 @@
     .footer-copy { text-align: left; }
   }
 </style>
+<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
+<script src="places-key.js"></script>
+<script>
+(function(){
+  var k = window.PLACES_KEY || '';
+  var bgs = [];
+  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
+  function fill(){
+    document.querySelectorAll('img[data-psrc]').forEach(function(img){
+      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
+      else img.style.visibility = 'hidden';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+})();
+</script>
 </head>
 <body>
 
 <!-- ========== HERO ========== -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="たから弥">
+    <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw" alt="たから弥">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -794,7 +810,7 @@
 <!-- ========== SECTION 1: Address ========== -->
 <div class="content-section">
   <div class="cs-image fade-left">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="店内">
+    <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M" alt="店内">
   </div>
   <div class="cs-text fade-right">
     <span class="cs-label">01 &middot; Access</span>
@@ -827,7 +843,7 @@
     <a href="https://maps.google.com/?cid=17576288794216478190" target="_blank" rel="noopener" class="cs-map-btn">Googleマップで確認する &rarr;</a>
   </div>
   <div class="cs-image fade-right" style="direction:ltr;">
-    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="商品">
+    <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw" alt="商品">
   </div>
 </div>
 
@@ -839,23 +855,23 @@
   </div>
   <div class="gallery-grid fade-up">
     <div class="gallery-item" data-index="0">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="1">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw" alt="1">
       <div class="gallery-hover"><span>拡大</span></div>
     </div>
     <div class="gallery-item" data-index="1">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="2">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M" alt="2">
       <div class="gallery-hover"><span>拡大</span></div>
     </div>
     <div class="gallery-item" data-index="2">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="3">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw" alt="3">
       <div class="gallery-hover"><span>拡大</span></div>
     </div>
     <div class="gallery-item" data-index="3">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeKrxdTsj_rsDeqYmGAZbuB-p63OzIvsTtoxcCpCpvYjyMdusy9O_7H33QFMLzhV7_d7XsIGhGJRJl7iPZhI02KtuVc44Wxb7IYjYdfdMClJKym8oEyxQWOEkiYByR5Ds3LQEYA4Rw3URfdQAqKsLIPc9QdH5_EMBRuOlLTIp_Q-ZHu1XUF0qZMo2twmcDT86ZDpksqiNBC2oxBPgl1iseTq4oprN0XCruG7K7FyNHxkdN5nG6H5PAvCrsob1p93QwEx2-TBRIlEL2fV8EfMl5hRTrgaYGVOw3SJ5QeIw2QGgFAUYNE8rvGjEU6pAj35Z3iP9dGyv5z2yCCIdYxY1g4gWaALiBL4vWV0m0jvHrEcRAoltO9cxd0BIPEJR3flJ6fVimeuBLjCNpbohP2NCbK1MexUTQZfBKu-lp9VP_sGQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="4">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeKrxdTsj_rsDeqYmGAZbuB-p63OzIvsTtoxcCpCpvYjyMdusy9O_7H33QFMLzhV7_d7XsIGhGJRJl7iPZhI02KtuVc44Wxb7IYjYdfdMClJKym8oEyxQWOEkiYByR5Ds3LQEYA4Rw3URfdQAqKsLIPc9QdH5_EMBRuOlLTIp_Q-ZHu1XUF0qZMo2twmcDT86ZDpksqiNBC2oxBPgl1iseTq4oprN0XCruG7K7FyNHxkdN5nG6H5PAvCrsob1p93QwEx2-TBRIlEL2fV8EfMl5hRTrgaYGVOw3SJ5QeIw2QGgFAUYNE8rvGjEU6pAj35Z3iP9dGyv5z2yCCIdYxY1g4gWaALiBL4vWV0m0jvHrEcRAoltO9cxd0BIPEJR3flJ6fVimeuBLjCNpbohP2NCbK1MexUTQZfBKu-lp9VP_sGQ" alt="4">
       <div class="gallery-hover"><span>拡大</span></div>
     </div>
     <div class="gallery-item" data-index="4">
-      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1nPu2KYhK9pijlK4RzxqCkct-GTwV08-Lbnw3I0bZ1r51hnDTY50dPyOPprrF5RrW6XuPy3P8O7KZHe3pTnEKNIeZRiQ3cCjvJDD8a5zkkJmiSag4xeBPwC06G_Hs_fPt5hwPctjfFCETDc1MSFZSlDCuiamh4kSfIwh24jyjqPnjyDFUBdrC80C6gjlWhlRjfNHl9n5cz3oT8aTyZs_gsjE7rC7yS0DqFeK_c4VgrWMC8a4fTeIVcDo6fL5pHLVEHbnp-KnHtarrPcJulvYYdhGeEDpX3fIxIHvd2b4Ywi8XISgm2yira7VU8EusZ1Tv1xN-f3O_Sb9RJyo2GGX4i16w-KjgjA9D7aJrvH0uAkRd5TFhBK9PCQ57hZxXnly69ylFyHU7ysAsU5dHwu5DrbDIgvY&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="5">
+      <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1nPu2KYhK9pijlK4RzxqCkct-GTwV08-Lbnw3I0bZ1r51hnDTY50dPyOPprrF5RrW6XuPy3P8O7KZHe3pTnEKNIeZRiQ3cCjvJDD8a5zkkJmiSag4xeBPwC06G_Hs_fPt5hwPctjfFCETDc1MSFZSlDCuiamh4kSfIwh24jyjqPnjyDFUBdrC80C6gjlWhlRjfNHl9n5cz3oT8aTyZs_gsjE7rC7yS0DqFeK_c4VgrWMC8a4fTeIVcDo6fL5pHLVEHbnp-KnHtarrPcJulvYYdhGeEDpX3fIxIHvd2b4Ywi8XISgm2yira7VU8EusZ1Tv1xN-f3O_Sb9RJyo2GGX4i16w-KjgjA9D7aJrvH0uAkRd5TFhBK9PCQ57hZxXnly69ylFyHU7ysAsU5dHwu5DrbDIgvY" alt="5">
       <div class="gallery-hover"><span>拡大</span></div>
     </div>
   </div>
@@ -946,11 +962,11 @@
 
   // Lightbox
   const photos = [
-    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
-    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
-    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
-    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeKrxdTsj_rsDeqYmGAZbuB-p63OzIvsTtoxcCpCpvYjyMdusy9O_7H33QFMLzhV7_d7XsIGhGJRJl7iPZhI02KtuVc44Wxb7IYjYdfdMClJKym8oEyxQWOEkiYByR5Ds3LQEYA4Rw3URfdQAqKsLIPc9QdH5_EMBRuOlLTIp_Q-ZHu1XUF0qZMo2twmcDT86ZDpksqiNBC2oxBPgl1iseTq4oprN0XCruG7K7FyNHxkdN5nG6H5PAvCrsob1p93QwEx2-TBRIlEL2fV8EfMl5hRTrgaYGVOw3SJ5QeIw2QGgFAUYNE8rvGjEU6pAj35Z3iP9dGyv5z2yCCIdYxY1g4gWaALiBL4vWV0m0jvHrEcRAoltO9cxd0BIPEJR3flJ6fVimeuBLjCNpbohP2NCbK1MexUTQZfBKu-lp9VP_sGQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg',
-    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1nPu2KYhK9pijlK4RzxqCkct-GTwV08-Lbnw3I0bZ1r51hnDTY50dPyOPprrF5RrW6XuPy3P8O7KZHe3pTnEKNIeZRiQ3cCjvJDD8a5zkkJmiSag4xeBPwC06G_Hs_fPt5hwPctjfFCETDc1MSFZSlDCuiamh4kSfIwh24jyjqPnjyDFUBdrC80C6gjlWhlRjfNHl9n5cz3oT8aTyZs_gsjE7rC7yS0DqFeK_c4VgrWMC8a4fTeIVcDo6fL5pHLVEHbnp-KnHtarrPcJulvYYdhGeEDpX3fIxIHvd2b4Ywi8XISgm2yira7VU8EusZ1Tv1xN-f3O_Sb9RJyo2GGX4i16w-KjgjA9D7aJrvH0uAkRd5TFhBK9PCQ57hZxXnly69ylFyHU7ysAsU5dHwu5DrbDIgvY&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg'
+    ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcbs1n7RHzSl4lvLYqJvBQm8q7CO_H3Rp3Sz18-ZURAcj3MrKhOoZ1v9c5dlQAeQJjCabfiO3FVMhoV4VIhiHjzrR53j532a_D2I_lxxCueYCIDl0SqIDc1po4i5YG9Q6IqhOi0-dhd2oUSE9IVQoHv7_4EOy_HMhnMekv5X8aPZP6p9Al-Wi7czBJ9LLUwaT5P4md4VVbHIKAx3V4--aCn6KSwx29JbPlit2ai39qPl9Ff4cGiB1bPVyJvaggTBBkIwKvklS0rNXUPezKg7LQEciNjM83ydA7YbxyigR-V4lzm5fuv1tjdR4KgUbsrVLnQqcu5EFOoea7OkO-w0B-EXcsUIMfZPNSDmpzyRVr6l5yVSf50zqmSusHuSU3WifdnjHjAK9iuwkHl6dJXQHzatw' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
+    ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf0SH3_xb67MxJVEEYfcNFlmVf4mAge3eZK9G-RDeAkLJ19ATdelyH6P6caAJCZ0PwiaPfIPJPALrO0otnVEhRa3Nu5jHG-3rrzUse9pBlFOApHX7xVtymAZ3jh54qzXEN5wDlUz9H2w7sJIS-oZH-9VVCxQVc4phbwgmNu89JQ-7S_LeINSLXc-RiZoHsn0BcegUha6jfwIA10XR7ILSaF9IwC_gbbLgbye2WIUYxcWTnoI0lrJxFg4a1jIWnAC2v1Oz7LwKCFTLaS57vxYfiJfiXdqwhvguY4fo8Dq-KTnehNxXBQHZjTVZL4MUpmEa7pzQv259W6lSUmlpTzcGtVnneHIQkC7lvmyktsa9HSu27zI-Y30xoFv4Pc8SqvMEEIpbzMIwInLhPDDJyUSTrRDLVN54M' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
+    ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcju1gEzC6EdQIP-ToeUmc_xNmk5vdiJcR4iqWBsK4mVyBpOYe9BQlcyrV3dqdxK4ckioZIahxTA8YCbIB8ijyACubdJZWdpwZfxdKVy-03yGQdvo38E4FoueT_g1I6Su_pdFH9bAFr7es7qe3Uhh-A4_W8OqrAfnGeLXxT8hZN6V4xcWPRZyjk9jeKcGfo_i2IHvfPpF_rPn7GEOtP7nQUO9uWXm-oH7sPXYkej_JR17XVVrRk-x0fstbsKZQp2eT89CU4YzHhalVL9mdIVze-_PPFvTTxSbLk1IzBoHxsLjTK77xH_B7mFt6AKnmYUKs8XGK2YRCDHxcHFEm1tzVh-B5FZ8BcCYwpQeAzyldq9I7W8-ukR_O_4wNPJuSS87pOfo4Od0qSMHJtTq4wTqW2IdLKCaw' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
+    ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLeKrxdTsj_rsDeqYmGAZbuB-p63OzIvsTtoxcCpCpvYjyMdusy9O_7H33QFMLzhV7_d7XsIGhGJRJl7iPZhI02KtuVc44Wxb7IYjYdfdMClJKym8oEyxQWOEkiYByR5Ds3LQEYA4Rw3URfdQAqKsLIPc9QdH5_EMBRuOlLTIp_Q-ZHu1XUF0qZMo2twmcDT86ZDpksqiNBC2oxBPgl1iseTq4oprN0XCruG7K7FyNHxkdN5nG6H5PAvCrsob1p93QwEx2-TBRIlEL2fV8EfMl5hRTrgaYGVOw3SJ5QeIw2QGgFAUYNE8rvGjEU6pAj35Z3iP9dGyv5z2yCCIdYxY1g4gWaALiBL4vWV0m0jvHrEcRAoltO9cxd0BIPEJR3flJ6fVimeuBLjCNpbohP2NCbK1MexUTQZfBKu-lp9VP_sGQ' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : '')),
+    ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLe1nPu2KYhK9pijlK4RzxqCkct-GTwV08-Lbnw3I0bZ1r51hnDTY50dPyOPprrF5RrW6XuPy3P8O7KZHe3pTnEKNIeZRiQ3cCjvJDD8a5zkkJmiSag4xeBPwC06G_Hs_fPt5hwPctjfFCETDc1MSFZSlDCuiamh4kSfIwh24jyjqPnjyDFUBdrC80C6gjlWhlRjfNHl9n5cz3oT8aTyZs_gsjE7rC7yS0DqFeK_c4VgrWMC8a4fTeIVcDo6fL5pHLVEHbnp-KnHtarrPcJulvYYdhGeEDpX3fIxIHvd2b4Ywi8XISgm2yira7VU8EusZ1Tv1xN-f3O_Sb9RJyo2GGX4i16w-KjgjA9D7aJrvH0uAkRd5TFhBK9PCQ57hZxXnly69ylFyHU7ysAsU5dHwu5DrbDIgvY' + (window.PLACES_KEY ? '&key=' + window.PLACES_KEY : ''))
   ];
 
   let currentIndex = 0;

@@ -375,6 +375,35 @@ footer {
   letter-spacing: 0.12em;
   color: var(--dim);
 }
+
+/* ===== 遊び：ドリップ ===== */
+.drip { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: clamp(3rem,7vw,6rem) 1.5rem; }
+.drip svg { width: clamp(110px,14vw,150px); height: auto; overflow: visible; }
+.drip p { font-size: 0.85rem; letter-spacing: 0.3em; color: var(--dim); }
+.drip-fill { transform-box: fill-box; transform-origin: 50% 100%; }
+.drop { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .drop { animation: drop-fall 2.1s cubic-bezier(.55,0,.9,.4) infinite; }
+  .drop.d2 { animation-delay: .7s; }
+  .drop.d3 { animation-delay: 1.4s; }
+}
+@keyframes drop-fall { 0% { transform: translateY(0); opacity: 0; } 12% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(86px); opacity: 0; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .drip-fill { animation: cup-fill linear both; animation-timeline: view(); animation-range: entry 30% cover 65%; }
+  }
+}
+@keyframes cup-fill { from { transform: scaleY(0.04); } to { transform: scaleY(1); } }
+
+/* ===== 遊び：値段を豆袋の荷札に ===== */
+.menu-price {
+  flex: none; display: inline-block; background: radial-gradient(circle at 13px 50%, var(--surface) 3px, transparent 3.5px), #c8a06e;
+  color: #1a1410 !important; font-weight: 500; padding: 0.15em 0.9em 0.15em 1.7em; letter-spacing: 0.06em; white-space: nowrap;
+  clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%); rotate: -3deg; transition: rotate .4s cubic-bezier(.22,1,.36,1);
+}
+.menu-item:hover .menu-price { rotate: 2deg; }
+.menu-note { margin-top: 1.6rem; font-size: 0.78rem; color: var(--dim); letter-spacing: 0.08em; }
+
 </style>
 </head>
 <body>
@@ -418,6 +447,23 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- 遊び：ドリップ（スクロールでカップに溜まる） -->
+<div class="drip" aria-hidden="true">
+  <svg viewBox="0 0 160 250">
+    <path d="M30 14 H130 L100 78 H60Z" fill="none" stroke="#c8a06e" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M44 30 H116 L98 66 H62Z" fill="#3a2a1c"/>
+    <path d="M52 78 H108" stroke="#c8a06e" stroke-width="2" stroke-linecap="round"/>
+    <circle class="drop d1" cx="80" cy="88" r="3.4" fill="#c8a06e"/>
+    <circle class="drop d2" cx="80" cy="88" r="3.4" fill="#c8a06e"/>
+    <circle class="drop d3" cx="80" cy="88" r="3.4" fill="#c8a06e"/>
+    <clipPath id="cupclip"><path d="M44 172 H116 L110 232 Q109 238 102 238 H58 Q51 238 50 232Z"/></clipPath>
+    <g clip-path="url(#cupclip)"><rect class="drip-fill" x="40" y="180" width="80" height="60" fill="#6b4526"/></g>
+    <path d="M44 172 H116 L110 232 Q109 238 102 238 H58 Q51 238 50 232Z" fill="none" stroke="#e8e2d9" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M115 184 q22 2 18 22 q-4 14 -22 12" fill="none" stroke="#e8e2d9" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <p>一滴ずつ、ゆっくりと。</p>
+</div>
 
 <!-- Menu -->
 <section class="sec menu" id="menu">
@@ -468,6 +514,7 @@ footer {
         <span class="menu-price">¥820</span>
       </div>
     </div>
+    <p class="menu-note">※ メニュー・価格はデモ用の仮の内容です。</p>
   </div>
 </section>
 

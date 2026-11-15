@@ -34,7 +34,7 @@
   .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfCBzLWpaAEfiT_0-7VR5MTs9-JKLwYHs5IsswtpD4pLx81xcSLVBPWYuSwUpeyuTm5rVRVyy3PCLJ1C5NSPDXytXd2nj0Ma2h1mEgWv6Qwwa6fBdZ1NnINCsZbgk8j8o0LTCWPeejiGAxv0pjCyuiDrKphLi4G6bBuayG7GsACagMBupG3Mq3p5Pr5y5o08OdpO1hduaE0e03-KgV450n4gFCYzXzt9aEtdl3FcVOrYqVTBUgz7DPKA0HnZLdEV1HnTeJoX8REonLqUcWlxybdgeeqQjXxa4Ap4JnQVZl8kKSdMTgOBY0Qn23iH5g4MEzXwdPuH5NFCS8OYDSKBD2VmVZdBgY7MlbyubWWeI0y9il2X9_Ti7UXH-DK0MH-AWb-fjAZS6B3Q1KL8cLkv2-T5aQ&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-image: var(--places-bg-1);
     background-size: cover;
     background-position: center;
     filter: grayscale(30%) sepia(20%);
@@ -258,7 +258,7 @@
   .parallax-bg {
     position: absolute;
     inset: -20%;
-    background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc4TBxEbfUIqEEmcUwVQbUGaL9bIbMlMBREiyCGNMgBElzodY4XTt3QTw7tveOjuSAIfyysnt39U-1EIYpJ3S2xjCwyCOof2Ms8LSqhBB2F0O_YF4ce0-TunFC_fGZZmbHQEvHonVv3ipqhiQ2fqbFII-qGNcP8RZQt4R26xP5IqZHa9WCzHhjM3kWKIJsjindT-WOeRdXBuNoTRSsqOXhuVDUsjQEPdCRR7Zzk7PuGquIj1NGgvX04WCoabCNx2Z_5tibb8HgJ8f0HOTWe00_7UMJ-6BiotDjpsa1DTnzjPA9L4HgQtORaBNNBHgfAxMA1K9xat6MLluTnxNKqySnPElGH9JFHjT3K2-x0LPcuhW_Wpmg4Yrsx8-q3y0xDIpNL5dgLbtQFHtU6_er7VtN4EiKn69A&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg');
+    background-image: var(--places-bg-2);
     background-size: cover;
     background-position: center;
     will-change: transform;
@@ -481,6 +481,22 @@
     section { padding: 4rem 0; }
   }
 </style>
+<!-- Google の写真用キーは places-key.js の1か所だけで管理（HTMLには書かない） -->
+<script src="places-key.js"></script>
+<script>
+(function(){
+  var k = window.PLACES_KEY || '';
+  var bgs = ["https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfCBzLWpaAEfiT_0-7VR5MTs9-JKLwYHs5IsswtpD4pLx81xcSLVBPWYuSwUpeyuTm5rVRVyy3PCLJ1C5NSPDXytXd2nj0Ma2h1mEgWv6Qwwa6fBdZ1NnINCsZbgk8j8o0LTCWPeejiGAxv0pjCyuiDrKphLi4G6bBuayG7GsACagMBupG3Mq3p5Pr5y5o08OdpO1hduaE0e03-KgV450n4gFCYzXzt9aEtdl3FcVOrYqVTBUgz7DPKA0HnZLdEV1HnTeJoX8REonLqUcWlxybdgeeqQjXxa4Ap4JnQVZl8kKSdMTgOBY0Qn23iH5g4MEzXwdPuH5NFCS8OYDSKBD2VmVZdBgY7MlbyubWWeI0y9il2X9_Ti7UXH-DK0MH-AWb-fjAZS6B3Q1KL8cLkv2-T5aQ","https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLc4TBxEbfUIqEEmcUwVQbUGaL9bIbMlMBREiyCGNMgBElzodY4XTt3QTw7tveOjuSAIfyysnt39U-1EIYpJ3S2xjCwyCOof2Ms8LSqhBB2F0O_YF4ce0-TunFC_fGZZmbHQEvHonVv3ipqhiQ2fqbFII-qGNcP8RZQt4R26xP5IqZHa9WCzHhjM3kWKIJsjindT-WOeRdXBuNoTRSsqOXhuVDUsjQEPdCRR7Zzk7PuGquIj1NGgvX04WCoabCNx2Z_5tibb8HgJ8f0HOTWe00_7UMJ-6BiotDjpsa1DTnzjPA9L4HgQtORaBNNBHgfAxMA1K9xat6MLluTnxNKqySnPElGH9JFHjT3K2-x0LPcuhW_Wpmg4Yrsx8-q3y0xDIpNL5dgLbtQFHtU6_er7VtN4EiKn69A"];
+  if (k) bgs.forEach(function(u, i){ document.documentElement.style.setProperty('--places-bg-' + (i + 1), 'url("' + u + '&key=' + k + '")'); });
+  function fill(){
+    document.querySelectorAll('img[data-psrc]').forEach(function(img){
+      if (k) img.src = img.getAttribute('data-psrc') + '&key=' + k;
+      else img.style.visibility = 'hidden';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+})();
+</script>
 </head>
 <body>
 
@@ -572,15 +588,15 @@
     </div>
     <div class="photo-grid fade-in">
       <div class="photo-card">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf81GpXan_OMgwrlLF8NLg_K03lwoaC4uatb8KolUM9QJZh2RSukAJT0huxwp0dcvRDJJHEKIc7vKrmj8YMeaWCfRz7px2bKyfenySLZ0R2o1_aDUF2PUh3c-RGBaLiwLeeJRIw_AJ7un_4aNgJLHlZmdaTCYdBv-_zsAx3ZvSDuX4MuUSptFEeYt3pOFO1_q8Pa4X6OdIYOGfE5XWE6DBapRVtEVQ3-KRpLwXzW8Pqhs-QHlpl0fexna__J1Qz8aMpiOc5G2tSdkxQc4IUPgwRdI-erRvRLxn3MB4iGDy9wPc77urPs3rJwzA9C9Nb3OFE0WkKjkgRHvg9EOadsoj2Eo8PfcpiZavuZOCQV3G0XMENdOHU4N4gspbQE54yCYXNmBg_l1XLYJWli6OPyBqDT87z&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="アロマ珈琲 店内">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLf81GpXan_OMgwrlLF8NLg_K03lwoaC4uatb8KolUM9QJZh2RSukAJT0huxwp0dcvRDJJHEKIc7vKrmj8YMeaWCfRz7px2bKyfenySLZ0R2o1_aDUF2PUh3c-RGBaLiwLeeJRIw_AJ7un_4aNgJLHlZmdaTCYdBv-_zsAx3ZvSDuX4MuUSptFEeYt3pOFO1_q8Pa4X6OdIYOGfE5XWE6DBapRVtEVQ3-KRpLwXzW8Pqhs-QHlpl0fexna__J1Qz8aMpiOc5G2tSdkxQc4IUPgwRdI-erRvRLxn3MB4iGDy9wPc77urPs3rJwzA9C9Nb3OFE0WkKjkgRHvg9EOadsoj2Eo8PfcpiZavuZOCQV3G0XMENdOHU4N4gspbQE54yCYXNmBg_l1XLYJWli6OPyBqDT87z" alt="アロマ珈琲 店内">
         <div class="photo-caption">アロマ珈琲 / 高槻市高槻町</div>
       </div>
       <div class="photo-card">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfLM7TyywgYc0rFtwoN0jNF-yzlydfzfs6kcoZiD_8aGfZ6-62PzwLOsC_FI5JZAEn3h8-zTABhu7IO7ZpaidLui6bgw3HjO-dD_ssZr92BBnJVBv9V59q4cbJ7ARGcXpHvLO7fnvbK8ROa7nGOeQ7gyPJ1oIWvsOv2kyf5PEIiisxgXGFPKuxcH-kkK9-MfS1sQ5kfod9rwvr3asFQVDPHCXkv2VHXbvqoCowajhm5YUP4ab0XTmnVDZ3GFdEsopXAlIk4DzjGWKcqFVkWlybaEkhHdqUCsoauBhNOUVEuc4NPhcr842TRbTF3a0ZSEVXCb2_h-nnk_lMJlrJmpYqIAjeStxtJ1LQSE9dsp-2_me5zDoQTSHtugczIwLwI1xEPpAv-oXqCiOvSQgsqwVM5_lnkMvs&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="アロマ珈琲 店内">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLfLM7TyywgYc0rFtwoN0jNF-yzlydfzfs6kcoZiD_8aGfZ6-62PzwLOsC_FI5JZAEn3h8-zTABhu7IO7ZpaidLui6bgw3HjO-dD_ssZr92BBnJVBv9V59q4cbJ7ARGcXpHvLO7fnvbK8ROa7nGOeQ7gyPJ1oIWvsOv2kyf5PEIiisxgXGFPKuxcH-kkK9-MfS1sQ5kfod9rwvr3asFQVDPHCXkv2VHXbvqoCowajhm5YUP4ab0XTmnVDZ3GFdEsopXAlIk4DzjGWKcqFVkWlybaEkhHdqUCsoauBhNOUVEuc4NPhcr842TRbTF3a0ZSEVXCb2_h-nnk_lMJlrJmpYqIAjeStxtJ1LQSE9dsp-2_me5zDoQTSHtugczIwLwI1xEPpAv-oXqCiOvSQgsqwVM5_lnkMvs" alt="アロマ珈琲 店内">
         <div class="photo-caption">アロマ珈琲 / 高槻市高槻町</div>
       </div>
       <div class="photo-card">
-        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcx1VqxFPZbtjUwngzZc3cCDtal7nZIZGbLQbV_zJzCJzniLqiALHZ6LmqgiuU43-yVb4UWucsM99n5iza_Ppf3BQ41MbeJQ8VOJRIeO3ogejYnUlfSSdiDsTQYFIelDUY1KR7L1Z_zM_1yuImpDMN4F2YvKh6lR7xFFqKriFgz_KpMpvX2m3FkxZHvDig9Zb79MTBmCmpWYVHYWl0dPRxIggcBCuIIIBwx4ABSuJCZz2KfH6Z-mArB54uIavyNEonl47qMOwP0fF5axOHlT8r1w5wrLb4EEdT-dXjYKhjKII9H3muqkHxZTIA-DV456Dh3doMVBgPrKamAmKzOSGb_ZkOWwQuQyab0fp07-BnNFpi0g_Z2HWHKc6e7oJeGGPGBvr1CT77CdA2LARvCqzKT8A&key=AIzaSyAWBPw1wE7ZwKJXFaIinTmnCa6G1Sic0vg" alt="アロマ珈琲 店内">
+        <img data-psrc="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=AV-0GLcx1VqxFPZbtjUwngzZc3cCDtal7nZIZGbLQbV_zJzCJzniLqiALHZ6LmqgiuU43-yVb4UWucsM99n5iza_Ppf3BQ41MbeJQ8VOJRIeO3ogejYnUlfSSdiDsTQYFIelDUY1KR7L1Z_zM_1yuImpDMN4F2YvKh6lR7xFFqKriFgz_KpMpvX2m3FkxZHvDig9Zb79MTBmCmpWYVHYWl0dPRxIggcBCuIIIBwx4ABSuJCZz2KfH6Z-mArB54uIavyNEonl47qMOwP0fF5axOHlT8r1w5wrLb4EEdT-dXjYKhjKII9H3muqkHxZTIA-DV456Dh3doMVBgPrKamAmKzOSGb_ZkOWwQuQyab0fp07-BnNFpi0g_Z2HWHKc6e7oJeGGPGBvr1CT77CdA2LARvCqzKT8A" alt="アロマ珈琲 店内">
         <div class="photo-caption">アロマ珈琲 / 高槻市高槻町</div>
       </div>
     </div>

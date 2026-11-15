@@ -2,14 +2,14 @@
 <!--
   役割: CTO
   目的: takibineko HP制作デモ一覧 — 見込み顧客に業種別のデモを見せるための入口ページ
-  日付: 2026-11-14
+  日付: 2026-11-15（着物店デモ追加・ポートフォリオv6へリンク更新）
 -->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>takibineko | HP制作デモ一覧</title>
-<meta name="description" content="takibineko — Web制作・AI自動化・Bot開発のフリーランス開発者。業種別のHP制作デモ一覧。">
+<meta name="description" content="takibineko — 事務作業の自動化とWeb制作。業種の雰囲気に合わせたHP制作デモ一覧。">
 <meta name="theme-color" content="#f7f5ef">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,6 +126,18 @@ a:hover>.go::after,a:hover .go::after{width:62px;}
 }
 .demo:hover .demo-arrow{background:var(--sea);border-color:var(--sea);color:#fff;transform:translateX(4px);}
 
+/* 和のデモカード：帯を巻いた見出し */
+.wa-card{position:relative;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-top:26px;padding:clamp(22px,3vw,34px) clamp(18px,3vw,36px) clamp(64px,7vw,84px);background:#fbf8f1;border:1px solid var(--rule);overflow:hidden;transition:transform .6s var(--ease),box-shadow .6s var(--ease);}
+.wa-card:hover{transform:translateY(-4px);box-shadow:0 30px 50px -34px rgba(28,43,58,0.4);}
+.wa-card:hover .demo-arrow{background:#8a2c35;border-color:#8a2c35;color:#fff;transform:translateX(4px);}
+.wa-obi{
+  position:absolute;left:0;right:0;bottom:16px;height:clamp(30px,3.6vw,40px);background-color:#27405f;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Crect width='40' height='20' fill='%2327405f'/%3E%3Cg fill='%2327405f' stroke='%23c9b27c' stroke-width='1.5'%3E%3Ccircle cx='20' cy='0' r='19.2'/%3E%3Ccircle cx='20' cy='0' r='13'/%3E%3Ccircle cx='20' cy='0' r='6.6'/%3E%3Ccircle cx='0' cy='10' r='19.2'/%3E%3Ccircle cx='0' cy='10' r='13'/%3E%3Ccircle cx='0' cy='10' r='6.6'/%3E%3Ccircle cx='40' cy='10' r='19.2'/%3E%3Ccircle cx='40' cy='10' r='13'/%3E%3Ccircle cx='40' cy='10' r='6.6'/%3E%3Ccircle cx='20' cy='20' r='19.2'/%3E%3Ccircle cx='20' cy='20' r='13'/%3E%3Ccircle cx='20' cy='20' r='6.6'/%3E%3Ccircle cx='0' cy='30' r='19.2'/%3E%3Ccircle cx='0' cy='30' r='13'/%3E%3Ccircle cx='40' cy='30' r='19.2'/%3E%3Ccircle cx='40' cy='30' r='13'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:32px 16px;transition:background-position 1.2s var(--ease);
+}
+.wa-obi::after{content:'';position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:repeating-linear-gradient(115deg,#e9dfc9 0 4px,#c9b78e 4px 8px);}
+.wa-card:hover .wa-obi{background-position:-64px 0;}
+
 /* CTA */
 .cta{
   margin:clamp(72px,10vw,140px) 0 0;padding:clamp(34px,5vw,64px);border-radius:18px;background:var(--mist);
@@ -168,14 +180,15 @@ footer a:hover{color:var(--sea-d);}
 <body>
 
 <header class="bar" id="bar">
-  <a class="bar-logo" href="2026-11-14_portfolio_v5_takibineko.html"><img src="2026-06-03_takibineko-assets/takibineko-logo.png" alt=""><span>takibineko</span></a>
+  <a class="bar-logo" href="2026-11-15_portfolio_v6_takibineko.html"><img src="2026-06-03_takibineko-assets/takibineko-logo.png" alt=""><span>takibineko</span></a>
   <nav class="bar-nav" aria-label="ページ内ナビゲーション">
     <a href="#premium">プレミアム</a>
+    <a href="#wa">きもの・和</a>
     <a href="#food">飲食・カフェ</a>
     <a href="#shop">物販</a>
     <a href="#salon">サロン・整体</a>
     <a href="#concept">3D演出</a>
-    <a class="pill" href="2026-11-14_portfolio_v5_takibineko.html#contact">相談する</a>
+    <a class="pill" href="2026-11-15_portfolio_v6_takibineko.html#contact">相談する</a>
   </nav>
 </header>
 
@@ -184,10 +197,10 @@ footer a:hover{color:var(--sea-d);}
   <div class="hero-copy">
     <p class="hero-en">Website Demos</p>
     <h1>HP制作デモ一覧</h1>
-    <p class="lead">業種ごとに制作したHPのデモページです。雰囲気や動きを、そのままブラウザでご覧いただけます。</p>
+    <p class="lead">業種ごとに制作したHPのデモページです。着物店なら和の装いに帯の柄をあしらうなど、その業種らしい雰囲気と遊びを入れています。</p>
     <div class="hero-count">
-      <div><b>11</b><span>デモ</span></div>
-      <div><b>5</b><span>カテゴリ</span></div>
+      <div><b>12</b><span>デモ</span></div>
+      <div><b>6</b><span>カテゴリ</span></div>
     </div>
   </div>
   <div class="wave" aria-hidden="true">
@@ -199,12 +212,12 @@ footer a:hover{color:var(--sea-d);}
 <main>
 
   <!-- ポートフォリオ -->
-  <a class="feature rv" href="2026-11-14_portfolio_v5_takibineko.html">
+  <a class="feature rv" href="2026-11-15_portfolio_v6_takibineko.html">
     <div class="feature-ph"><img src="assets_takibineko/coast-right.jpg" alt="岩の浮かぶ入り江と空"></div>
     <div class="feature-body">
       <p class="label"><em>Portfolio</em></p>
       <h2>takibineko ポートフォリオ</h2>
-      <p>Web制作 × AI自動化 × Bot開発。Three.js / GSAP / Next.js を使ったインタラクティブなWebと、Claude API × Python による業務自動化が得意なフリーランス開発者のポートフォリオ。</p>
+      <p>「あなたの日々の事務作業、すべて自動化しませんか？」領収書の入力、問い合わせ対応、SNS投稿などの自動化をお手伝いしています。HP制作の実績もこちらから。</p>
       <span class="go">ポートフォリオを見る</span>
     </div>
   </a>
@@ -224,6 +237,25 @@ footer a:hover{color:var(--sea-d);}
         <span class="demo-arrow">→</span>
       </a>
     </div>
+  </section>
+
+  <!-- きもの・和 -->
+  <section class="sec" id="wa">
+    <div class="sec-head rv">
+      <div>
+        <p class="label"><em>Kimono &amp; Japanese Style</em></p>
+        <h2 class="sec-title">きもの・和のお店</h2>
+      </div>
+      <p class="sec-note">帯の柄がページを横切り、着物と帯の組み合わせを試せる「帯あわせ」付きの和風デモです。</p>
+    </div>
+    <a class="wa-card rv" href="demo_きもの綾衣.html">
+      <span class="wa-obi" aria-hidden="true"></span>
+      <div class="wa-body">
+        <div class="demo-name">きもの 綾衣<span class="demo-plan">NEW</span></div>
+        <div class="demo-type">呉服店（架空の店舗） — 和風 × 帯モチーフ × 帯あわせ体験</div>
+      </div>
+      <span class="demo-arrow">→</span>
+    </a>
   </section>
 
   <!-- 飲食・カフェ -->
@@ -313,14 +345,14 @@ footer a:hover{color:var(--sea-d);}
       <h2>あなたのお店でも、つくれます。</h2>
       <p>HP制作・LP制作のご相談はお気軽に。初回相談は無料です。</p>
     </div>
-    <a class="btn" href="2026-11-14_portfolio_v5_takibineko.html#contact"><span>相談してみる</span><span>→</span></a>
+    <a class="btn" href="2026-11-15_portfolio_v6_takibineko.html#contact"><span>相談してみる</span><span>→</span></a>
   </div>
 
 </main>
 
 <footer>
   <span>© 2026 takibineko</span>
-  <a href="2026-11-14_portfolio_v5_takibineko.html">Portfolio</a>
+  <a href="2026-11-15_portfolio_v6_takibineko.html">Portfolio</a>
 </footer>
 
 <script>
