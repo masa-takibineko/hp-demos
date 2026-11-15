@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>珈琲と焙煎の店 | HP制作デモ</title>
+<meta name="description" content="スペシャルティコーヒーと焙煎にこだわる小さな珈琲店のホームページデモ。">
+<meta property="og:title" content="珈琲と焙煎の店 | HP制作デモ">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #090b0d;
+  --surface: #111316;
+  --accent:  #c8a06e;
+  --text:    #e8e2d9;
+  --dim:     #9a8e82;
+  --border:  rgba(255,255,255,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Serif JP',serif;font-weight:300;line-height:1.9;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+.rv{opacity:0;transform:translateY(28px);transition:opacity 0.8s ease,transform 0.8s ease;transition-delay:var(--d,0s);}
+.rv.visible{opacity:1;transform:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1.5rem,6vw,5rem);height:68px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,box-shadow .5s;}
+nav.solid{background:rgba(9,11,13,.92);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;letter-spacing:.04em;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);transition:color .3s;}
+.nav-links a:hover{color:var(--accent);}
+
+/* HERO */
+.hero{position:relative;height:100svh;min-height:640px;display:flex;align-items:flex-end;padding:0 clamp(1.5rem,6vw,5rem) clamp(3rem,8vh,6rem);overflow:hidden;}
+.hero-bg{position:absolute;inset:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) sepia(.15);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,11,13,.88) 0%,rgba(9,11,13,.18) 55%,transparent 100%);}
+.hero-content{position:relative;z-index:2;max-width:620px;}
+.hero-label{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.4rem;}
+.hero-title{font-family:'Playfair Display','Noto Serif JP',serif;font-size:clamp(3rem,10vw,6.5rem);font-weight:400;line-height:1.0;margin-bottom:1.4rem;}
+.hero-sub{font-size:clamp(.88rem,2vw,1rem);color:var(--dim);line-height:1.9;max-width:400px;}
+
+/* SECTION */
+.section{padding:clamp(5rem,12vh,9rem) clamp(1.5rem,6vw,5rem);}
+.section-label{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:1.2rem;}
+.section-title{font-family:'Playfair Display','Noto Serif JP',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;line-height:1.25;margin-bottom:1.8rem;}
+.accent-line{width:36px;height:1px;background:var(--accent);margin-bottom:1.8rem;}
+
+/* STORY */
+.story{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.story-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center;}
+.story-photo{border-radius:2px;overflow:hidden;aspect-ratio:4/3;}
+.story-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) sepia(.08);transition:transform .8s ease;}
+.story-photo:hover img{transform:scale(1.03);}
+.story-body{color:var(--dim);font-size:.95rem;line-height:2;}
+
+/* MENU */
+.menu-inner{max-width:900px;margin:0 auto;}
+.menu-list{margin-top:3rem;border-top:1px solid var(--border);}
+.menu-item{display:flex;justify-content:space-between;align-items:baseline;padding:1.4rem 0;border-bottom:1px solid var(--border);gap:1rem;}
+.menu-name{font-family:'Playfair Display','Noto Serif JP',serif;font-size:1.05rem;font-weight:400;}
+.menu-desc{color:var(--dim);font-size:.82rem;flex:1;text-align:center;padding:0 1rem;}
+.menu-price{font-family:'Courier New',monospace;font-size:.88rem;letter-spacing:.08em;color:var(--accent);white-space:nowrap;}
+
+/* FULLBLEED */
+.fullbleed{position:relative;height:clamp(320px,50vh,540px);overflow:hidden;display:flex;align-items:center;}
+.fullbleed-bg{position:absolute;inset:0;}
+.fullbleed-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.5) sepia(.12);}
+.fullbleed-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,11,13,.88) 0%,rgba(9,11,13,.3) 60%,transparent 100%);}
+.fullbleed-text{position:relative;z-index:2;padding:0 clamp(1.5rem,6vw,5rem);max-width:560px;}
+.fullbleed-quote{font-family:'Playfair Display','Noto Serif JP',serif;font-size:clamp(1.3rem,3.5vw,2.2rem);font-weight:400;font-style:italic;line-height:1.5;margin-bottom:1rem;}
+.fullbleed-cap{font-size:.82rem;color:var(--dim);letter-spacing:.08em;}
+
+/* GALLERY */
+.gallery{background:var(--surface);border-top:1px solid var(--border);}
+.gallery-inner{max-width:1100px;margin:0 auto;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3rem;}
+.g-item{overflow:hidden;aspect-ratio:1;}
+.g-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);transition:transform .6s ease,filter .6s ease;}
+.g-item:hover img{transform:scale(1.05);filter:brightness(1);}
+
+/* ACCESS */
+.access{border-top:1px solid var(--border);}
+.access-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:start;}
+.access-info dt{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-top:1.4rem;margin-bottom:.3rem;}
+.access-info dd{font-size:.9rem;color:var(--dim);line-height:1.8;}
+.access-map{border-radius:2px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);}
+.access-map iframe{width:100%;height:100%;border:0;filter:invert(.9) hue-rotate(170deg) saturate(.6);}
+
+/* CTA */
+.cta-section{text-align:center;padding:clamp(5rem,10vh,8rem) clamp(1.5rem,6vw,5rem);background:var(--surface);border-top:1px solid var(--border);}
+.cta-tel{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;letter-spacing:.04em;margin-bottom:.6rem;}
+.cta-tel a{transition:color .3s;}
+.cta-tel a:hover{color:var(--accent);}
+.cta-note{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.15em;color:var(--dim);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2.5rem clamp(1.5rem,6vw,5rem);display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.footer-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--dim);}
+.footer-copy{font-family:'Courier New',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--dim);opacity:.6;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .story-inner{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .access-inner{grid-template-columns:1fr;}
+  .menu-desc{display:none;}
+  footer{flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <span class="nav-logo">Café</span>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#access">Access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1600&q=80&auto=format&fit=crop" alt="珈琲">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-label">— Specialty Coffee &amp; Roast</span>
+    <h1 class="hero-title">珈琲と<br>焙煎の店</h1>
+    <p class="hero-sub">豆の個性を引き出す、一杯一杯丁寧な焙煎と抽出。<br>地域に根ざした、静かで誠実な珈琲店です。</p>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story section" id="story">
+  <div class="story-inner">
+    <div class="story-photo rv">
+      <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop" alt="店内">
+    </div>
+    <div class="rv" style="--d:.1s">
+      <span class="section-label">Story</span>
+      <div class="accent-line"></div>
+      <h2 class="section-title">ゆっくりと、<br>丁寧に。</h2>
+      <p class="story-body">
+        「急がない珈琲を、急がない空間で。」<br><br>
+        産地にこだわったスペシャルティコーヒーを自家焙煎し、ハンドドリップで一杯ずつ丁寧にお出しします。
+        忙しい毎日の中に、ほんの少しゆっくりする時間を届けたい——そんな思いで、この店を始めました。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="section" id="menu">
+  <div class="menu-inner">
+    <div class="rv">
+      <span class="section-label">Menu</span>
+      <h2 class="section-title">メニュー</h2>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item rv" style="--d:0s">
+        <span class="menu-name">ハンドドリップコーヒー</span>
+        <span class="menu-desc">本日の豆、エチオピア / コロンビア / 季節の豆</span>
+        <span class="menu-price">¥ 600</span>
+      </div>
+      <div class="menu-item rv" style="--d:.05s">
+        <span class="menu-name">カフェラテ</span>
+        <span class="menu-desc">低温スチームのなめらかなミルクとともに</span>
+        <span class="menu-price">¥ 680</span>
+      </div>
+      <div class="menu-item rv" style="--d:.1s">
+        <span class="menu-name">アイスコーヒー</span>
+        <span class="menu-desc">急冷ドリップ、すっきりとした後味</span>
+        <span class="menu-price">¥ 580</span>
+      </div>
+      <div class="menu-item rv" style="--d:.15s">
+        <span class="menu-name">焙煎豆（100g）</span>
+        <span class="menu-desc">テイクアウト販売。その日焙煎のものをご用意</span>
+        <span class="menu-price">¥ 900〜</span>
+      </div>
+      <div class="menu-item rv" style="--d:.2s">
+        <span class="menu-name">本日の焼き菓子</span>
+        <span class="menu-desc">地元の菓子工房から届く、日替わりのお菓子</span>
+        <span class="menu-price">¥ 300〜</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULLBLEED -->
+<div class="fullbleed">
+  <div class="fullbleed-bg">
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&q=80&auto=format&fit=crop" alt="">
+  </div>
+  <div class="fullbleed-overlay"></div>
+  <div class="fullbleed-text rv">
+    <p class="fullbleed-quote">"豆が持つ本来の風味を、<br>邪魔せず引き出すことが<br>焙煎師の仕事だと思っています。"</p>
+    <span class="fullbleed-cap">— 店主より</span>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery section" id="gallery">
+  <div class="gallery-inner">
+    <div class="rv">
+      <span class="section-label">Gallery</span>
+      <h2 class="section-title">店内の風景</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-item rv" style="--d:0s">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1200&q=80&auto=format&fit=crop" alt="ドリンク">
+      </div>
+      <div class="g-item rv" style="--d:.1s">
+        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80&auto=format&fit=crop" alt="コーヒーとお菓子">
+      </div>
+      <div class="g-item rv" style="--d:.2s">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80&auto=format&fit=crop" alt="店内">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS + CTA -->
+<section class="section access" id="access">
+  <div class="access-inner">
+    <div class="rv">
+      <span class="section-label">Access</span>
+      <h2 class="section-title">アクセス</h2>
+      <dl class="access-info">
+        <dt>Address</dt>
+        <dd>大阪府 ○○市 ○○町 X-XX</dd>
+        <dt>Hours</dt>
+        <dd>月〜金 10:00 – 19:00<br>土日祝 10:00 – 18:00<br>火曜定休</dd>
+        <dt>Tel</dt>
+        <dd>0XX-XXX-XXXX</dd>
+        <dt>Instagram</dt>
+        <dd>@yourcafe</dd>
+      </dl>
+    </div>
+    <div class="access-map rv" style="--d:.1s">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100000!2d135.5!3d34.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s!2zSlA!5e0!3m2!1sja!2sjp!4v1700000000000"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="地図">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="rv">
+    <span class="section-label">Contact</span>
+    <div class="cta-tel"><a href="tel:0XXXXXXXXXX">0XX-XXX-XXXX</a></div>
+    <p class="cta-note">月〜金 10:00 – 19:00 &nbsp;|&nbsp; 土日祝 10:00 – 18:00</p>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">珈琲と焙煎の店</span>
+  <span class="footer-copy">&copy; 2026 Café. All rights reserved.</span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('solid', window.scrollY > 60);
+}, { passive: true });
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.rv').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
