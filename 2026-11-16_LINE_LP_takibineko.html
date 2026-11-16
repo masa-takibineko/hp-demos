@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>たきびねこ | 事務自動化・HP制作・AI活用相談</title>
+  <meta name="description" content="日々の繰り返し作業を自動化して、あなたの時間を本来の仕事に。HP制作から業務自動化、AI活用相談まで。LINEで気軽にご相談ください。">
+  <meta property="og:title" content="たきびねこ | 事務自動化・HP制作・AI活用相談">
+  <meta property="og:description" content="日々の繰り返し作業を自動化して、あなたの時間を本来の仕事に。">
+  <meta property="og:type" content="website">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: #f7f9fb;
+      color: #2a323d;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ===== REDUCED MOTION GUARD ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .line-lit span { opacity: 1 !important; }
+      .scroll-badge { display: none; }
+      .stage-near { opacity: 1; transform: none; }
+    }
+
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg: #f7f9fb;
+      --surface: #ffffff;
+      --accent: #5b9bc4;
+      --accent-dark: #3f7da8;
+      --accent-deep: #2a323d;
+      --text: #2a323d;
+      --text-dim: #6b7682;
+      --radius: 20px;
+      --max-w: 1120px;
+    }
+
+    /* ===== STAGE — fixed background (Effect A) ===== */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .stage > * {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .stage-sky {
+        animation: zoomSky linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 150svh;
+      }
+      .stage-near {
+        animation: zoomNear linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 150svh;
+        transform-origin: 50% 80%;
+      }
+      @keyframes zoomSky { to { transform: scale(1.18); } }
+      @keyframes zoomNear { to { transform: scale(2.2); opacity: 0; } }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      z-index: 1;
+      height: 200svh;
+    }
+    .hero-inner {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(3rem, 8vh, 6rem);
+    }
+    .hero-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: clamp(2rem, 5.5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      color: #ffffff;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+      max-width: 18em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+      max-width: 28em;
+    }
+
+    /* scroll badge (Effect E) */
+    .scroll-badge {
+      position: absolute;
+      right: clamp(1.5rem, 4vw, 3rem);
+      bottom: clamp(2rem, 6vh, 4.5rem);
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    .scroll-badge svg {
+      width: 100px;
+      animation: spin 14s linear infinite;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      fill: currentColor;
+    }
+    .scroll-line {
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      width: 1px;
+      height: 30%;
+      background: currentColor;
+      animation: drop 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes spin { to { rotate: 360deg; } }
+    @keyframes drop {
+      0%   { scale: 1 0; transform-origin: top; }
+      50%  { scale: 1 1; }
+      100% { scale: 1 0; transform-origin: bottom; }
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content { position: relative; z-index: 1; }
+    section { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem); }
+    .inner { max-width: var(--max-w); margin: 0 auto; }
+
+    /* ===== SECTION LABELS & HEADINGS ===== */
+    .sec-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+    .sec-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .sec-desc {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      color: var(--text-dim);
+      max-width: 38em;
+      margin-bottom: 3rem;
+      line-height: 1.9;
+    }
+
+    /* ===== MESSAGE SECTION (Effect C) ===== */
+    .sec-message {
+      background: var(--accent);
+      color: white;
+      padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem);
+    }
+    .line-lit { text-align: center; }
+    .line-lit span {
+      display: block;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 500;
+      line-height: 2.4;
+      letter-spacing: 0.1em;
+      opacity: 1;
+    }
+    @supports (animation-timeline: view()) {
+      .line-lit span {
+        animation: lit linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+        opacity: 0.2;
+      }
+      @keyframes lit { from { opacity: 0.2; } to { opacity: 1; } }
+    }
+
+    /* ===== WAVE DIVIDER ===== */
+    .wave { background: transparent; overflow: hidden; margin-bottom: -1px; line-height: 0; }
+    .wave svg { display: block; width: 100%; height: clamp(50px, 9vw, 120px); }
+    .wave-down { background: var(--accent); }
+    .wave-down svg path { fill: #f7f9fb; }
+    .wave-up { background: #f7f9fb; }
+    .wave-up svg path { fill: var(--surface); }
+
+    /* ===== PROBLEM SECTION ===== */
+    .sec-problem { background: var(--surface); }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .pain-item {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      border-left: 3px solid var(--accent);
+      opacity: 1;
+    }
+    .pain-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      display: block;
+    }
+    .pain-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0.4rem 0 0.6rem;
+    }
+    .pain-item p { font-size: 0.9rem; line-height: 1.8; color: var(--text-dim); }
+
+    /* ===== ABOUT SECTION ===== */
+    .sec-about { background: var(--bg); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .about-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .about-photo {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .about-photo:first-child { margin-top: 2rem; }
+    .about-photo:last-child { margin-top: -2rem; }
+    .about-photo img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .about-photo:hover img { transform: scale(1.03); }
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+    }
+    .about-text strong { color: var(--text); font-weight: 700; }
+    .about-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .about-handle {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== SERVICES SECTION ===== */
+    .sec-services { background: var(--surface); }
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(42,50,61,0.1);
+    }
+    .service-icon-wrap {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(91,155,196,0.06);
+    }
+    .service-icon-wrap svg { width: 72px; height: 72px; }
+    .service-body { padding: 2rem; }
+    .service-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .service-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .service-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.85; }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.2rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.75rem;
+      background: var(--surface);
+      border-radius: 100px;
+      color: var(--text-dim);
+      border: 1px solid rgba(91,155,196,0.25);
+    }
+
+    /* ===== WORKS SECTION ===== */
+    .sec-works { background: var(--bg); }
+    .works-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .work-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+    .work-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .work-card:hover img { transform: scale(1.04); }
+    .work-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(42,50,61,0.72));
+    }
+    .work-genre {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.72);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .work-title { font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+    .work-link {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .work-link:hover { color: white; border-color: white; }
+
+    /* "More demos" card */
+    .work-card-more {
+      border-radius: var(--radius);
+      background: rgba(91,155,196,0.08);
+      border: 2px dashed rgba(91,155,196,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      aspect-ratio: 4/3;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .work-card-more:hover { background: rgba(91,155,196,0.14); }
+    .work-card-more-num {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1;
+    }
+    .work-card-more-label {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ===== FLOW SECTION ===== */
+    .sec-flow { background: var(--surface); }
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+    /* Workflow connection line — automation motif */
+    .flow-steps::before {
+      content: '';
+      position: absolute;
+      top: 23px;
+      left: calc(16.6% + 0.5rem);
+      right: calc(16.6% + 0.5rem);
+      height: 1px;
+      background: linear-gradient(to right, var(--accent) 0%, rgba(91,155,196,0.3) 50%, var(--accent) 100%);
+      z-index: 0;
+    }
+    .flow-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .flow-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0 auto 1.5rem;
+    }
+    .flow-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .flow-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; }
+
+    /* ===== CTA SECTION ===== */
+    .sec-cta {
+      background: var(--accent-deep);
+      color: white;
+      text-align: center;
+      padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem);
+    }
+    .cta-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+    .cta-sub {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      opacity: 0.7;
+      margin-bottom: 3rem;
+      max-width: 30em;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.9;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 2.2rem;
+      background: #06c755;
+      border-radius: 100px;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .btn-line:hover { opacity: 0.85; }
+    .btn-insta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 2.2rem;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 100px;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .btn-insta:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--accent-deep);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ===== IO REVEAL (fallback) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photos { max-width: 480px; }
+    }
+
+    @media (max-width: 768px) {
+      .works-layout { grid-template-columns: 1fr; }
+      .flow-steps { grid-template-columns: 1fr; }
+      .flow-steps::before { display: none; }
+      .service-cards { grid-template-columns: 1fr; }
+      .hero-title { font-size: clamp(1.9rem, 7.5vw, 3rem); }
+      .about-photos { margin: 0 auto; }
+    }
+
+    @media (max-width: 480px) {
+      .pain-grid { grid-template-columns: 1fr; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .about-photos { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== FIXED STAGE (Effect A) ===== -->
+  <div class="stage" aria-hidden="true">
+    <img class="stage-sky"  src="assets_takibineko/sky.jpg"   alt="">
+    <img class="stage-near" src="assets_takibineko/shore.jpg" alt="">
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">takibineko — automations &amp; web</span>
+      <h1 class="hero-title">あなたの日々の事務作業、<br>すべて自動化しませんか？</h1>
+      <p class="hero-sub">HP制作 / 業務自動化 / AI活用相談<br>気軽にLINEでご相談ください。</p>
+
+      <!-- Effect E: rotating scroll badge -->
+      <a class="scroll-badge" href="#message" aria-label="下へスクロール">
+        <svg viewBox="0 0 120 120">
+          <defs>
+            <path id="badge-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
+          </defs>
+          <text>
+            <textPath href="#badge-circle">SCROLL DOWN ・ SCROLL DOWN ・ SCROLL DOWN ・</textPath>
+          </text>
+        </svg>
+        <span class="scroll-line"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="content">
+
+    <!-- MESSAGE SECTION (Effect C: 行点灯) -->
+    <section class="sec-message" id="message">
+      <div class="inner">
+        <div class="line-lit">
+          <span>毎日の繰り返し作業、</span>
+          <span>コピペ・転記・整理・確認。</span>
+          <span>その時間、ぜんぶ取り戻せます。</span>
+          <span>あなたの手だから、できること。</span>
+          <span>もっとたくさんあるはずです。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAVE DIVIDER -->
+    <div class="wave wave-down" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"/>
+      </svg>
+    </div>
+
+    <!-- PROBLEM SECTION -->
+    <section class="sec-problem">
+      <div class="inner">
+        <span class="sec-label reveal">— The Problem</span>
+        <h2 class="sec-title reveal">こんな作業、<br>まだ手動でやっていませんか？</h2>
+        <p class="sec-desc reveal">「これって自動化できるの？」と思ったことが、たいてい自動化できます。毎日の小さな手間が積み重なって、気づけば何時間も失っています。</p>
+        <div class="pain-grid">
+          <div class="pain-item reveal">
+            <span class="pain-num">01</span>
+            <p class="pain-title">予約・問い合わせの転記</p>
+            <p>Googleフォームの回答をスプレッドシートへ手入力。同じ確認メールを毎回コピペして送っている。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">02</span>
+            <p class="pain-title">定期的なメール・SNS投稿</p>
+            <p>毎週の案内メール、毎日のSNS更新。作ること自体に時間がかかりすぎて本業が圧迫される。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">03</span>
+            <p class="pain-title">売上集計・報告書作成</p>
+            <p>月末にExcelを開いて、コピペして、グラフを作って…。毎月まったく同じことの繰り返し。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">04</span>
+            <p class="pain-title">ホームページの更新</p>
+            <p>「更新したいけどやり方がわからない」「業者に頼むたびに時間と費用がかかる」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="sec-about">
+      <div class="inner">
+        <span class="sec-label reveal">— About</span>
+        <h2 class="sec-title reveal">自動化を、身近に。</h2>
+        <div class="about-grid">
+          <div class="about-photos reveal">
+            <div class="about-photo">
+              <img src="assets_takibineko/coast-left.jpg" alt="海辺の風景">
+            </div>
+            <div class="about-photo">
+              <img src="assets_takibineko/coast-right.jpg" alt="海辺の風景">
+            </div>
+          </div>
+          <div class="about-text reveal">
+            <p class="about-name">たきびねこ</p>
+            <span class="about-handle">@takibi__neko</span>
+            <p>「自動化って難しそう」という声をよく聞きます。でも実際は、日常的に使っているGoogleのツールで、ほとんどの繰り返し作業は仕組みにできます。</p>
+            <p><strong>事務作業の自動化</strong>から<strong>ホームページ制作</strong>、<strong>AI活用の相談</strong>まで、小規模店舗・個人事業の方向けにサポートしています。</p>
+            <p>難しい話は抜きで、「こんなことできる？」という相談だけでも気軽にどうぞ。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="sec-services">
+      <div class="inner">
+        <span class="sec-label reveal">— Services</span>
+        <h2 class="sec-title reveal">3つのサービス</h2>
+        <p class="sec-desc reveal">「難しそう」と思っている作業ほど、実は自動化しやすいものです。まずは相談から。</p>
+        <div class="service-cards">
+
+          <!-- Service 01 -->
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <!-- Automation motif: connected workflow nodes -->
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="36" r="10" stroke="#5b9bc4" stroke-width="2"/>
+                <circle cx="56" cy="18" r="8" stroke="#5b9bc4" stroke-width="2"/>
+                <circle cx="56" cy="54" r="8" stroke="#5b9bc4" stroke-width="2"/>
+                <line x1="26" y1="33" x2="48" y2="22" stroke="#5b9bc4" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <line x1="26" y1="39" x2="48" y2="50" stroke="#5b9bc4" stroke-width="1.5" stroke-dasharray="3 2"/>
+                <circle cx="16" cy="36" r="4" fill="#5b9bc4"/>
+                <circle cx="56" cy="18" r="3" fill="#5b9bc4" opacity="0.55"/>
+                <circle cx="56" cy="54" r="3" fill="#5b9bc4" opacity="0.55"/>
+              </svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 01</span>
+              <h3 class="service-title">事務自動化</h3>
+              <p class="service-desc">Google Apps Script / Make / Zapier などを使って、繰り返しの手作業を仕組みに変えます。フォーム→スプレッドシート→メール通知まで一気通貫で対応。</p>
+              <div class="service-tags">
+                <span class="tag">Google Apps Script</span>
+                <span class="tag">Make</span>
+                <span class="tag">Zapier</span>
+                <span class="tag">スプレッドシート連携</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 02 -->
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <!-- Website motif: browser window -->
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="14" width="56" height="44" rx="6" stroke="#5b9bc4" stroke-width="2"/>
+                <line x1="8" y1="26" x2="64" y2="26" stroke="#5b9bc4" stroke-width="1.5"/>
+                <circle cx="18" cy="20" r="2.5" fill="#5b9bc4" opacity="0.5"/>
+                <circle cx="26" cy="20" r="2.5" fill="#5b9bc4" opacity="0.3"/>
+                <rect x="14" y="33" width="20" height="12" rx="2" stroke="#5b9bc4" stroke-width="1.5"/>
+                <line x1="40" y1="36" x2="58" y2="36" stroke="#5b9bc4" stroke-width="1.5" opacity="0.6"/>
+                <line x1="40" y1="41" x2="54" y2="41" stroke="#5b9bc4" stroke-width="1.5" opacity="0.4"/>
+                <line x1="14" y1="52" x2="58" y2="52" stroke="#5b9bc4" stroke-width="1.5" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 02</span>
+              <h3 class="service-title">HP制作</h3>
+              <p class="service-desc">小規模店舗・個人事業向けのホームページを制作します。自分で更新できる管理画面つきオプションもあり。制作後も継続サポート可能です。</p>
+              <div class="service-tags">
+                <span class="tag">HTML/CSS</span>
+                <span class="tag">管理画面オプション</span>
+                <span class="tag">SEO対応</span>
+                <span class="tag">スマホ対応</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service 03 -->
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <!-- AI/Consulting motif: dialogue bubbles -->
+              <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="12" width="38" height="26" rx="8" stroke="#5b9bc4" stroke-width="2"/>
+                <line x1="18" y1="22" x2="36" y2="22" stroke="#5b9bc4" stroke-width="1.5" opacity="0.7"/>
+                <line x1="18" y1="28" x2="30" y2="28" stroke="#5b9bc4" stroke-width="1.5" opacity="0.5"/>
+                <path d="M13 38 L8 46 L18 42" stroke="#5b9bc4" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+                <rect x="26" y="34" width="38" height="26" rx="8" stroke="#5b9bc4" stroke-width="2" opacity="0.55"/>
+                <line x1="34" y1="44" x2="56" y2="44" stroke="#5b9bc4" stroke-width="1.5" opacity="0.4"/>
+                <line x1="34" y1="50" x2="50" y2="50" stroke="#5b9bc4" stroke-width="1.5" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 03</span>
+              <h3 class="service-title">AI活用相談</h3>
+              <p class="service-desc">「ChatGPTやClaudeをどう業務に使えばいいか」「何から始めるべきかわからない」という相談に乗ります。具体的な活用方法を一緒に考えます。</p>
+              <div class="service-tags">
+                <span class="tag">ChatGPT活用</span>
+                <span class="tag">Claude</span>
+                <span class="tag">業務フロー設計</span>
+                <span class="tag">ツール選定</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS SECTION -->
+    <section class="sec-works">
+      <div class="inner">
+        <span class="sec-label reveal">— Works</span>
+        <h2 class="sec-title reveal">制作実績</h2>
+        <p class="sec-desc reveal">小規模店舗・個人事業向けのデモサイトを多数制作しています。</p>
+        <div class="works-layout">
+          <div class="work-card reveal">
+            <img src="assets_takibineko/work-lumiere.jpg" alt="美容室 ホームページ制作">
+            <div class="work-overlay">
+              <span class="work-genre">HP制作</span>
+              <p class="work-title">美容室 ホームページ</p>
+              <a href="index.html" class="work-link">デモ一覧を見る →</a>
+            </div>
+          </div>
+          <a href="index.html" class="work-card-more reveal" aria-label="他のデモを見る">
+            <span class="work-card-more-num">9+</span>
+            <span class="work-card-more-label">骨董×喫茶、美容室、整体、<br>ペットサロンなど多数</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOW SECTION -->
+    <section class="sec-flow">
+      <div class="inner">
+        <span class="sec-label reveal">— How It Works</span>
+        <h2 class="sec-title reveal">ご相談の流れ</h2>
+        <p class="sec-desc reveal">まずはLINEかInstagramで、気軽に話しかけてください。</p>
+        <div class="flow-steps">
+          <div class="flow-step reveal">
+            <div class="flow-num">01</div>
+            <h3 class="flow-title">LINEで無料相談</h3>
+            <p class="flow-desc">「こんなことできる？」という相談だけでもOK。自動化できるかどうかの確認だけでも気軽にどうぞ。</p>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-num">02</div>
+            <h3 class="flow-title">ヒアリング・提案</h3>
+            <p class="flow-desc">現在の業務フローを聞いて、何をどう自動化するか具体的に提案します。費用感もここで確認できます。</p>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-num">03</div>
+            <h3 class="flow-title">制作・納品・サポート</h3>
+            <p class="flow-desc">制作後も継続してサポートします。「使い方がわからない」というときも気軽にご連絡ください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="sec-cta">
+      <div class="inner">
+        <h2 class="cta-title reveal">まずは、気軽に<br>話しかけてください。</h2>
+        <p class="cta-sub reveal">「自動化できるかな？」「HPってどのくらいかかるの？」<br>どんな小さな疑問でも、お気軽にどうぞ。</p>
+        <div class="cta-buttons reveal">
+          <!-- LINE URL はここを実際のURLに変更してください -->
+          <a href="#line-contact" class="btn-line">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304M6.584 13.459H4.929c-.346 0-.627-.284-.627-.631V8.057c0-.347.281-.631.627-.631.348 0 .63.284.63.631v4.14h1.025c.347 0 .628.285.628.631 0 .347-.281.631-.628.631m2.312-.631c0 .347-.282.631-.629.631-.346 0-.628-.284-.628-.631V8.057c0-.347.282-.631.628-.631.347 0 .629.284.629.631zm4.861 0c0 .272-.173.512-.432.597-.062.021-.129.031-.196.031-.21 0-.389-.099-.506-.25l-2.443-3.317v2.939c0 .347-.281.631-.628.631-.346 0-.628-.284-.628-.631V8.057c0-.272.172-.512.431-.597.063-.022.13-.033.197-.033.195 0 .375.104.495.254l2.461 3.329V8.057c0-.347.282-.631.629-.631.346 0 .628.284.628.631zm4.085-.631h-1.754v-1.125h1.755c.347 0 .628-.283.628-.629 0-.347-.281-.631-.628-.631h-1.755v-1.125h1.755c.347 0 .628-.283.628-.631 0-.347-.281-.631-.628-.631h-2.385c-.346 0-.628.284-.628.631v4.771c0 .347.282.631.628.631h2.385c.347 0 .629-.284.629-.631 0-.346-.282-.631-.629-.631"/>
+            </svg>
+            LINE で相談する
+          </a>
+          <a href="https://www.instagram.com/takibi__neko" class="btn-insta" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+            @takibi__neko
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 たきびねこ</p>
+  </footer>
+
+  <script>
+    // IntersectionObserver reveal (fallback for all browsers)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
