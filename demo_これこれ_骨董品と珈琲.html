@@ -3,472 +3,384 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>これこれ | 骨董品と珈琲 大阪 日本橋</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<title>これこれ 骨董品と珈琲 | 大阪・日本橋 黒門市場そばの古民家</title>
+<meta name="description" content="大阪・日本橋、黒門市場そばの路地にある古民家。日本の骨董・和雑貨と、ハンドドリップの珈琲、抹茶のお店。（制作見本）">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #12100e;
-  --bg2: #1a1714;
-  --bg3: #221e1a;
-  --amber: #d4931a;
-  --amber-light: #f0b040;
-  --amber-dim: rgba(212,147,26,0.12);
-  --brown: #6b4c2a;
-  --brown-light: #8a6540;
-  --text: #e8ddd0;
-  --text-dim: #9a8870;
-  --text-light: #c8baa8;
-  --border: rgba(212,147,26,0.2);
+  --paper: #f7f2e7;      /* 生成り */
+  --paper-2: #efe7d6;    /* 少し濃い生成り */
+  --white: #fffdf8;
+  --ink: #2b2620;
+  --ink-dim: #6d6457;
+  --ai: #2d4b7c;         /* 染付の藍 */
+  --ai-pale: #dfe6f0;
+  --matcha: #7a8c3c;
+  --shu: #b5412d;        /* 朱 */
+  --line: rgba(43,38,32,.16);
+  --mincho: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  --gothic: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --latin: 'Cormorant Garamond', serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: 'Noto Serif JP', serif; overflow-x: hidden; }
+body { background: var(--paper); color: var(--ink); font-family: var(--gothic); line-height: 1.9; overflow-x: clip; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+.ib { display: inline-block; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--amber); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
 
-@keyframes fadeUp { from { opacity:0; transform:translateY(50px); } to { opacity:1; transform:translateY(0); } }
-@keyframes heroSlide { from { transform:scale(1.06); } to { transform:scale(1.0); } }
-@keyframes scrollAnim { 0%,100% { opacity:1; top:5px; } 70% { opacity:0; top:14px; } }
-
-.reveal { opacity:0; transition:opacity 0.9s cubic-bezier(.4,0,.2,1), transform 0.9s cubic-bezier(.4,0,.2,1); transform:translateY(40px); }
-.reveal.left { transform:translateX(-40px); }
-.reveal.right { transform:translateX(40px); }
-.reveal.visible { opacity:1; transform:none; }
-.d1 { transition-delay:0.1s; } .d2 { transition-delay:0.25s; } .d3 { transition-delay:0.4s; }
+/* 染付の縁（青海波の帯） */
+.sometsuke {
+  height: 26px;
+  background-color: var(--white);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'%3E%3Cg fill='none' stroke='%232d4b7c' stroke-width='1.3'%3E%3Cpath d='M0 20a20 20 0 0 1 40 0'/%3E%3Cpath d='M6 20a14 14 0 0 1 28 0'/%3E%3Cpath d='M12 20a8 8 0 0 1 16 0'/%3E%3Cpath d='M-20 10a20 20 0 0 1 40 0M20 10a20 20 0 0 1 40 0'/%3E%3Cpath d='M-14 10a14 14 0 0 1 28 0M26 10a14 14 0 0 1 28 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 40px 20px; background-position: 0 6px; background-repeat: repeat-x;
+  border-top: 2px solid var(--ai); border-bottom: 2px solid var(--ai);
+}
 
 /* NAV */
-nav {
-  position:fixed; top:0; width:100%; z-index:300;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:1rem 2.5rem;
-  background:rgba(18,16,14,0.88);
-  backdrop-filter:blur(16px);
-  transition:background 0.4s;
-}
-.nav-brand { display:flex; flex-direction:column; text-decoration:none; }
-.nav-brand-ja { font-family:'Noto Serif JP',serif; font-size:1.1rem; font-weight:500; color:var(--amber); letter-spacing:0.2em; }
-.nav-brand-en { font-family:'Courier New',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.3em; text-transform:uppercase; }
-.nav-menu { display:flex; align-items:center; gap:2rem; list-style:none; }
-.nav-menu a {
-  color:var(--text-dim); text-decoration:none; font-size:0.68rem;
-  letter-spacing:0.2em; text-transform:uppercase; font-family:'Courier New',monospace;
-  position:relative; padding-bottom:2px;
-}
-.nav-menu a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--amber); transition:width 0.3s; }
-.nav-menu a:hover { color:var(--amber); }
-.nav-menu a:hover::after { width:100%; }
-.nav-tel { font-family:'Courier New',monospace; font-size:0.72rem; color:var(--amber); letter-spacing:0.08em; border:1px solid rgba(212,147,26,0.4); padding:0.4rem 1rem; text-decoration:none; transition:background 0.3s; }
-.nav-tel:hover { background:var(--amber-dim); }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(247,242,231,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { text-decoration: none; display: flex; align-items: baseline; gap: 12px; }
+.brand b { font-family: var(--mincho); font-weight: 700; font-size: 1.35rem; letter-spacing: .18em; }
+.brand span { font-size: .72rem; letter-spacing: .2em; color: var(--ink-dim); }
+.nav ul { display: flex; gap: 28px; list-style: none; font-size: .85rem; letter-spacing: .12em; }
+.nav ul a { text-decoration: none; padding: 6px 0; border-bottom: 1px solid transparent; transition: border-color .3s, color .3s; }
+.nav ul a:hover { color: var(--ai); border-color: var(--ai); }
+.today { font-size: .78rem; letter-spacing: .08em; padding: 5px 12px; border: 1px solid var(--ai); color: var(--ai); border-radius: 2px; white-space: nowrap; }
+.today.closed { border-color: var(--shu); color: var(--shu); }
 
 /* HERO */
-.hero { height:100vh; min-height:700px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
-.hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; filter:brightness(0.35) sepia(0.4) contrast(1.1); transform:scale(1.06); animation:heroSlide 14s ease-out forwards; }
-.hero-overlay { position:absolute; inset:0; z-index:2; background:radial-gradient(ellipse at center, rgba(18,16,14,0.3) 0%, rgba(18,16,14,0.8) 100%); }
-.hero-content { position:relative; z-index:3; text-align:center; padding:0 2rem; max-width:900px; }
-.hero-tag { display:inline-block; border:1px solid var(--amber); padding:0.4rem 1.4rem; font-family:'Courier New',monospace; font-size:0.62rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:2.5rem; animation:fadeUp 0.8s 0.3s both; }
-.hero-title { font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(3rem,8vw,7rem); color:var(--text); line-height:1; letter-spacing:-0.02em; animation:fadeUp 0.9s 0.5s both; }
-.hero-title-ja { font-family:'Noto Serif JP',serif; font-size:0.3em; color:var(--amber); display:block; letter-spacing:0.5em; font-weight:300; margin-top:0.5em; }
-.hero-korekore { font-family:'Courier New',monospace; font-size:0.65rem; color:var(--text-dim); letter-spacing:0.6em; text-transform:uppercase; margin:2rem 0 1.5rem; display:block; animation:fadeUp 0.9s 0.8s both; }
-.hero-sub { font-size:0.85rem; color:var(--text-dim); line-height:2; letter-spacing:0.08em; max-width:480px; margin:0 auto 2.5rem; animation:fadeUp 0.9s 1s both; }
-.hero-btns { display:flex; gap:1rem; justify-content:center; animation:fadeUp 0.9s 1.2s both; flex-wrap:wrap; }
-.btn-primary { padding:0.9rem 2rem; background:var(--amber); color:var(--bg); font-size:0.75rem; letter-spacing:0.2em; text-decoration:none; font-family:'Courier New',monospace; text-transform:uppercase; transition:background 0.3s, transform 0.2s; display:inline-block; }
-.btn-primary:hover { background:var(--amber-light); transform:translateY(-2px); }
-.btn-ghost { padding:0.9rem 2rem; border:1px solid rgba(212,147,26,0.4); color:var(--amber); font-size:0.75rem; letter-spacing:0.2em; text-decoration:none; font-family:'Courier New',monospace; text-transform:uppercase; transition:border-color 0.3s, color 0.3s; display:inline-block; }
-.btn-ghost:hover { border-color:var(--amber); color:var(--amber-light); }
-.hero-scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; font-family:'Courier New',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.3em; text-transform:uppercase; animation:fadeUp 1s 1.5s both; z-index:3; }
-.scroll-wheel { width:22px; height:34px; border:1px solid rgba(212,147,26,0.4); border-radius:11px; position:relative; }
-.scroll-wheel::after { content:''; position:absolute; top:5px; left:50%; transform:translateX(-50%); width:3px; height:6px; background:var(--amber); border-radius:2px; animation:scrollAnim 1.5s ease-in-out infinite; }
+.hero { padding: 56px 0 88px; }
+.hero-in { display: grid; grid-template-columns: 1fr minmax(0, 440px); gap: 64px; align-items: center; }
+.hero-place { font-size: .82rem; letter-spacing: .28em; color: var(--ai); margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+.hero-place::before { content: ''; width: 36px; height: 1px; background: var(--ai); }
+.hero-title { display: flex; gap: 22px; align-items: flex-start; margin-bottom: 36px; }
+.hero-title h1 { writing-mode: vertical-rl; font-family: var(--mincho); font-weight: 700; font-size: clamp(3.6rem, 8vw, 6.2rem); letter-spacing: .12em; line-height: 1.1; }
+.hero-title p { writing-mode: vertical-rl; font-family: var(--mincho); font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: .5em; padding-top: .4em; color: var(--ink-dim); }
+.hero-title .rakkan { margin-top: auto; }
+.hero-lead { font-family: var(--mincho); font-size: clamp(1.05rem, 1.7vw, 1.3rem); line-height: 2.1; letter-spacing: .06em; max-width: 26em; text-wrap: balance; }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.btn { display: inline-block; padding: 13px 26px; font-size: .9rem; letter-spacing: .14em; text-decoration: none; border: 1px solid var(--ai); border-radius: 2px; transition: background .3s, color .3s; }
+.btn.fill { background: var(--ai); color: var(--white); }
+.btn.fill:hover { background: #223a62; }
+.btn.line { color: var(--ai); }
+.btn.line:hover { background: var(--ai-pale); }
 
-/* STORY */
-.story { padding:9rem 2rem; overflow:hidden; }
-.story-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:5fr 7fr; gap:5rem; align-items:center; }
-.story-img-wrap { position:relative; }
-.story-img-bg { width:100%; height:520px; object-fit:cover; filter:sepia(0.25) brightness(0.85); transition:filter 0.5s; display:block; }
-.story-img-wrap:hover .story-img-bg { filter:sepia(0.1) brightness(0.95); }
-.story-img-frame { position:absolute; top:1.5rem; left:1.5rem; right:-1.5rem; bottom:-1.5rem; border:1px solid rgba(212,147,26,0.25); pointer-events:none; z-index:-1; }
-.story-year { position:absolute; bottom:-1.5rem; right:0; font-family:'Playfair Display',serif; font-size:5rem; font-weight:700; color:rgba(212,147,26,0.08); line-height:1; pointer-events:none; letter-spacing:-0.05em; }
-.story-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.5em; color:var(--amber); text-transform:uppercase; display:block; margin-bottom:1.5rem; }
-.story-heading { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; color:var(--text); line-height:1.3; margin-bottom:2rem; letter-spacing:-0.01em; }
-.story-heading em { font-style:italic; color:var(--amber); }
-.story-body { font-size:0.88rem; color:var(--text-dim); line-height:2.5; letter-spacing:0.06em; margin-bottom:2rem; }
-.story-quote { border-left:3px solid var(--amber); padding-left:1.5rem; margin:2rem 0; }
-.story-quote p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; color:var(--text-light); line-height:1.8; }
-.story-quote cite { font-size:0.68rem; color:var(--text-dim); letter-spacing:0.2em; text-transform:uppercase; display:block; margin-top:0.8rem; font-family:'Courier New',monospace; }
-
-/* PRODUCTS */
-.products { padding:6rem 2rem; background:var(--bg2); }
-.products-inner { max-width:1200px; margin:0 auto; }
-.products-header { text-align:center; margin-bottom:5rem; }
-.products-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.5em; color:var(--amber); text-transform:uppercase; display:block; margin-bottom:1rem; }
-.products-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:400; color:var(--text); letter-spacing:-0.01em; }
-.products-cols { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
-.product-col { position:relative; overflow:hidden; }
-.product-col-img { width:100%; height:480px; object-fit:cover; filter:brightness(0.5) sepia(0.3); transition:filter 0.6s, transform 0.6s; display:block; }
-.product-col:hover .product-col-img { filter:brightness(0.65) sepia(0.15); transform:scale(1.03); }
-.product-col-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:3rem 2.5rem; background:linear-gradient(to top, rgba(18,16,14,0.9) 0%, transparent 60%); }
-.product-col-num { font-family:'Playfair Display',serif; font-size:5rem; font-weight:700; color:rgba(212,147,26,0.12); position:absolute; top:1.5rem; left:2rem; line-height:1; }
-.product-col-label { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:0.8rem; }
-.product-col-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; color:var(--text); letter-spacing:-0.01em; margin-bottom:1rem; }
-.product-col-title span { font-family:'Noto Serif JP',serif; font-size:0.5em; display:block; color:var(--amber); letter-spacing:0.2em; margin-bottom:0.3rem; }
-.product-col-desc { font-size:0.8rem; color:var(--text-dim); line-height:2; opacity:0; transform:translateY(15px); transition:opacity 0.4s, transform 0.4s; }
-.product-col:hover .product-col-desc { opacity:1; transform:translateY(0); }
-.product-col-line { width:0; height:2px; background:var(--amber); margin-top:1.5rem; transition:width 0.5s 0.1s; }
-.product-col:hover .product-col-line { width:60px; }
-
-/* GALLERY */
-.gallery { padding:7rem 2rem; }
-.gallery-inner { max-width:1200px; margin:0 auto; }
-.gallery-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3rem; }
-.gallery-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; color:var(--text); }
-.gallery-link { font-family:'Courier New',monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--amber); text-decoration:none; text-transform:uppercase; border-bottom:1px solid rgba(212,147,26,0.4); padding-bottom:2px; transition:border-color 0.3s; }
-.gallery-link:hover { border-color:var(--amber); }
-.gallery-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-template-rows:auto; gap:4px; }
-.g1 { grid-column:span 7; grid-row:span 2; }
-.g2 { grid-column:span 5; }
-.g3 { grid-column:span 5; }
-.g4 { grid-column:span 4; }
-.g5 { grid-column:span 4; }
-.g6 { grid-column:span 4; }
-.gallery-item { position:relative; overflow:hidden; background:var(--bg3); }
-.g1 .gallery-img { height:500px; }
-.g2 .gallery-img, .g3 .gallery-img { height:245px; }
-.g4 .gallery-img, .g5 .gallery-img, .g6 .gallery-img { height:200px; }
-.gallery-img { width:100%; object-fit:cover; display:block; filter:sepia(0.2) brightness(0.85); transition:filter 0.5s, transform 0.6s; }
-.gallery-item:hover .gallery-img { filter:sepia(0.1) brightness(0.95); transform:scale(1.04); }
-.gallery-hover { position:absolute; inset:0; background:rgba(18,16,14,0.7); opacity:0; display:flex; align-items:center; justify-content:center; transition:opacity 0.4s; }
-.gallery-item:hover .gallery-hover { opacity:1; }
-.gallery-hover span { font-family:'Courier New',monospace; font-size:0.6rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; }
-
-/* ACCESS */
-.access { padding:8rem 2rem; background:var(--bg2); }
-.access-inner { max-width:900px; margin:0 auto; }
-.access-top { display:flex; align-items:flex-end; gap:2rem; margin-bottom:4rem; }
-.access-num { font-family:'Playfair Display',serif; font-size:6rem; font-weight:700; color:rgba(212,147,26,0.08); line-height:1; flex-shrink:0; }
-.access-heading { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,3vw,2.5rem); font-weight:400; color:var(--text); padding-bottom:1rem; border-bottom:1px solid var(--border); }
-.access-heading span { font-family:'Noto Serif JP',serif; font-size:0.5em; color:var(--amber); display:block; letter-spacing:0.3em; margin-bottom:0.3rem; }
-.access-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; }
-.info-block { margin-bottom:2rem; }
-.info-label { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:0.6rem; }
-.info-value { font-size:0.88rem; color:var(--text-dim); line-height:1.9; }
-.info-value a { color:var(--amber); text-decoration:none; }
-.info-value a:hover { text-decoration:underline; }
-.hours-table { width:100%; border-collapse:collapse; }
-.hours-table td { padding:0.8rem 0; border-bottom:1px solid rgba(212,147,26,0.1); font-size:0.82rem; }
-.hours-table td:last-child { text-align:right; }
-.closed { color:var(--brown-light); }
-.note-box { background:rgba(212,147,26,0.05); border:1px solid rgba(212,147,26,0.15); padding:1.5rem; margin-top:2rem; font-size:0.78rem; color:var(--text-dim); line-height:1.9; }
-
-/* FOOTER */
-footer { background:var(--bg); border-top:1px solid rgba(212,147,26,0.12); padding:4rem 2rem 2rem; }
-.footer-inner { max-width:1200px; margin:0 auto; }
-.footer-top { display:grid; grid-template-columns:1fr 2fr 1fr; gap:3rem; padding-bottom:3rem; border-bottom:1px solid rgba(212,147,26,0.12); margin-bottom:2rem; }
-.footer-brand-name { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--amber); display:block; margin-bottom:0.3rem; }
-.footer-brand-ja { font-family:'Noto Serif JP',serif; font-size:0.75rem; color:var(--text-dim); letter-spacing:0.15em; }
-.footer-tagline { font-family:'Courier New',monospace; font-size:0.62rem; color:var(--text-dim); letter-spacing:0.08em; line-height:1.8; padding-top:0.5rem; }
-.footer-nav-title { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:1.2rem; }
-.footer-nav-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
-.footer-nav-list a { color:var(--text-dim); text-decoration:none; font-size:0.78rem; transition:color 0.3s; }
-.footer-nav-list a:hover { color:var(--amber); }
-.footer-contact-title { font-family:'Courier New',monospace; font-size:0.58rem; letter-spacing:0.4em; color:var(--amber); text-transform:uppercase; margin-bottom:1.2rem; }
-.footer-tel { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); display:block; margin-bottom:0.5rem; }
-.footer-hours { font-size:0.72rem; color:var(--text-dim); line-height:1.8; }
-.footer-bottom { display:flex; justify-content:space-between; align-items:center; }
-.footer-copy { font-size:0.68rem; color:var(--text-dim); letter-spacing:0.08em; font-family:'Courier New',monospace; }
-.footer-copy a { color:var(--amber); text-decoration:none; }
-.footer-copy a:hover { text-decoration:underline; }
-
-/* DEMO BADGE */
-.demo-badge { position:fixed; bottom:1.5rem; right:1.5rem; z-index:999; background:rgba(18,16,14,0.92); border:1px solid rgba(212,147,26,0.3); color:var(--text-dim); font-size:0.6rem; letter-spacing:0.1em; padding:0.4rem 0.8rem; font-family:'Courier New',monospace; backdrop-filter:blur(8px); }
-
-/* RESPONSIVE */
-@media(max-width:900px) {
-  nav { padding:1rem 1.5rem; }
-  .nav-menu { display:none; }
-  .story-inner { grid-template-columns:1fr; }
-  .story-text { padding-left:0; }
-  .products-cols { grid-template-columns:1fr; }
-  .product-col-img { height:320px; }
-  .g1 { grid-column:span 12; grid-row:span 1; }
-  .g1 .gallery-img { height:280px; }
-  .g2,.g3 { grid-column:span 6; }
-  .g4,.g5,.g6 { grid-column:span 4; }
-  .access-grid { grid-template-columns:1fr; gap:2rem; }
-  .footer-top { grid-template-columns:1fr; gap:2rem; }
-  .footer-bottom { flex-direction:column; gap:1rem; }
-}
-@media(max-width:600px) {
-  .g2,.g3 { grid-column:span 12; }
-  .g4,.g5,.g6 { grid-column:span 6; }
-  .hero-btns { flex-direction:column; align-items:center; }
-  .gallery-header { flex-direction:column; gap:1rem; align-items:flex-start; }
-}
-
-/* ===== 遊び：蔵出しの札 ===== */
-.gallery-item { overflow: visible; }
-.gallery-item .gallery-img, .gallery-item .gallery-hover { clip-path: inset(0); }
-.fuda {
-  position: absolute; left: 18px; top: -10px; z-index: 3; width: 38px; padding: 20px 0 10px; text-align: center;
-  background: radial-gradient(circle at 50% 9px, #12100e 3px, transparent 3.5px), #e9dcc0; color: #2a2018;
-  clip-path: polygon(22% 0, 78% 0, 100% 12%, 100% 100%, 0 100%, 0 12%);
-  transform-origin: 50% 0; rotate: -4deg; transition: rotate .7s cubic-bezier(.3,1.6,.5,1);
-  filter: drop-shadow(0 6px 8px rgba(0,0,0,.5));
-}
-.fuda i { display: block; font-style: normal; writing-mode: vertical-rl; margin: 0 auto; font-family: 'Noto Serif JP', serif; font-size: 0.75rem; letter-spacing: 0.2em; }
-.fuda b { display: block; margin-top: 6px; font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 1rem; color: #a3301f; }
-.gallery-item:hover .fuda { rotate: 7deg; }
-.gallery-item:nth-child(even) .fuda { rotate: 3deg; left: auto; right: 18px; }
-.gallery-item:nth-child(even):hover .fuda { rotate: -6deg; }
-
-/* ===== 遊び：落款 ===== */
-.products-header { position: relative; }
-.rakkan {
-  display: inline-grid; grid-template-columns: 1fr 1fr; direction: rtl; width: 58px; height: 58px; margin-top: 1.4rem; rotate: 4deg;
-  border: 2.5px solid #c8442e; border-radius: 5px; color: #c8442e; place-items: center; padding: 3px;
-  font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 1rem; line-height: 1;
-}
+/* 落款 */
+.rakkan { display: inline-grid; grid-template-columns: 1fr 1fr; direction: rtl; width: 54px; height: 54px; rotate: 3deg; border: 2.5px solid var(--shu); border-radius: 5px; color: var(--shu); place-items: center; padding: 3px; font-family: var(--mincho); font-weight: 700; font-size: .95rem; line-height: 1; writing-mode: horizontal-tb; }
 .rakkan i { font-style: normal; }
 
-.gallery, .products { overflow-x: clip; }
-.hero { overflow: clip; }
+/* 暖簾つきの写真 */
+.noren-photo { position: relative; }
+.noren-photo .ph { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-2); box-shadow: 0 24px 50px -28px rgba(43,38,32,.45); }
+.noren-photo .ph img { width: 100%; height: 100%; object-fit: cover; }
+.noren { position: absolute; left: -14px; right: -14px; top: -16px; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; filter: drop-shadow(0 8px 8px rgba(43,38,32,.22)); }
+.noren::before { content: ''; position: absolute; left: -10px; right: -10px; top: -5px; height: 7px; background: #8a6a45; border-radius: 4px; }
+.noren span { background: var(--ai); color: var(--white); font-family: var(--mincho); font-weight: 500; font-size: clamp(1.3rem, 2.4vw, 1.8rem); text-align: center; padding: 16px 0 26px; transform-origin: 50% 0; transition: transform .8s cubic-bezier(.3,1.5,.5,1); }
+.noren span:nth-child(odd) { padding-bottom: 32px; }
+.noren-photo:hover .noren span:nth-child(1) { transform: skewX(4deg) scaleY(.96); }
+.noren-photo:hover .noren span:nth-child(2) { transform: skewX(-3deg); }
+.noren-photo:hover .noren span:nth-child(3) { transform: skewX(3deg) scaleY(.97); }
+.noren-photo:hover .noren span:nth-child(4) { transform: skewX(-5deg); }
+.hero-sub { position: absolute; left: -72px; bottom: -40px; width: 46%; aspect-ratio: 1; overflow: hidden; border: 8px solid var(--white); box-shadow: 0 18px 36px -20px rgba(43,38,32,.5); z-index: 3; }
+.hero-sub img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 見出し */
+.sec { padding: 96px 0; }
+.sec.alt { background: var(--white); }
+.head { display: flex; align-items: flex-end; gap: 22px; margin-bottom: 52px; }
+.head .no { font-family: var(--latin); font-style: italic; font-size: 1.15rem; color: var(--ai); letter-spacing: .1em; padding-bottom: .5em; }
+.head h2 { font-family: var(--mincho); font-weight: 500; font-size: clamp(1.7rem, 3.4vw, 2.5rem); letter-spacing: .1em; line-height: 1.5; text-wrap: balance; }
+.head::after { content: ''; flex: 1; height: 1px; background: var(--line); margin-bottom: .9em; }
+
+/* 道しるべ */
+.michi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; counter-reset: michi; }
+.michi li { list-style: none; position: relative; }
+.michi .ph { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-2); }
+.michi .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.michi li:hover .ph img { transform: scale(1.04); }
+.michi h3 { font-family: var(--mincho); font-weight: 500; font-size: 1.2rem; letter-spacing: .1em; margin: 20px 0 6px; display: flex; align-items: center; gap: 12px; }
+.michi h3::before { counter-increment: michi; content: counter(michi, cjk-ideographic); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--ai); color: var(--white); font-size: .9rem; flex: none; }
+.michi p { font-size: .92rem; color: var(--ink-dim); }
+.michi li:nth-child(2) { margin-top: 48px; }
+.michi li:nth-child(3) { margin-top: 96px; }
+
+/* 二軒 */
+.niken { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.ken .ph { position: relative; aspect-ratio: 4 / 5; background: var(--paper-2); }
+.ken .ph img { width: 100%; height: 100%; object-fit: cover; }
+.ken .label { font-size: .8rem; letter-spacing: .3em; color: var(--ai); margin: 28px 0 8px; }
+.ken.cha .label { color: var(--matcha); }
+.ken h3 { font-family: var(--mincho); font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: .1em; margin-bottom: 14px; }
+.ken p { font-size: .96rem; color: var(--ink-dim); }
+.ken:nth-child(2) { margin-top: 72px; }
+
+/* 荷札 */
+.fuda { position: absolute; left: 20px; top: -12px; z-index: 3; width: 40px; padding: 22px 0 12px; text-align: center; background: radial-gradient(circle at 50% 10px, var(--paper) 3px, transparent 3.5px), #e7d8b6; color: var(--ink); clip-path: polygon(22% 0, 78% 0, 100% 12%, 100% 100%, 0 100%, 0 12%); transform-origin: 50% 0; rotate: -4deg; transition: rotate .7s cubic-bezier(.3,1.6,.5,1); filter: drop-shadow(0 6px 6px rgba(43,38,32,.25)); }
+.fuda i { display: block; font-style: normal; writing-mode: vertical-rl; margin: 0 auto; font-family: var(--mincho); font-size: .8rem; letter-spacing: .2em; }
+.ken:hover .fuda { rotate: 6deg; }
+.ken.cha .fuda { left: auto; right: 20px; rotate: 3deg; }
+.ken.cha:hover .fuda { rotate: -6deg; }
+
+/* 品書き */
+.shina { margin-top: 26px; border-top: 1px solid var(--line); }
+.shina li { list-style: none; display: flex; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); font-family: var(--mincho); font-size: 1.05rem; letter-spacing: .08em; }
+.shina li small { font-family: var(--gothic); font-size: .8rem; color: var(--ink-dim); letter-spacing: .04em; margin-left: auto; text-align: right; }
+.shina-note { font-size: .78rem; color: var(--ink-dim); margin-top: 12px; }
+
+/* 器の帯写真 */
+.utsuwa { display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: center; }
+.utsuwa .ph { aspect-ratio: 4 / 5; overflow: hidden; border-radius: 50% 50% 0 0 / 30% 30% 0 0; background: var(--paper-2); }
+.utsuwa .ph img { width: 100%; height: 100%; object-fit: cover; }
+.utsuwa h3 { font-family: var(--mincho); font-weight: 500; font-size: clamp(1.5rem, 2.8vw, 2.1rem); letter-spacing: .1em; line-height: 1.7; margin-bottom: 18px; text-wrap: balance; }
+.utsuwa p { color: var(--ink-dim); max-width: 30em; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.tags span { font-family: var(--mincho); font-size: .95rem; letter-spacing: .14em; padding: 5px 16px; border: 1px solid var(--ai); color: var(--ai); border-radius: 999px; background: var(--white); }
+
+/* 声 */
+.koe-top { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 36px; }
+.koe-top b { font-family: var(--latin); font-size: 4rem; line-height: 1; color: var(--ai); font-weight: 500; }
+.koe-top span { font-size: .88rem; color: var(--ink-dim); }
+.koe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.koe li { list-style: none; padding: 26px 26px 22px; background: var(--paper); border-left: 3px solid var(--ai); font-family: var(--mincho); font-size: 1rem; line-height: 2; }
+.koe li:nth-child(2) { border-color: var(--matcha); }
+.koe li:nth-child(3) { border-color: var(--shu); }
+.koe-note { font-size: .78rem; color: var(--ink-dim); margin-top: 18px; }
+
+/* 店舗情報 */
+.info { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.info dl { display: grid; grid-template-columns: 6em 1fr; row-gap: 20px; font-size: .96rem; }
+.info dt { font-family: var(--mincho); letter-spacing: .2em; color: var(--ai); }
+.info dd { color: var(--ink); }
+.info dd small { display: block; color: var(--ink-dim); font-size: .82rem; }
+.hours { background: var(--white); border: 1px solid var(--line); padding: 30px 32px; position: relative; }
+.hours h3 { font-family: var(--mincho); font-weight: 500; letter-spacing: .3em; font-size: 1.05rem; margin-bottom: 14px; }
+.hours table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.hours td { padding: 9px 6px; border-bottom: 1px dashed var(--line); }
+.hours td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.hours tr.off td { color: var(--shu); }
+.hours tr.now td { background: var(--ai-pale); font-weight: 500; }
+.hours tr.now.off td { background: #f4e2dc; }
+.hours .rakkan { position: absolute; right: 22px; top: -24px; background: var(--white); }
+
+footer { padding: 44px 0 56px; background: var(--paper-2); font-size: .82rem; color: var(--ink-dim); }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+footer b { font-family: var(--mincho); color: var(--ink); font-size: 1.05rem; letter-spacing: .16em; }
+.demo-badge { position: fixed; right: 14px; bottom: 14px; z-index: 60; background: var(--white); border: 1px solid var(--line); font-size: .7rem; letter-spacing: .08em; padding: 5px 10px; color: var(--ink-dim); }
+
+@media (max-width: 860px) {
+  .nav ul { display: none; }
+  .hero { padding: 44px 0 72px; }
+  .hero-in { grid-template-columns: 1fr; gap: 56px; }
+  .noren-photo { max-width: 360px; margin: 0 auto; width: calc(100% - 28px); }
+  .hero-sub { left: -14px; width: 40%; }
+  .sec { padding: 68px 0; }
+  .head { margin-bottom: 36px; }
+  .michi { grid-template-columns: 1fr; gap: 40px; }
+  .michi li:nth-child(n) { margin-top: 0; }
+  .michi .ph { aspect-ratio: 4 / 3; }
+  .niken, .utsuwa, .info { grid-template-columns: 1fr; gap: 44px; }
+  .ken:nth-child(2) { margin-top: 0; }
+  .koe { grid-template-columns: 1fr; gap: 16px; }
+  .utsuwa .ph { max-width: 320px; }
+}
+@media (max-width: 480px) {
+  .brand span { display: none; }
+  .hero-title h1 { font-size: 3.4rem; }
+  .shina li { flex-wrap: wrap; }
+  .hours { padding: 26px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .noren span, .fuda, .michi .ph img { transition: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-brand">
-    <span class="nav-brand-ja">これこれ</span>
-    <span class="nav-brand-en">Korekore — Antiques & Coffee</span>
-  </a>
-  <ul class="nav-menu">
-    <li><a href="#story">Story</a></li>
-    <li><a href="#products">Items</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#access">Access</a></li>
-  </ul>
-  <a href="#access" class="nav-tel">大阪市 日本橋 ― Tue–Sat Open</a>
-</nav>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><b>これこれ</b><span>骨董品と珈琲</span></a>
+    <ul>
+      <li><a href="#michi">路地の奥へ</a></li>
+      <li><a href="#niken">骨董と珈琲</a></li>
+      <li><a href="#koe">お客さまの声</a></li>
+      <li><a href="#info">店舗情報</a></li>
+    </ul>
+    <span class="today" id="today">月・火・木〜土 10:30–17:00</span>
+  </div>
+</header>
 
-<!-- HERO -->
+<main id="top">
 <section class="hero">
-  <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLfwgbY4SaOaLaiGi05sBpHCkMgdd-B-mf1z67h36r1WuJ2-Ua6Wa-JhKIPB_Uz7VgDUFmtN6GyzaQNTeE4kxz3xb9SaZIez9-6Ie2dkZIWuJ0GjFxIvCVlJT-LuqVKeOAnIS8X_Em83FfsQ=w1920-k-no" alt="これこれ 入口" class="hero-bg" loading="eager">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-tag">Est. in Nipponbashi, Osaka</span>
-    <h1 class="hero-title">
-      korekore
-      <span class="hero-title-ja">骨董品と珈琲</span>
-    </h1>
-    <span class="hero-korekore">古いものと、コーヒーだけがある場所</span>
-    <p class="hero-sub">時代を越えた骨董品と、丁寧に淹れた珈琲。<br>ここでしか出会えない「これこれ」を探しに来てください。</p>
-    <div class="hero-btns">
-      <a href="#products" class="btn-primary">Collections</a>
-      <a href="#story" class="btn-ghost">Our Story</a>
-    </div>
-  </div>
-  <div class="hero-scroll-hint">
-    <div class="scroll-wheel"></div>
-    <span>Scroll</span>
-  </div>
-</section>
-
-<!-- STORY -->
-<section class="story" id="story">
-  <div class="story-inner">
-    <div class="story-img-wrap reveal left">
-      <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TmzM-R0Eyff_CZkApmnCEDzjO_9L_SQuy82hfYXMAhmcheUxjvGWWNDIvVT97UGcNNcB29iePM0KibNwCT8nWHl3VdjBuXMbSUW654-SDlGDY1K0cByKMMFGcWD-t8hco4L5PIX_kuEBo=w800-k-no" alt="これこれ 店内" class="story-img-bg" loading="lazy">
-      <div class="story-img-frame"></div>
-      <div class="story-year">1962</div>
-    </div>
-    <div class="story-text reveal right">
-      <span class="story-label">Our Story</span>
-      <h2 class="story-heading">古いものと、<br><em>コーヒー</em>だけが<br>ある場所</h2>
-      <p class="story-body">
-        「これこれ」は、骨董品と珈琲という異なる文化が<br>
-        奇妙なほど自然に共存する場所です。<br><br>
-        棚に並ぶのは、昭和の家庭で使われた食器、<br>
-        戦前の雑誌、旅先で拾ってきた陶器のかけら——<br>
-        それぞれに、誰かの時間が宿っています。<br><br>
-        そしてカウンターには、コーヒーの煙がゆっくりと上がる。
-      </p>
-      <div class="story-quote">
-        <p>"物に歴史あり、珈琲に深みあり。<br>どちらも時間をかけてはじめて、味が出る。"</p>
-        <cite>— 店主より</cite>
+  <div class="wrap hero-in">
+    <div>
+      <p class="hero-place">大阪・日本橋　黒門市場のそば</p>
+      <div class="hero-title">
+        <h1>これこれ</h1>
+        <p>骨董品と珈琲</p>
+        <span class="rakkan" aria-hidden="true"><i>こ</i><i>こ</i><i>れ</i><i>れ</i></span>
       </div>
+      <p class="hero-lead"><span class="ib">路地の奥の古民家で、</span><span class="ib">日本の古いうつわと</span><span class="ib">和の小物に出会い、</span><span class="ib">となりで一杯の珈琲を。</span></p>
+      <div class="hero-btns">
+        <a class="btn fill" href="#info">営業時間と場所</a>
+        <a class="btn line" href="#niken">お店のこと</a>
+      </div>
+    </div>
+    <div class="noren-photo">
+      <div class="noren" aria-hidden="true"><span>こ</span><span>れ</span><span>こ</span><span>れ</span></div>
+      <div class="ph"><img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Svrp6Y40FF-jE185fhfAU_W4Gaw4_4cfFcmxTmuVUOw-6aNlxcksTrp23HI3hH0IqzFGGCOQa1Y2dwoYXbVF8FfRlWoNarZSjmwMX6IvGuO-CP539m1gVt157b7B30XgbLay8xtW7VMVM=w1200-k-no" alt="これこれの店先。古民家の軒先に看板と鉢植えが並ぶ" loading="eager"></div>
+      <div class="hero-sub"><img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Rl7mJrCLcxa_OKHeFws5T6oUvueU5cUKa6CpnwlCa25A9GabyQaVpKTbtXVy8ukt76Pvpzr5h_Vc0EIXiOI7xhS4MHwMsIIOI8NmbuyCUwDqshvxXZKtmvbWRpzqc-iO5PKrx4WY8G0WTL=w800-k-no" alt="抹茶と三色団子" loading="eager"></div>
     </div>
   </div>
 </section>
 
-<!-- PRODUCTS -->
-<section class="products" id="products">
-  <div class="products-inner">
-    <div class="products-header reveal">
-      <span class="products-label">What We Offer</span>
-      <h2 class="products-title">骨董と珈琲、<br>二つの世界</h2>
-      <span class="rakkan" aria-hidden="true"><i>こ</i><i>こ</i><i>れ</i><i>れ</i></span>
-    </div>
-    <div class="products-cols">
-      <div class="product-col reveal left">
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TVu-TTjI60hpcjbOaSCIfsag9MveleCBBT_YkelHLH-VITKNXzuQ3r6vJHm0MeQXh7iK86F68DLCKyLYLctU2ED69-CjMwHdcolpRnosihV8ws9MI0iaXXojIPjxt1myDGM7QP=w800-k-no" alt="骨董品" class="product-col-img" loading="lazy">
-        <div class="product-col-content">
-          <div class="product-col-num">I</div>
-          <div class="product-col-label">Antiques</div>
-          <div class="product-col-title">
-            <span>骨董品</span>
-            Antiques
-          </div>
-          <p class="product-col-desc">昭和・大正・明治の生活用品、陶磁器、古書、玩具、雑貨。全て真品のみを厳選。一点物の出会いをお楽しみください。</p>
-          <div class="product-col-line"></div>
-        </div>
-      </div>
-      <div class="product-col reveal right">
-        <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLeMfU0nCuf9TPxfMHHQUR2phVKR85uJ1d24OMZsHPWy6bpT_YBWHl5V38UGJtwiKlE-XDVRrDwQ69EF9m8-_bMQe5QBkJdXwmRnxJ4C_AidWGpcrj2OfaS4dsY6tRvP6OUI88aJ=w800-k-no" alt="珈琲" class="product-col-img" loading="lazy">
-        <div class="product-col-content">
-          <div class="product-col-num">II</div>
-          <div class="product-col-label">Coffee</div>
-          <div class="product-col-title">
-            <span>珈琲</span>
-            Coffee
-          </div>
-          <p class="product-col-desc">自家焙煎の豆を使ったハンドドリップ珈琲。産地別に味わいの違いを感じてください。豆の販売も行っています。</p>
-          <div class="product-col-line"></div>
-        </div>
-      </div>
-    </div>
+<div class="sometsuke" aria-hidden="true"></div>
+
+<section class="sec alt" id="michi">
+  <div class="wrap">
+    <div class="head reveal"><span class="no">no.1</span><h2><span class="ib">看板をくぐって、</span><span class="ib">路地の奥へ</span></h2></div>
+    <ol class="michi">
+      <li class="reveal">
+        <div class="ph"><img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Qyr0BdaaaViEh6GqENNKxvYnhqEbQAGbbvdlfEFr93HkeoV1Q8B6hTEHU-Y9zYzjmgEQzDLFljgPQ4r7fKjZEKXN7_zFLv-kzGVhdw4kZq15HM1wNdvXqHOcwRg0bPlqZryOOdz4D4Stpo=w1000-k-no" alt="通りに面した路地の入口。看板が並ぶ" loading="lazy"></div>
+        <h3>路地の入口</h3>
+        <p>通りから見えるのは、看板と細い路地だけ。ここが入口です。</p>
+      </li>
+      <li class="reveal">
+        <div class="ph"><img src="https://lh3.googleusercontent.com/grass-cs/AABkmLeMfU0nCuf9TPxfMHHQUR2phVKR85uJ1d24OMZsHPWy6bpT_YBWHl5V38UGJtwiKlE-XDVRrDwQ69EF9m8-_bMQe5QBkJdXwmRnxJ4C_AidWGpcrj2OfaS4dsY6tRvP6OUI88aJ=w1000-k-no" alt="店先に活けられた花と、これこれの額" loading="lazy"></div>
+        <h3>花と額が目印</h3>
+        <p>路地を進むと、季節の花と「これこれ」の額が迎えます。</p>
+      </li>
+      <li class="reveal">
+        <div class="ph"><img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QNg7o96Prlw8_OSJPut_exRCqnjugCocKFJi2lWNvpWdyhcXcWW-8UiH87cdQRon3zGFmfvYLWlLM5dyU240_VNKS-hFMKrzXsnR0ZlE_56lH7cM-RjBoDUcY4n33jXjci6gY2_ofHCDnw=w1000-k-no" alt="木の引き戸と丸い看板のある入口" loading="lazy"></div>
+        <h3>木の引き戸を開けて</h3>
+        <p>古民家の引き戸の向こうが、お店です。</p>
+      </li>
+    </ol>
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <div class="gallery-inner">
-    <div class="gallery-header reveal">
-      <h2 class="gallery-title">Gallery</h2>
-      <a href="#" class="gallery-link">View All</a>
-    </div>
-    <div class="gallery-grid reveal d1">
-      <div class="gallery-item g1">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>壱</b></span>
-        <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLfwgbY4SaOaLaiGi05sBpHCkMgdd-B-mf1z67h36r1WuJ2-Ua6Wa-JhKIPB_Uz7VgDUFmtN6GyzaQNTeE4kxz3xb9SaZIez9-6Ie2dkZIWuJ0GjFxIvCVlJT-LuqVKeOAnIS8X_Em83FfsQ=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Entrance</span></div>
-      </div>
-      <div class="gallery-item g2">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>弐</b></span>
-        <img src="https://lh3.googleusercontent.com/grass-cs/AABkmLeMfU0nCuf9TPxfMHHQUR2phVKR85uJ1d24OMZsHPWy6bpT_YBWHl5V38UGJtwiKlE-XDVRrDwQ69EF9m8-_bMQe5QBkJdXwmRnxJ4C_AidWGpcrj2OfaS4dsY6tRvP6OUI88aJ=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Coffee</span></div>
-      </div>
-      <div class="gallery-item g3">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>参</b></span>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TmzM-R0Eyff_CZkApmnCEDzjO_9L_SQuy82hfYXMAhmcheUxjvGWWNDIvVT97UGcNNcB29iePM0KibNwCT8nWHl3VdjBuXMbSUW654-SDlGDY1K0cByKMMFGcWD-t8hco4L5PIX_kuEBo=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Space</span></div>
-      </div>
-      <div class="gallery-item g4">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>四</b></span>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TVu-TTjI60hpcjbOaSCIfsag9MveleCBBT_YkelHLH-VITKNXzuQ3r6vJHm0MeQXh7iK86F68DLCKyLYLctU2ED69-CjMwHdcolpRnosihV8ws9MI0iaXXojIPjxt1myDGM7QP=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Antiques</span></div>
-      </div>
-      <div class="gallery-item g5">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>五</b></span>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QEabXa4WXycj2PKHhdQYgrkmxn0OxXwZ6BR8V2nDfRSFxmsoD2BBy98ZuMPIpWFauTyM8El8cvJoQq18_3ZzkAWpc60_P9tHLn6Hd6J90sqhjbiMISMaUksAIVrtZ8bFnfEpExRHHZk0uQ=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Items</span></div>
-      </div>
-      <div class="gallery-item g6">
-        <span class="fuda" aria-hidden="true"><i>蔵出し</i><b>六</b></span>
-        <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9R5MT5A_9-vo-rFdKJ1ZR7bgFJMvWWsXfjaWM6IWpkQ3UHSdQ7ms-6FAYXQv6FsA3r2oEthWEeuyjm43k2Z9P-E92tNj1EN3DrOPNMO5VKa82Wi_u01-5WAXZO8bQ8-T6JUSafEM4p3NLre=w800-k-no" alt="" class="gallery-img" loading="lazy">
-        <div class="gallery-hover"><span>Details</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ACCESS -->
-<section class="access" id="access">
-  <div class="access-inner">
-    <div class="access-top reveal">
-      <div class="access-num">04</div>
-      <h2 class="access-heading">
-        <span>Access / 店舗情報</span>
-        これこれ 骨董品と珈琲
-      </h2>
-    </div>
-    <div class="access-grid">
-      <div class="reveal left">
-        <div class="info-block">
-          <div class="info-label">Location</div>
-          <div class="info-value">〒542-0073 大阪府大阪市中央区日本橋２丁目１２−２１</div>
+<section class="sec" id="niken">
+  <div class="wrap">
+    <div class="head reveal"><span class="no">no.2</span><h2><span class="ib">骨董の家と、</span><span class="ib">珈琲の家</span></h2></div>
+    <div class="niken">
+      <article class="ken reveal">
+        <div class="ph">
+          <span class="fuda" aria-hidden="true"><i>骨董</i></span>
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Rqbvoga292IOxW4KtUJ12vcm55KGUiFMCBBnpIO-a_lcCjIiBo2ZTYQl48E6TmfXEOkL6VcPBf2fbTrxUj3y-qtI5rqTlxK3JNPKNEaBrVCkks_0DZJlK-e7aDTWqqZQcT67SsWsEfRLNg=w1200-k-no" alt="古民家の店内に骨董品が並ぶ" loading="lazy">
         </div>
-        <div class="info-block">
-          <div class="info-label">Access</div>
-          <div class="info-value">大阪メトロ 堺筋線・千日前線<br>「日本橋駅」徒歩約2分</div>
+        <p class="label">骨董品・和雑貨</p>
+        <h3><span class="ib">昔の暮らしが、</span><span class="ib">そのまま残る家</span></h3>
+        <p>骨董の店は、古民家をそのまま使っています。うつわ、お猪口、扇子、茶器。手に取れる小さなものが多く、旅のおみやげにも選ばれています。</p>
+      </article>
+      <article class="ken cha reveal">
+        <div class="ph">
+          <span class="fuda" aria-hidden="true"><i>喫茶</i></span>
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9Rl7mJrCLcxa_OKHeFws5T6oUvueU5cUKa6CpnwlCa25A9GabyQaVpKTbtXVy8ukt76Pvpzr5h_Vc0EIXiOI7xhS4MHwMsIIOI8NmbuyCUwDqshvxXZKtmvbWRpzqc-iO5PKrx4WY8G0WTL=w1200-k-no" alt="抹茶と三色団子" loading="lazy">
         </div>
-        <div class="info-block">
-          <div class="info-label">SNS</div>
-          <div class="info-value">
-            <a href="https://www.instagram.com/takibi__neko" target="_blank">Instagram: @korekore_takatsuki</a>
-          </div>
-        </div>
-      </div>
-      <div class="reveal right">
-        <div class="info-label">Hours</div>
-        <table class="hours-table">
-          <tr><td style="color:var(--text-dim)">月・火・木〜土</td><td>10:30 — 17:00</td></tr>
-          <tr><td style="color:var(--text-dim)">定休日</td><td class="closed">水・日曜日</td></tr>
-        </table>
-        <div class="note-box">
-          骨董品の出張買取・査定も承ります。<br>
-          お気軽にお電話またはInstagramのDMにてご連絡ください。
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <span class="footer-brand-name">korekore</span>
-        <span class="footer-brand-ja">これこれ 骨董品と珈琲</span>
-        <p class="footer-tagline">古いものと、コーヒーだけがある場所<br>大阪市中央区 日本橋</p>
-      </div>
-      <div>
-        <div class="footer-nav-title">Navigation</div>
-        <ul class="footer-nav-list">
-          <li><a href="#story">Story</a></li>
-          <li><a href="#products">Collections</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#access">Access</a></li>
+        <p class="label">珈琲・抹茶</p>
+        <h3><span class="ib">明るく直した、</span><span class="ib">となりの家</span></h3>
+        <p>となりの喫茶は、古民家を明るく改装した空間です。珈琲は一杯ずつハンドドリップで。抹茶と焼き菓子もあります。</p>
+        <ul class="shina">
+          <li>珈琲<small>ハンドドリップ</small></li>
+          <li>水出し珈琲</li>
+          <li>抹茶</li>
+          <li>抹茶カヌレ・カヌレ</li>
+          <li>フィナンシェ</li>
         </ul>
-      </div>
-      <div>
-        <div class="footer-contact-title">Contact</div>
-        <span class="footer-tel">072-XXX-XXXX</span>
-        <div class="footer-hours">火〜金 12:00-19:00<br>土日祝 11:00-20:00<br>月曜定休</div>
+        <p class="shina-note">※ 口コミに挙がっている品です。内容・価格は店頭でご確認ください。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="sometsuke" aria-hidden="true"></div>
+
+<section class="sec alt">
+  <div class="wrap utsuwa">
+    <div class="ph reveal"><img src="https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RdARDkzq4LxPhuxsdQX_dzKZHOihqej05eZTltpIkbBQ6X3ZA-agDBpug4PwulgKm9DIwzAbqOtWDkV5a0NGFbvu0VEua32VxzDWUA8izQDsqOzY7IPrFS_Qk1LxHilD5Dvqp0=w1200-k-no" alt="染付や色絵の皿が並ぶ" loading="lazy"></div>
+    <div class="reveal">
+      <h3><span class="ib">「これこれ、</span><span class="ib">こういうのを</span><span class="ib">探していた」</span><br><span class="ib">という一枚に。</span></h3>
+      <p>藍の染付、赤絵の小皿、豆皿。同じものは二つとない古いうつわが、棚いっぱいに並びます。珈琲を待つあいだに、ゆっくりご覧ください。</p>
+      <div class="tags"><span>うつわ</span><span>お猪口</span><span>茶器</span><span>扇子</span><span>和の小物</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="koe">
+  <div class="wrap">
+    <div class="head reveal"><span class="no">no.3</span><h2>お客さまの声</h2></div>
+    <div class="koe-top reveal"><b>4.9</b><span>Googleマップの評価（97件・2026年11月時点）</span></div>
+    <ul class="koe">
+      <li class="reveal">古民家を直した趣のあるカフェ。ハンドドリップの珈琲と抹茶カヌレがおいしかった。</li>
+      <li class="reveal">お猪口や扇子、茶器など小物がたくさん。おみやげにもよさそう。</li>
+      <li class="reveal">黒門市場の近くに泊まっていて、二日続けて通いました。</li>
+    </ul>
+    <p class="koe-note">※ Googleマップの口コミを要約したものです。</p>
+  </div>
+</section>
+
+<section class="sec alt" id="info">
+  <div class="wrap">
+    <div class="head reveal"><span class="no">no.4</span><h2>店舗情報</h2></div>
+    <div class="info">
+      <dl class="reveal">
+        <dt>店名</dt><dd>これこれ 骨董品と珈琲<small>korekore coffee &amp; Japanese Antique Store</small></dd>
+        <dt>住所</dt><dd>〒542-0073<br>大阪府大阪市中央区日本橋2丁目12-21</dd>
+        <dt>道案内</dt><dd>大阪メトロ「日本橋」駅・黒門市場のそば<small>看板のある路地を入った奥です。</small></dd>
+        <dt>地図</dt><dd><a class="btn line" href="https://maps.google.com/?cid=10092798746834250560" target="_blank" rel="noopener">Googleマップで開く</a></dd>
+      </dl>
+      <div class="hours reveal">
+        <span class="rakkan" aria-hidden="true"><i>営</i><i>時</i><i>業</i><i>間</i></span>
+        <h3>営業時間</h3>
+        <table id="hours">
+          <tr data-d="1"><td>月</td><td>10:30 – 17:00</td></tr>
+          <tr data-d="2"><td>火</td><td>10:30 – 17:00</td></tr>
+          <tr data-d="3" class="off"><td>水</td><td>定休日</td></tr>
+          <tr data-d="4"><td>木</td><td>10:30 – 17:00</td></tr>
+          <tr data-d="5"><td>金</td><td>10:30 – 17:00</td></tr>
+          <tr data-d="6"><td>土</td><td>10:30 – 17:00</td></tr>
+          <tr data-d="0" class="off"><td>日</td><td>定休日</td></tr>
+        </table>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© これこれ 骨董品と珈琲 | Powered by <a href="https://www.instagram.com/takibi__neko" target="_blank">@takibi__neko</a></p>
-    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>これこれ</b>　骨董品と珈琲</p>
+    <p>このページは制作見本で、店舗の公式サイトではありません。<br>掲載情報と写真は Googleマップ掲載のものです（2026年11月時点）。</p>
   </div>
 </footer>
-
-<div class="demo-badge">※ Demo Page</div>
+<div class="demo-badge">制作見本</div>
 
 <script>
-const reveals = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-reveals.forEach(el => io.observe(el));
+(function () {
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-  nav.style.background = window.scrollY > 80
-    ? 'rgba(18,16,14,0.97)'
-    : 'rgba(18,16,14,0.88)';
-});
+  var d = new Date().getDay();
+  var row = document.querySelector('#hours tr[data-d="' + d + '"]');
+  var today = document.getElementById('today');
+  if (row) {
+    row.classList.add('now');
+    var off = row.classList.contains('off');
+    today.textContent = off ? '本日 定休日' : '本日 10:30–17:00';
+    if (off) today.classList.add('closed');
+  }
+})();
 </script>
 </body>
 </html>
