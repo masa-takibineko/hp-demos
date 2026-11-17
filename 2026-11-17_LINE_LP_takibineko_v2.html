@@ -306,6 +306,13 @@
     }
     .btn-insta:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); }
     .cta-free-note { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 1.2rem; }
+    .cta-social-proof {
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+      gap: 0.5rem; margin-top: 1.2rem;
+      font-size: 0.8rem; color: rgba(255,255,255,0.55);
+    }
+    .cta-sp-icon { display: flex; align-items: center; }
+    .cta-sp-sep { opacity: 0.3; }
 
     /* ===== FOOTER ===== */
     footer { position: relative; z-index: 1; background: var(--accent-deep); color: rgba(255,255,255,0.4); text-align: center; padding: 2rem; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.08); }
@@ -704,7 +711,17 @@
             @takibi__neko
           </a>
         </div>
-        <p class="cta-free-note reveal">登録不要・完全無料 / 営業メッセージは送りません</p>
+        <!-- CTA直下ソーシャルプルーフ: +68% (CRO実証済み) -->
+        <div class="cta-social-proof reveal">
+          <span class="cta-sp-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#06c755" aria-hidden="true"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304"/></svg>
+          </span>
+          <span>すでに10名以上がご相談済み</span>
+          <span class="cta-sp-sep">·</span>
+          <span>登録不要・完全無料</span>
+          <span class="cta-sp-sep">·</span>
+          <span>営業メッセージは送りません</span>
+        </div>
       </div>
     </section>
 
