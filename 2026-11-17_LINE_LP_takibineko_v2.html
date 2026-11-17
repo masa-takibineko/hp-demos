@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>たきびねこ | 事務自動化・HP制作・AI活用相談</title>
+  <meta name="description" content="日々の繰り返し作業を自動化して、あなたの時間を本来の仕事に。LINEを追加するだけで、自動化できる作業を無料で洗い出します。">
+  <meta property="og:title" content="たきびねこ | 事務自動化・HP制作・AI活用相談">
+  <meta property="og:description" content="LINEを追加するだけで、自動化できる作業を無料で洗い出します。">
+  <meta property="og:type" content="website">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: #f7f9fb;
+      color: #2a323d;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .line-lit span { opacity: 1 !important; }
+      .scroll-badge { display: none; }
+    }
+
+    :root {
+      --bg: #f7f9fb;
+      --surface: #ffffff;
+      --accent: #5b9bc4;
+      --accent-dark: #3f7da8;
+      --accent-deep: #2a323d;
+      --text: #2a323d;
+      --text-dim: #6b7682;
+      --radius: 20px;
+      --max-w: 1120px;
+    }
+
+    /* ===== STAGE (Effect A) ===== */
+    .stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .stage > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    @supports (animation-timeline: scroll()) {
+      .stage-sky { animation: zoomSky linear both; animation-timeline: scroll(root); animation-range: 0 150svh; }
+      .stage-near { animation: zoomNear linear both; animation-timeline: scroll(root); animation-range: 0 150svh; transform-origin: 50% 80%; }
+      @keyframes zoomSky { to { transform: scale(1.18); } }
+      @keyframes zoomNear { to { transform: scale(2.2); opacity: 0; } }
+    }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; z-index: 1; height: 200svh; }
+    .hero-inner {
+      position: sticky; top: 0; height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(2.5rem, 7vh, 5rem);
+    }
+    .hero-eyebrow {
+      font-family: 'Poppins', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.75); display: block; margin-bottom: 0.8rem;
+    }
+    .hero-title {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: clamp(2rem, 5.5vw, 3.8rem); font-weight: 700; line-height: 1.25;
+      color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,0.25); max-width: 18em; margin-bottom: 1.2rem;
+    }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: rgba(255,255,255,0.88);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.2); max-width: 28em; margin-bottom: 2rem;
+    }
+
+    /* Hero CTA — 損失回避 × 返報性 (ファーストビュー必須) */
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2rem; background: #06c755; border-radius: 100px;
+      color: white; font-size: 0.95rem; font-weight: 700;
+      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 24px rgba(6,199,85,0.4);
+    }
+    .hero-cta:hover { opacity: 0.9; transform: translateY(-2px); }
+    .hero-cta-note {
+      font-size: 0.78rem; color: rgba(255,255,255,0.65);
+      margin-top: 0.6rem; display: block;
+    }
+
+    /* scroll badge (Effect E) */
+    .scroll-badge {
+      position: absolute; right: clamp(1.5rem, 4vw, 3rem); bottom: clamp(2rem, 6vh, 4rem);
+      width: 100px; height: 100px; display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.72); text-decoration: none;
+    }
+    .scroll-badge svg { width: 100px; animation: spin 14s linear infinite; font-size: 9px; letter-spacing: .28em; fill: currentColor; }
+    .scroll-line { position: absolute; left: 50%; top: 35%; width: 1px; height: 30%; background: currentColor; animation: drop 2s ease-in-out infinite; transform-origin: top; }
+    @keyframes spin { to { rotate: 360deg; } }
+    @keyframes drop { 0% { scale: 1 0; transform-origin: top; } 50% { scale: 1 1; } 100% { scale: 1 0; transform-origin: bottom; } }
+
+    /* ===== MAIN ===== */
+    .content { position: relative; z-index: 1; }
+    section { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem); }
+    .inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .sec-label {
+      font-family: 'Poppins', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+      display: block; margin-bottom: 1.2rem;
+    }
+    .sec-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.3; margin-bottom: 1rem; }
+    .sec-desc { font-size: clamp(0.95rem, 1.8vw, 1.05rem); color: var(--text-dim); max-width: 38em; margin-bottom: 3rem; line-height: 1.9; }
+
+    /* ===== TRUST STRIP — 社会的証明 × 権威性 ===== */
+    .trust-strip { background: var(--accent-deep); padding: 2rem clamp(1.5rem, 6vw, 5rem); }
+    .trust-strip .inner { display: flex; justify-content: center; align-items: center; gap: clamp(2rem, 6vw, 5rem); flex-wrap: wrap; }
+    .trust-item { text-align: center; }
+    .trust-num {
+      font-family: 'Poppins', sans-serif; font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 600; color: white; display: block; line-height: 1.1;
+    }
+    .trust-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); display: block; margin-top: 0.3rem; letter-spacing: 0.05em; }
+    .trust-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
+
+    /* ===== MESSAGE (Effect C) ===== */
+    .sec-message { background: var(--accent); color: white; padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem); }
+    .line-lit { text-align: center; }
+    .line-lit span { display: block; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 500; line-height: 2.4; letter-spacing: 0.1em; opacity: 1; }
+    @supports (animation-timeline: view()) {
+      .line-lit span { animation: lit linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; opacity: 0.2; }
+      @keyframes lit { from { opacity: 0.2; } to { opacity: 1; } }
+    }
+
+    /* ===== WAVE ===== */
+    .wave { overflow: hidden; margin-bottom: -1px; line-height: 0; }
+    .wave svg { display: block; width: 100%; height: clamp(50px, 9vw, 120px); }
+    .wave-down { background: var(--accent); } .wave-down path { fill: #f7f9fb; }
+    .wave-up { background: #f7f9fb; } .wave-up path { fill: var(--surface); }
+    .wave-up2 { background: var(--surface); } .wave-up2 path { fill: #f7f9fb; }
+
+    /* ===== PROBLEM — 損失回避 ===== */
+    .sec-problem { background: var(--surface); }
+    .loss-calc {
+      background: var(--bg); border-radius: var(--radius); padding: 2rem 2.5rem;
+      border-left: 4px solid var(--accent); margin-bottom: 3rem;
+    }
+    .loss-calc-title { font-size: 1rem; color: var(--text-dim); margin-bottom: 1rem; }
+    .loss-num {
+      font-family: 'Poppins', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 0.4rem;
+    }
+    .loss-calc p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; margin-top: 0.8rem; }
+    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .pain-item { background: var(--bg); border-radius: var(--radius); padding: 1.8rem; border-left: 3px solid var(--accent); }
+    .pain-num { font-family: 'Poppins', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--accent); display: block; }
+    .pain-title { font-size: 1rem; font-weight: 700; margin: 0.4rem 0 0.6rem; }
+    .pain-item p { font-size: 0.9rem; line-height: 1.8; color: var(--text-dim); }
+
+    /* ===== BEFORE/AFTER — 一貫性 (ありありと想像させる) ===== */
+    .sec-transform { background: var(--bg); }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .ba-card { border-radius: var(--radius); padding: 2rem; }
+    .ba-before { background: #fff; border: 2px solid rgba(107,118,130,0.15); }
+    .ba-after { background: var(--accent); color: white; }
+    .ba-tag {
+      font-family: 'Poppins', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 100px;
+      display: inline-block; margin-bottom: 1.2rem; font-weight: 500;
+    }
+    .ba-before .ba-tag { background: rgba(107,118,130,0.1); color: var(--text-dim); }
+    .ba-after .ba-tag { background: rgba(255,255,255,0.2); color: white; }
+    .ba-item { display: flex; gap: 0.8rem; align-items: flex-start; margin-bottom: 1rem; }
+    .ba-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 0.6rem; flex-shrink: 0; }
+    .ba-before .ba-dot { background: var(--text-dim); }
+    .ba-after .ba-dot { background: rgba(255,255,255,0.7); }
+    .ba-item p { font-size: 0.9rem; line-height: 1.7; }
+    .ba-before .ba-item p { color: var(--text-dim); }
+    .ba-after .ba-item p { color: rgba(255,255,255,0.9); }
+    .ba-arrow {
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif; font-size: 1.5rem; color: var(--accent);
+      padding-top: 4rem;
+    }
+
+    /* ===== SERVICES ===== */
+    .sec-services { background: var(--surface); }
+    .service-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .service-card { background: var(--bg); border-radius: var(--radius); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(42,50,61,0.1); }
+    .service-icon-wrap { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; background: rgba(91,155,196,0.06); }
+    .service-icon-wrap svg { width: 64px; height: 64px; }
+    .service-body { padding: 1.8rem; }
+    .service-num { font-family: 'Poppins', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; color: var(--accent); display: block; margin-bottom: 0.4rem; }
+    .service-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .service-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.85; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag { font-size: 0.72rem; padding: 0.25rem 0.75rem; background: var(--surface); border-radius: 100px; color: var(--text-dim); border: 1px solid rgba(91,155,196,0.25); }
+
+    /* ===== SOCIAL PROOF — 社会的証明 ===== */
+    .sec-proof { background: var(--bg); }
+    .proof-note { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 2.5rem; }
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .testimonial {
+      background: var(--surface); border-radius: var(--radius); padding: 2rem;
+      border-top: 3px solid var(--accent); position: relative;
+    }
+    .testimonial-quote {
+      font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 0.8rem;
+      font-family: 'Poppins', sans-serif; opacity: 0.4;
+    }
+    .testimonial-text { font-size: 0.95rem; line-height: 1.85; color: var(--text); margin-bottom: 1.2rem; }
+    .testimonial-meta { font-size: 0.8rem; color: var(--text-dim); }
+    .testimonial-meta strong { color: var(--accent); font-size: 0.72rem; letter-spacing: 0.08em; display: block; margin-top: 0.3rem; }
+
+    /* ===== WORKS ===== */
+    .sec-works { background: var(--surface); }
+    .works-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .work-card { border-radius: var(--radius); overflow: hidden; position: relative; }
+    .work-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.5s ease; }
+    .work-card:hover img { transform: scale(1.04); }
+    .work-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(transparent, rgba(42,50,61,0.72)); }
+    .work-genre { font-family: 'Poppins', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.72); display: block; margin-bottom: 0.3rem; }
+    .work-title { font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+    .work-link { display: inline-block; font-size: 0.8rem; color: rgba(255,255,255,0.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+    .work-link:hover { color: white; border-color: white; }
+    .work-card-more { border-radius: var(--radius); background: rgba(91,155,196,0.08); border: 2px dashed rgba(91,155,196,0.35); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; aspect-ratio: 4/3; text-decoration: none; transition: background 0.25s; }
+    .work-card-more:hover { background: rgba(91,155,196,0.14); }
+    .work-card-more-num { font-size: 2.5rem; font-weight: 700; color: var(--accent); font-family: 'Poppins', sans-serif; line-height: 1; }
+    .work-card-more-label { font-size: 0.88rem; color: var(--text-dim); text-align: center; line-height: 1.6; }
+
+    /* ===== MID CTA — ページ中間のCTA ===== */
+    .sec-mid-cta {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      padding: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 6vw, 5rem);
+      text-align: center; color: white;
+    }
+    .sec-mid-cta h3 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 0.6rem; }
+    .sec-mid-cta p { font-size: 0.95rem; opacity: 0.8; margin-bottom: 2rem; max-width: 32em; margin-left: auto; margin-right: auto; }
+    .btn-mid-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2.2rem; background: white; border-radius: 100px;
+      color: var(--accent); font-size: 0.95rem; font-weight: 700;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    }
+    .btn-mid-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+
+    /* ===== FLOW ===== */
+    .sec-flow { background: var(--bg); }
+    .flow-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; position: relative; }
+    .flow-steps::before { content: ''; position: absolute; top: 23px; left: calc(16.6% + 0.5rem); right: calc(16.6% + 0.5rem); height: 1px; background: linear-gradient(to right, var(--accent), rgba(91,155,196,0.3), var(--accent)); z-index: 0; }
+    .flow-step { text-align: center; position: relative; z-index: 1; }
+    .flow-num { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 500; margin: 0 auto 1.5rem; }
+    .flow-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .flow-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; }
+
+    /* ===== FAQ — 不安解消 ===== */
+    .sec-faq { background: var(--surface); }
+    .faq-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1px; }
+    .faq-item { background: var(--bg); border-radius: 12px; overflow: hidden; margin-bottom: 0.8rem; }
+    .faq-q {
+      width: 100%; text-align: left; padding: 1.4rem 1.8rem;
+      background: none; border: none; cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center; gap: 1rem;
+      font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.98rem;
+      font-weight: 700; color: var(--text); transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(91,155,196,0.06); }
+    .faq-icon { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: transform 0.3s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a-inner { padding: 0 1.8rem 1.4rem; font-size: 0.9rem; color: var(--text-dim); line-height: 1.9; }
+
+    /* ===== FINAL CTA ===== */
+    .sec-cta {
+      background: var(--accent-deep); color: white; text-align: center;
+      padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem);
+    }
+    .cta-label { font-family: 'Poppins', sans-serif; font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); display: block; margin-bottom: 1.5rem; }
+    .cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; }
+    .cta-sub { font-size: clamp(0.9rem, 1.8vw, 1.05rem); opacity: 0.65; margin-bottom: 1rem; max-width: 32em; margin-left: auto; margin-right: auto; line-height: 1.9; }
+
+    /* 返報性: 追加後に何が得られるか明示 */
+    .cta-value {
+      display: inline-block; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
+      padding: 1.2rem 2rem; margin-bottom: 2.5rem; text-align: left; max-width: 420px; width: 100%;
+    }
+    .cta-value-title { font-size: 0.8rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem; }
+    .cta-value-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.5rem; font-size: 0.88rem; color: rgba(255,255,255,0.85); }
+    .cta-value-dot { width: 6px; height: 6px; border-radius: 50%; background: #06c755; margin-top: 0.55rem; flex-shrink: 0; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-line {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1.1rem 2.4rem; background: #06c755; border-radius: 100px;
+      color: white; font-size: 1rem; font-weight: 700; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s; box-shadow: 0 4px 32px rgba(6,199,85,0.4);
+    }
+    .btn-line:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-insta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1.1rem 2.2rem; border: 2px solid rgba(255,255,255,0.3); border-radius: 100px;
+      color: white; font-size: 0.95rem; font-weight: 500; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-insta:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); }
+    .cta-free-note { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 1.2rem; }
+
+    /* ===== FOOTER ===== */
+    footer { position: relative; z-index: 1; background: var(--accent-deep); color: rgba(255,255,255,0.4); text-align: center; padding: 2rem; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.08); }
+
+    /* ===== STICKY MOBILE CTA ===== */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      padding: 0.8rem 1.5rem 1rem; background: white;
+      box-shadow: 0 -4px 24px rgba(42,50,61,0.12);
+      display: none; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .sticky-cta-text { font-size: 0.82rem; color: var(--text-dim); line-height: 1.4; }
+    .sticky-cta-text strong { color: var(--text); display: block; }
+    .sticky-btn {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.75rem 1.5rem; background: #06c755; border-radius: 100px;
+      color: white; font-size: 0.88rem; font-weight: 700; text-decoration: none;
+    }
+    @media (max-width: 768px) { .sticky-cta { display: flex; } body { padding-bottom: 76px; } }
+
+    /* ===== IO REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .ba-grid { grid-template-columns: 1fr; }
+      .ba-arrow { padding-top: 0; }
+    }
+    @media (max-width: 768px) {
+      .works-layout { grid-template-columns: 1fr; }
+      .flow-steps { grid-template-columns: 1fr; }
+      .flow-steps::before { display: none; }
+      .service-cards { grid-template-columns: 1fr; }
+      .hero-title { font-size: clamp(1.9rem, 7.5vw, 3rem); }
+      .trust-strip .inner { gap: 1.5rem; }
+      .trust-divider { display: none; }
+    }
+    @media (max-width: 480px) {
+      .pain-grid { grid-template-columns: 1fr; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .testimonials { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed Stage (Effect A) -->
+  <div class="stage" aria-hidden="true">
+    <img class="stage-sky"  src="assets_takibineko/sky.jpg"   alt="">
+    <img class="stage-near" src="assets_takibineko/shore.jpg" alt="">
+  </div>
+
+  <!-- HERO — ファーストビューにCTA必須 (CROルール) -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">takibineko — automations &amp; web</span>
+      <h1 class="hero-title">毎月何時間も失っている<br>繰り返し作業、<br>全部自動化できます。</h1>
+      <p class="hero-sub">HP制作 / 業務自動化 / AI活用相談<br>LINEを追加するだけで、自動化できる作業を<strong style="color:rgba(255,255,255,0.95)">無料で洗い出します。</strong></p>
+      <!-- CTA above fold -->
+      <a href="#line-contact" class="hero-cta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304"/></svg>
+        LINEで無料相談を始める
+      </a>
+      <span class="hero-cta-note">登録不要・完全無料 / 返信は営業時間内に</span>
+
+      <!-- Effect E: rotating scroll badge -->
+      <a class="scroll-badge" href="#trust" aria-label="下へスクロール">
+        <svg viewBox="0 0 120 120"><defs><path id="bc" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#bc">SCROLL DOWN ・ SCROLL DOWN ・ SCROLL DOWN ・</textPath></text></svg>
+        <span class="scroll-line"></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- TRUST STRIP — 社会的証明 × 権威性 (numbers) -->
+    <div class="trust-strip" id="trust">
+      <div class="inner">
+        <div class="trust-item reveal">
+          <span class="trust-num">10+</span>
+          <span class="trust-label">ご相談件数</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item reveal">
+          <span class="trust-num">月20h</span>
+          <span class="trust-label">平均削減時間（導入後）</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item reveal">
+          <span class="trust-num">無料</span>
+          <span class="trust-label">初回相談・作業洗い出し</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item reveal">
+          <span class="trust-num">当日〜</span>
+          <span class="trust-label">LINE返信スピード</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MESSAGE (Effect C: 行点灯) -->
+    <section class="sec-message">
+      <div class="inner">
+        <div class="line-lit">
+          <span>毎日の繰り返し作業、</span>
+          <span>コピペ・転記・整理・確認。</span>
+          <span>その時間、ぜんぶ取り戻せます。</span>
+          <span>あなたの手だから、できること。</span>
+          <span>もっとたくさんあるはずです。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAVE -->
+    <div class="wave wave-down" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"/></svg></div>
+
+    <!-- PROBLEM — 損失回避 (今も毎月失っている) -->
+    <section class="sec-problem">
+      <div class="inner">
+        <span class="sec-label reveal">— The Problem</span>
+        <h2 class="sec-title reveal">今も、毎月◯時間<br>失い続けていませんか？</h2>
+        <div class="loss-calc reveal">
+          <p class="loss-calc-title">計算してみてください ——</p>
+          <div class="loss-num">月 20〜30h</div>
+          <p>コピペ・転記・整理を「1日30分」とすると、<br>月に換算すると<strong>約10〜15時間</strong>。週次の報告書・SNS投稿・請求書確認を加えると、<strong>月20〜30時間</strong>が繰り返し作業に消えています。<br>年間にすると<strong>240〜360時間</strong>。これが本来の仕事に使えたら？</p>
+        </div>
+        <p class="sec-desc reveal">「これって自動化できるの？」と思ったことが、たいてい自動化できます。難しいと思っているほど、実は仕組みにしやすいことが多いです。</p>
+        <div class="pain-grid">
+          <div class="pain-item reveal">
+            <span class="pain-num">よくある例 01</span>
+            <p class="pain-title">予約・問い合わせの転記</p>
+            <p>Googleフォームの回答をスプレッドシートへ手入力。同じ確認メールを毎回コピペして送っている。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">よくある例 02</span>
+            <p class="pain-title">定期的なメール・SNS投稿</p>
+            <p>毎週の案内メール、毎日のSNS更新。作ること自体に時間がかかりすぎて本業が圧迫される。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">よくある例 03</span>
+            <p class="pain-title">売上集計・報告書作成</p>
+            <p>月末にExcelを開いて、コピペして、グラフを作って…。毎月まったく同じことの繰り返し。</p>
+          </div>
+          <div class="pain-item reveal">
+            <span class="pain-num">よくある例 04</span>
+            <p class="pain-title">ホームページの更新</p>
+            <p>「更新したいけどやり方がわからない」「業者に頼むたびに時間と費用がかかる」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEFORE/AFTER — 一貫性 (ありありと想像させる) -->
+    <section class="sec-transform">
+      <div class="inner">
+        <span class="sec-label reveal">— Before / After</span>
+        <h2 class="sec-title reveal">自動化すると、<br>こんなに変わります。</h2>
+        <div class="ba-grid">
+          <div class="ba-card ba-before reveal">
+            <span class="ba-tag">Before — 自動化する前</span>
+            <div class="ba-item"><div class="ba-dot"></div><p>問い合わせが届くたびにスプレッドシートへ手入力。確認メールもコピペして送信。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>月末3〜4時間かけて売上をExcelでまとめ、グラフを作って報告書を作成。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>SNS投稿のたびに同じような文章を考えて、画像を探して、手動でアップロード。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>HPの営業時間を変えたくても「どこを変えればいいか」わからず後回しにしている。</p></div>
+          </div>
+          <div class="ba-card ba-after reveal">
+            <span class="ba-tag">After — 自動化した後</span>
+            <div class="ba-item"><div class="ba-dot"></div><p>問い合わせが届くと自動でスプレッドシートに追記され、確認メールも自動送信される。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>月末には自動でレポートが完成。グラフ付きで確認するだけ。作業時間はゼロ。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>スプレッドシートに書くだけでSNSに自動投稿。投稿作業が週5分に。</p></div>
+            <div class="ba-item"><div class="ba-dot"></div><p>HPの簡単な管理画面が用意されていて、自分でテキストや写真を更新できる。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="sec-services">
+      <div class="inner">
+        <span class="sec-label reveal">— Services</span>
+        <h2 class="sec-title reveal">3つのサービス</h2>
+        <p class="sec-desc reveal">「難しそう」と思っている作業ほど、実は自動化しやすいものです。まずは相談から。</p>
+        <div class="service-cards">
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 72 72" fill="none"><circle cx="16" cy="36" r="10" stroke="#5b9bc4" stroke-width="2"/><circle cx="56" cy="18" r="8" stroke="#5b9bc4" stroke-width="2"/><circle cx="56" cy="54" r="8" stroke="#5b9bc4" stroke-width="2"/><line x1="26" y1="33" x2="48" y2="22" stroke="#5b9bc4" stroke-width="1.5" stroke-dasharray="3 2"/><line x1="26" y1="39" x2="48" y2="50" stroke="#5b9bc4" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="16" cy="36" r="4" fill="#5b9bc4"/><circle cx="56" cy="18" r="3" fill="#5b9bc4" opacity=".55"/><circle cx="56" cy="54" r="3" fill="#5b9bc4" opacity=".55"/></svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 01</span>
+              <h3 class="service-title">事務自動化</h3>
+              <p class="service-desc">Google Apps Script / Make / Zapier などを使って繰り返しの手作業を仕組みに。フォーム→スプレッドシート→メール通知まで一気通貫で対応。</p>
+              <div class="service-tags"><span class="tag">Google Apps Script</span><span class="tag">Make</span><span class="tag">Zapier</span><span class="tag">スプレッドシート連携</span></div>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 72 72" fill="none"><rect x="8" y="14" width="56" height="44" rx="6" stroke="#5b9bc4" stroke-width="2"/><line x1="8" y1="26" x2="64" y2="26" stroke="#5b9bc4" stroke-width="1.5"/><circle cx="18" cy="20" r="2.5" fill="#5b9bc4" opacity=".5"/><circle cx="26" cy="20" r="2.5" fill="#5b9bc4" opacity=".3"/><rect x="14" y="33" width="20" height="12" rx="2" stroke="#5b9bc4" stroke-width="1.5"/><line x1="40" y1="36" x2="58" y2="36" stroke="#5b9bc4" stroke-width="1.5" opacity=".6"/><line x1="40" y1="41" x2="54" y2="41" stroke="#5b9bc4" stroke-width="1.5" opacity=".4"/><line x1="14" y1="52" x2="58" y2="52" stroke="#5b9bc4" stroke-width="1.5" opacity=".25"/></svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 02</span>
+              <h3 class="service-title">HP制作</h3>
+              <p class="service-desc">小規模店舗・個人事業向けのHP制作。自分で更新できる管理画面つきオプションもあり。制作後も継続サポート可能。</p>
+              <div class="service-tags"><span class="tag">HTML/CSS</span><span class="tag">管理画面オプション</span><span class="tag">SEO対応</span><span class="tag">スマホ対応</span></div>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-icon-wrap">
+              <svg viewBox="0 0 72 72" fill="none"><rect x="8" y="12" width="38" height="26" rx="8" stroke="#5b9bc4" stroke-width="2"/><line x1="18" y1="22" x2="36" y2="22" stroke="#5b9bc4" stroke-width="1.5" opacity=".7"/><line x1="18" y1="28" x2="30" y2="28" stroke="#5b9bc4" stroke-width="1.5" opacity=".5"/><path d="M13 38 L8 46 L18 42" stroke="#5b9bc4" stroke-width="1.5" fill="none" stroke-linejoin="round"/><rect x="26" y="34" width="38" height="26" rx="8" stroke="#5b9bc4" stroke-width="2" opacity=".55"/><line x1="34" y1="44" x2="56" y2="44" stroke="#5b9bc4" stroke-width="1.5" opacity=".4"/><line x1="34" y1="50" x2="50" y2="50" stroke="#5b9bc4" stroke-width="1.5" opacity=".3"/></svg>
+            </div>
+            <div class="service-body">
+              <span class="service-num">Service. 03</span>
+              <h3 class="service-title">AI活用相談</h3>
+              <p class="service-desc">「ChatGPT/Claudeをどう業務に使えばいいか」「何から始めるべきかわからない」。具体的な活用方法を一緒に考えます。</p>
+              <div class="service-tags"><span class="tag">ChatGPT</span><span class="tag">Claude</span><span class="tag">業務フロー設計</span><span class="tag">ツール選定</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF — 社会的証明 (testimonials) -->
+    <section class="sec-proof">
+      <div class="inner">
+        <span class="sec-label reveal">— Voices</span>
+        <h2 class="sec-title reveal">こんなお声を<br>よくいただきます。</h2>
+        <p class="proof-note reveal">※ プライバシー保護のため業種・性別のみ記載</p>
+        <div class="testimonials">
+          <div class="testimonial reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">「毎月の予約転記とメール送信を自動化してもらいました。今まで毎日30分かかっていた作業がゼロになって、その時間でやっと新メニューの準備ができました。」</p>
+            <div class="testimonial-meta">
+              整体サロン経営 / 40代
+              <strong>導入後 月15時間の削減</strong>
+            </div>
+          </div>
+          <div class="testimonial reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">「HPを作ってもらったのですが、管理画面がついていて自分で更新できるのが本当に助かっています。写真の差し替えも簡単にできました。」</p>
+            <div class="testimonial-meta">
+              カフェ経営 / 30代
+              <strong>HP制作 + 管理画面オプション</strong>
+            </div>
+          </div>
+          <div class="testimonial reveal">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">「『自動化できますか？』って聞くだけで、できるかどうかすぐ教えてくれるし、実際に動くものを作ってくれるので信頼しています。」</p>
+            <div class="testimonial-meta">
+              雑貨店経営 / 50代
+              <strong>スプレッドシート自動集計</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS -->
+    <section class="sec-works">
+      <div class="inner">
+        <span class="sec-label reveal">— Works</span>
+        <h2 class="sec-title reveal">制作実績</h2>
+        <div class="works-layout">
+          <div class="work-card reveal">
+            <img src="assets_takibineko/work-lumiere.jpg" alt="美容室 ホームページ制作">
+            <div class="work-overlay">
+              <span class="work-genre">HP制作</span>
+              <p class="work-title">美容室 ホームページ</p>
+              <a href="index.html" class="work-link">デモ一覧を見る →</a>
+            </div>
+          </div>
+          <a href="index.html" class="work-card-more reveal" aria-label="他のデモを見る">
+            <span class="work-card-more-num">9+</span>
+            <span class="work-card-more-label">骨董×喫茶、美容室、整体、<br>ペットサロンなど多数</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MID-PAGE CTA — 2回目のCTA (ロングページは3箇所) -->
+    <div class="sec-mid-cta">
+      <div class="inner">
+        <h3 class="reveal">「これ、自動化できますか？」</h3>
+        <p class="reveal">まずその質問だけでOKです。<br>自動化できるかどうかの確認だけでも気軽にどうぞ。</p>
+        <a href="#line-contact" class="btn-mid-cta reveal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#5b9bc4" aria-hidden="true"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304"/></svg>
+          LINEで無料相談する
+        </a>
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <section class="sec-flow">
+      <div class="inner">
+        <span class="sec-label reveal">— How It Works</span>
+        <h2 class="sec-title reveal">ご相談の流れ</h2>
+        <p class="sec-desc reveal">まずはLINEかInstagramで、気軽に話しかけてください。</p>
+        <div class="flow-steps">
+          <div class="flow-step reveal">
+            <div class="flow-num">01</div>
+            <h3 class="flow-title">LINEで無料相談</h3>
+            <p class="flow-desc">「こんなことできる？」という相談だけでOK。自動化できるかどうかの確認だけでも気軽にどうぞ。</p>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-num">02</div>
+            <h3 class="flow-title">ヒアリング・提案</h3>
+            <p class="flow-desc">現在の業務フローを聞いて、何をどう自動化するか具体的に提案します。費用感もここで確認できます。</p>
+          </div>
+          <div class="flow-step reveal">
+            <div class="flow-num">03</div>
+            <h3 class="flow-title">制作・納品・サポート</h3>
+            <p class="flow-desc">制作後も継続してサポートします。「使い方がわからない」というときも気軽にご連絡ください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ — よくある不安を先に潰す -->
+    <section class="sec-faq">
+      <div class="inner">
+        <span class="sec-label reveal">— FAQ</span>
+        <h2 class="sec-title reveal">よくある質問</h2>
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span>費用はどのくらいかかりますか？</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" role="region">
+              <div class="faq-a-inner">自動化の内容や規模によって異なります。シンプルなフォーム連携であれば¥15,000〜、HP制作は¥30,000〜が目安です。まず無料相談でヒアリングした上で、正確なお見積りをお伝えします。費用の見積もりだけでも気軽にご相談ください。</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span>ITが苦手でも大丈夫ですか？</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" role="region">
+              <div class="faq-a-inner">大丈夫です。「Googleスプレッドシートが使える」「スマートフォンを使える」程度で十分です。技術的な説明は必要な範囲だけ、わかりやすくお伝えします。納品後の操作方法もしっかりサポートします。</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span>どんな作業が自動化できますか？</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" role="region">
+              <div class="faq-a-inner">フォームの回答をスプレッドシートへ転記する・定期的にメールを送る・売上データを集計する・SNSに投稿する、などが代表例です。「毎回同じことを手でやっている」と感じる作業は自動化できることが多いです。まず話してみてください。</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span>自動化したあとのサポートはありますか？</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" role="region">
+              <div class="faq-a-inner">はい、あります。納品後も「動かなくなった」「内容を変えたい」などのご連絡にLINEで対応しています。継続サポート契約（月額）も承っています。</div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              <span>LINEを追加したら営業が来ますか？</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" role="region">
+              <div class="faq-a-inner">来ません。こちらから一方的に「買いませんか？」とメッセージをお送りすることはありません。相談があれば連絡してください、というスタンスです。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA — 3回目のCTA + 返報性の価値提案 -->
+    <section class="sec-cta" id="line-contact">
+      <div class="inner">
+        <span class="cta-label">— Contact</span>
+        <h2 class="cta-title reveal">まずは、気軽に<br>話しかけてください。</h2>
+        <p class="cta-sub reveal">「自動化できますか？」という質問だけでもOKです。<br>追加するだけで、自動化できる作業を無料で洗い出します。</p>
+
+        <!-- 返報性: 追加後に何が得られるか明示 -->
+        <div class="cta-value reveal">
+          <p class="cta-value-title">LINE追加後にできること</p>
+          <div class="cta-value-item"><div class="cta-value-dot"></div><p>自動化できる作業の無料洗い出し</p></div>
+          <div class="cta-value-item"><div class="cta-value-dot"></div><p>費用感の確認（見積もりのみもOK）</p></div>
+          <div class="cta-value-item"><div class="cta-value-dot"></div><p>HP制作デモの確認・相談</p></div>
+          <div class="cta-value-item"><div class="cta-value-dot"></div><p>AI活用方法の相談</p></div>
+        </div>
+
+        <div class="cta-buttons reveal">
+          <!-- LINE URL はここを実際のURLに変更してください -->
+          <a href="#line-contact" class="btn-line">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304"/></svg>
+            LINE で友だち追加
+          </a>
+          <a href="https://www.instagram.com/takibi__neko" class="btn-insta" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @takibi__neko
+          </a>
+        </div>
+        <p class="cta-free-note reveal">登録不要・完全無料 / 営業メッセージは送りません</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 たきびねこ</p>
+  </footer>
+
+  <!-- STICKY MOBILE CTA (モバイルは常時表示) -->
+  <div class="sticky-cta" aria-label="LINEでの相談を促すバー">
+    <div class="sticky-cta-text">
+      <strong>無料で相談する</strong>
+      自動化できる作業を洗い出します
+    </div>
+    <a href="#line-contact" class="sticky-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.082.923.258 1.058.59.12.301.079.766.039 1.08l-.165 1.02c-.046.301-.24 1.186 1.049.645 1.291-.539 6.916-4.07 9.436-6.975C23.176 14.393 24 12.458 24 10.304"/></svg>
+      LINE相談
+    </a>
+  </div>
+
+  <script>
+    // ===== IntersectionObserver reveal =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ===== FAQ accordion =====
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // close all
+        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+        document.querySelectorAll('.faq-q').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // ===== Sticky CTA: hide when in final CTA section =====
+    const finalCta = document.getElementById('line-contact');
+    const stickyCta = document.querySelector('.sticky-cta');
+    if (finalCta && stickyCta) {
+      const hideObserver = new IntersectionObserver(([e]) => {
+        stickyCta.style.opacity = e.isIntersecting ? '0' : '1';
+        stickyCta.style.pointerEvents = e.isIntersecting ? 'none' : 'auto';
+      }, { threshold: 0.1 });
+      hideObserver.observe(finalCta);
+    }
+  </script>
+
+</body>
+</html>
